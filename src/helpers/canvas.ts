@@ -60,16 +60,16 @@ public writeImageToCanvas(
     }
     public writeButtonToCanvas() {
         let buttonElement = document.createElement("img");
-        buttonElement.src = "./assets/images/SpaceShooterRedux/PNG/UI/buttonBlue.png";
+        buttonElement.src = "./assets/images/buttonYellow.png";
 
         buttonElement.addEventListener("load", () => {
-            this.ctx.drawImage(buttonElement, this.getCenter().X , this.getCenter().Y );
-            this.writeTextToCanvas("Play", 20, this.getCenter().X, this.getCenter().Y, "black", "center");
+            this.ctx.drawImage(buttonElement, this.getCenter().X -111, this.getCenter().Y -30);
+            this.writeTextToCanvas("START!", 35, this.getCenter().X, this.getCenter().Y, "black", "center");
         });
 
         this.canvas.addEventListener("click", (event: MouseEvent) => {
-            if (event.x > this.getCenter().X  && event.x < this.getCenter().X ) {
-                if (event.y > this.getCenter().Y  && event.y < this.getCenter().Y) {
+            if (event.x > this.getCenter().X -111  && event.x < this.getCenter().X + 111) {
+                if (event.y > this.getCenter().Y -30 && event.y < this.getCenter().Y +30) {
                     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
                     //hier functie voor de pagina.
                 }
