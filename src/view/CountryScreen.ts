@@ -5,6 +5,6 @@ class CountryScreen extends Mapview {
     }
 
     public draw(){
-
+        this.canvas.writeImageToCanvas('./assets/images/nederland.png', this.canvas.getCenter().X , this.canvas.getCenter().Y);
     }
 }

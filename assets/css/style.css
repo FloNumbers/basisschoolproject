@@ -1,4 +1,6 @@
 body {
     overflow: hidden;
-    background-image: url('./assets/images/background/');
+}
+canvas{
+    background-image: url('./assets/images/background/achtergrond.png');
 }
