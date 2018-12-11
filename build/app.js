@@ -1,20 +1,45 @@
-class CountryScreen {
-}
-class EuropeScreen {
-}
 class Game {
+    constructor() {
+        const canvasElement = document.getElementById("canvas");
+        this.canvas = new Canvas(canvasElement);
+        this.mathHelper = new MathHelper;
+        this.question = new Question;
+        this.player = new Player;
+        this.highscore = new Highscore;
+        this.introText = new IntroText;
+        this.startScreen = new StartScreen;
+        this.europeScreen = new EuropeScreen;
+        this.countryScreen = new CountryScreen;
+        this.shopScreen = new ShopScreen;
+    }
+    draw() {
+        this.startScreen.draw();
+        this.europeScreen.draw();
+        this.countryScreen.draw();
+        this.shopScreen.draw();
+    }
+    gameLoop() {
+        window.setInterval(() => this.draw(), 1000 / 60);
+    }
+}
+window.addEventListener("load", init);
+function init() {
+    const spelletje = new Game();
+    spelletje.gameLoop();
+}
+class Mapview {
+    constructor() {
+    }
 }
 class Highscore {
 }
 class IntroText {
 }
-class Mapview {
-}
 class Player {
+    constructor() {
+    }
 }
 class Question {
-}
-class StartScreen {
 }
 class Canvas {
     constructor(canvas) {
@@ -67,6 +92,32 @@ class Canvas {
 class MathHelper {
     randomNumber(min, max) {
         return Math.round(Math.random() * (max - min) + min);
+    }
+}
+class CountryScreen extends Mapview {
+    constructor() {
+        super();
+    }
+    draw() {
+    }
+}
+class EuropeScreen extends Mapview {
+    constructor() {
+        super();
+    }
+    draw() {
+    }
+}
+class ShopScreen {
+    constructor() {
+    }
+    draw() {
+    }
+}
+class StartScreen {
+    constructor() {
+    }
+    draw() {
     }
 }
 //# sourceMappingURL=app.js.map
