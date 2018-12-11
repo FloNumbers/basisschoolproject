@@ -1,6 +1,6 @@
 class Mapview {
     private canvas:Canvas;
-    constructor(){
-        
+    constructor(canvas:HTMLCanvasElement){
+        this.canvas = new Canvas(canvas)
     }
 }
