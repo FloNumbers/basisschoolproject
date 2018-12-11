@@ -1,8 +1,11 @@
 class EuropeScreen extends Mapview{
-    constructor(){
-        super();
+
+    constructor(canvas:HTMLCanvasElement){
+        super(canvas);
     }
+
     public draw(){
         
     }
+    
 }

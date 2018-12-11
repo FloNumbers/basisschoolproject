@@ -1,5 +1,5 @@
 class Game {
-    constructor() {
+    constructor(canvas) {
         const canvasElement = document.getElementById("canvas");
         this.canvas = new Canvas(canvasElement);
         this.mathHelper = new MathHelper;
@@ -8,8 +8,8 @@ class Game {
         this.highscore = new Highscore;
         this.introText = new IntroText;
         this.startScreen = new StartScreen;
-        this.europeScreen = new EuropeScreen;
-        this.countryScreen = new CountryScreen;
+        this.europeScreen = new EuropeScreen(canvas);
+        this.countryScreen = new CountryScreen(canvas);
         this.shopScreen = new ShopScreen;
     }
     draw() {
@@ -24,11 +24,12 @@ class Game {
 }
 window.addEventListener("load", init);
 function init() {
-    const spelletje = new Game();
+    const spelletje = new Game(document.getElementById('canvas'));
     spelletje.gameLoop();
 }
 class Mapview {
-    constructor() {
+    constructor(canvas) {
+        this.canvas = new Canvas(canvas);
     }
 }
 class Highscore {
@@ -95,15 +96,15 @@ class MathHelper {
     }
 }
 class CountryScreen extends Mapview {
-    constructor() {
-        super();
+    constructor(canvas) {
+        super(canvas);
     }
     draw() {
     }
 }
 class EuropeScreen extends Mapview {
-    constructor() {
-        super();
+    constructor(canvas) {
+        super(canvas);
     }
     draw() {
     }

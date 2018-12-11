@@ -1,6 +1,6 @@
 class CountryScreen extends Mapview {
-    constructor(){
-        super();
+    constructor(canvas:HTMLCanvasElement){
+        super(canvas);
         
     }
 
