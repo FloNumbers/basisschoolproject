@@ -1,6 +1,10 @@
+canvas{
+    background-image: url("../images/background/achtergrond.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
 body {
     overflow: hidden;
-}
-canvas{
-    background-image: url('./assets/images/background/achtergrond.png');
+    margin: 0;
 }
