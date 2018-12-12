@@ -80,4 +80,41 @@ public writeTextToCanvas(
     public writeImageToCanvasPreload(image: HTMLImageElement, xCoordinate: number, yCoordinate: number, width: number, height: number):void {
         this.ctx.drawImage(image, xCoordinate, yCoordinate, width, height);
     }
+    public colorClick() {
+        this.canvas.addEventListener("click", (event: MouseEvent) => {
+            let clickEventColor = this.ctx.getImageData(event.x, event.y, 1, 1).data
+            // console.log(event.x, event.y)
+            console.log(this.ctx.getImageData(event.x, event.y, 1, 1).data)
+            if (clickEventColor[0] == 255 &&
+                clickEventColor[1] == 106 &&
+                clickEventColor[2] == 0) {
+                console.log('Nederland')
+            }
+            if (clickEventColor[0] == 140 &&
+                clickEventColor[1] == 255 &&
+                clickEventColor[2] == 172) {
+                console.log('België')
+            }
+            if (clickEventColor[0] == 255 &&
+                clickEventColor[1] == 191 &&
+                clickEventColor[2] == 0) {
+                console.log('Luxemburg')
+            }
+            if (clickEventColor[0] == 20 &&
+                clickEventColor[1] == 51 &&
+                clickEventColor[2] == 255) {
+                console.log('Frankrijk')
+            }
+            if (clickEventColor[0] == 255 &&
+                clickEventColor[1] == 0 &&
+                clickEventColor[2] == 25) {
+                console.log('Spanje')
+            }
+            if (clickEventColor[0] == 255 &&
+                clickEventColor[1] == 221 &&
+                clickEventColor[2] == 0) {
+                console.log('Portugal')
+            }
+        });
+    }
 }
