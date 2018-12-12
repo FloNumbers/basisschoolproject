@@ -26,17 +26,19 @@ class Game {
     }
      public draw(){
         this.startScreen.draw();
-        this.europeScreen.draw();
-        this.countryScreen.draw();
-        this.shopScreen.draw();
+        // this.europeScreen.draw();
+        // this.countryScreen.draw();
+        // this.shopScreen.draw();
     }
     public gameLoop() {
-        window.setInterval(() => this.draw(), 1000 / 60);
+        this.draw();
+        // window.setInterval(() => this.draw(), 1000 / 60);
     }
 }
 window.addEventListener("load", init);
 function init(): void {
     const spelletje = new Game(<HTMLCanvasElement>document.getElementById('canvas'));
     spelletje.gameLoop();
+
 
 }
