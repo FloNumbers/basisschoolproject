@@ -58,22 +58,14 @@ public writeImageToCanvas(
     public clearScreen() {
         this.ctx.clearRect(0, 0, this.getWidth(), this.getHeight());
     }
-    public writeButtonToCanvas() {
+    public writeButtonToCanvas(imageSource:string, imageX:number, imageY:number, imageText:string, imageTextSize:number, imageTextX:number, imageTextY:number, imageTextColor:string, imageTextAlignment:CanvasTextAlign, ) {
         let buttonElement = document.createElement("img");
-        buttonElement.src = "./assets/images/buttonYellow.png";
+        buttonElement.src = imageSource;
 
         buttonElement.addEventListener("load", () => {
-            this.ctx.drawImage(buttonElement, this.getCenter().X -111, this.getCenter().Y -30);
-            this.writeTextToCanvas("START!", 35, this.getCenter().X, this.getCenter().Y, "black", "center");
+            this.ctx.drawImage(buttonElement, imageX, imageY);
+            this.writeTextToCanvas(imageText, imageTextSize, imageTextX, imageTextY, imageTextColor, imageTextAlignment);
         });
 
-        this.canvas.addEventListener("click", (event: MouseEvent) => {
-            if (event.x > this.getCenter().X -111  && event.x < this.getCenter().X + 111) {
-                if (event.y > this.getCenter().Y -30 && event.y < this.getCenter().Y +30) {
-                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                    //hier functie voor de pagina.
-                }
-            }
-        });
     }
 }
