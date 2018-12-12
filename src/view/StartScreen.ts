@@ -11,8 +11,8 @@ class StartScreen {
     }
 
     public draw(){
-        this.canvas.writeTextToCanvas('Waar is deze geschiedenis?', 100, this.canvas.getWidth()/ 2, this.canvas.getHeight()/ 6, 'black', 'center');
-        this.canvas.writeButtonToCanvas("../assets/images/buttonYellow.png",this.canvas.getCenter().X -111, this.canvas.getCenter().Y -30,"Start",35,this.canvas.getCenter().X,this.canvas.getCenter().Y,"black","center");
+        this.canvas.writeTextToCanvas('Waar is deze geschiedenis?', 100, this.canvas.getWidth()/ 2, this.canvas.getHeight()/ 6, 'black', 'center', 'Old English Text MT');
+        this.canvas.writeButtonToCanvas("../assets/images/buttonYellow.png",this.canvas.getCenter().X -111, this.canvas.getCenter().Y -30,"Start",35,this.canvas.getCenter().X,this.canvas.getCenter().Y,"black","center", "Old English Text MT");
         window.addEventListener("click", (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X -111  && event.x < this.canvas.getCenter().X + 111) {
                 if (event.y > this.canvas.getCenter().Y -30 && event.y < this.canvas.getCenter().Y +30) {

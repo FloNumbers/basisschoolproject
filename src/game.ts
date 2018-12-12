@@ -12,8 +12,8 @@ class Game {
 
 
     constructor(canvas:HTMLCanvasElement){
-        // const canvasElement: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("canvas")
-        this.canvas = new Canvas(canvas);
+        const canvasElement: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("canvas")
+        this.canvas = new Canvas(canvasElement);
         this.mathHelper = new MathHelper;
         this.question = new Question;
         this.player = new Player;
@@ -26,9 +26,9 @@ class Game {
     }
      public draw(){
         this.startScreen.draw();
-        this.europeScreen.draw();
-        this.countryScreen.draw();
-        this.shopScreen.draw();
+        // this.europeScreen.draw();
+            // this.countryScreen.draw();
+        // this.shopScreen.draw();
     }
     public gameLoop() {
         this.draw();
@@ -37,7 +37,7 @@ class Game {
 }
 window.addEventListener("load", init);
 function init(): void {
-    const spelletje = new Game(<HTMLCanvasElement>document.getElementById("canvas"));
+    const spelletje = new Game(<HTMLCanvasElement>document.getElementById('canvas'));
     spelletje.gameLoop();
 
 
