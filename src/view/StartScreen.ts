@@ -20,9 +20,10 @@ class StartScreen {
                 if (event.x > this.canvas.getCenter().X - 111 && event.x < this.canvas.getCenter().X + 111) {
                     if (event.y > this.canvas.getCenter().Y + 250 && event.y < this.canvas.getCenter().Y + 289) {
                         let names = (<HTMLInputElement>document.getElementById('name')); 
-                        console.log(names.value)
+                        console.log(names.value);
                         names.type = "hidden";  
-                        document.getElementById("wereld").setAttribute('style', 'hidden')
+                        document.getElementById("wereld").setAttribute('style', 'hidden');
+                        document.getElementById("compass").setAttribute('style', 'hidden')
                         this.canvas.clearScreen();
                         this.europeScreen.draw();
                         this.player.setName(names.value);
