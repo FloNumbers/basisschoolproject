@@ -17,4 +17,8 @@ class Player {
     public scorePlus(plusAmount: number) {
         this.score += plusAmount
     }
+
+    public setName(name: string) {
+        this.name = name
+    }
 }
