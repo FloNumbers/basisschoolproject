@@ -1,7 +1,7 @@
 class Canvas {
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
-    private selectedCountry: string;
+    private selectedCountry: string = '';
     private selectedProvince: string;
 
 
@@ -342,12 +342,20 @@ class Canvas {
                 console.log('Corsica')
                 this.selectedCountry = 'Corsica'
             }
+            if (this.selectedCountry !== '') {
+                this.clearArea(800, 100, 400, 300)
+                this.writeTextToCanvas(this.selectedCountry, 30, 1000, 200, 'black', 'center', 'Old English Text MT')
+            }
         });
     }
     public getSelectedCountry() {
-        if (this.selectedCountry !== undefined) {
+        if (this.selectedCountry !== '') {
             return this.selectedCountry
-        } else { return 'Kies een land om te beginnen!' }
+        } else {return null}
+    }
+
+    public resetSelectedCountry() {
+        this.selectedCountry = ''
     }
 
     public colorClickNederland() {
@@ -357,89 +365,93 @@ class Canvas {
             // console.log(this.ctx.getImageData(event.x, event.y, 1, 1).data)
             if (clickEventColor[0] == 0 &&
                 clickEventColor[1] == 102 &&
-                clickEventColor[2] == 204 
-                ) {
+                clickEventColor[2] == 204
+            ) {
                 console.log('Zeeland')
                 this.selectedProvince = 'Zeeland'
             }
             if (clickEventColor[0] == 255 &&
                 clickEventColor[1] == 204 &&
-                clickEventColor[2] == 0 
-                ) {
+                clickEventColor[2] == 0
+            ) {
                 console.log('Noord-Brabant')
                 this.selectedProvince = 'Noord-Brabant'
             }
             if (clickEventColor[0] == 183 &&
                 clickEventColor[1] == 75 &&
-                clickEventColor[2] == 42 
-                ) {
+                clickEventColor[2] == 42
+            ) {
                 console.log('Limburg')
                 this.selectedProvince = 'Limburg'
             }
             if (clickEventColor[0] == 166 &&
                 clickEventColor[1] == 161 &&
-                clickEventColor[2] == 20 
-                ) {
+                clickEventColor[2] == 20
+            ) {
                 console.log('Zuid-Holland')
                 this.selectedProvince = 'Zuid-Holland'
             }
             if (clickEventColor[0] == 255 &&
                 clickEventColor[1] == 130 &&
-                clickEventColor[2] == 9 
-                ) {
+                clickEventColor[2] == 9
+            ) {
                 console.log('Noord-Holland')
                 this.selectedProvince = 'Noord-Holland'
             }
             if (clickEventColor[0] == 255 &&
                 clickEventColor[1] == 140 &&
-                clickEventColor[2] == 167 
-                ) {
+                clickEventColor[2] == 167
+            ) {
                 console.log('Flevoland')
                 this.selectedProvince = 'Flevoland'
             }
             if (clickEventColor[0] == 0 &&
                 clickEventColor[1] == 105 &&
-                clickEventColor[2] == 120 
-                ) {
+                clickEventColor[2] == 120
+            ) {
                 console.log('Utrecht')
                 this.selectedProvince = 'Utrecht'
             }
             if (clickEventColor[0] == 0 &&
                 clickEventColor[1] == 145 &&
-                clickEventColor[2] == 215 
-                ) {
+                clickEventColor[2] == 215
+            ) {
                 console.log('Gelderland')
                 this.selectedProvince = 'Gelderland'
             }
             if (clickEventColor[0] == 192 &&
                 clickEventColor[1] == 213 &&
-                clickEventColor[2] == 0 
-                ) {
+                clickEventColor[2] == 0
+            ) {
                 console.log('Overijsel')
                 this.selectedProvince = 'Overijsel'
             }
             if (clickEventColor[0] == 102 &&
                 clickEventColor[1] == 153 &&
-                clickEventColor[2] == 51 
-                ) {
+                clickEventColor[2] == 51
+            ) {
                 console.log('Drenthe')
                 this.selectedProvince = 'Drenthe'
             }
             if (clickEventColor[0] == 200 &&
                 clickEventColor[1] == 63 &&
-                clickEventColor[2] == 105 
-                ) {
+                clickEventColor[2] == 105
+            ) {
                 console.log('Groningen')
                 this.selectedProvince = 'Groningen'
             }
             if (clickEventColor[0] == 73 &&
                 clickEventColor[1] == 222 &&
-                clickEventColor[2] == 232 
-                ) {
+                clickEventColor[2] == 232
+            ) {
                 console.log('Friesland')
                 this.selectedProvince = 'Friesland'
             }
         });
+    }
+
+    public getClickedProvince():string{
+        return this.selectedProvince;
     }
 
     public clearArea(x: number, y: number, width: number, height: number) {
