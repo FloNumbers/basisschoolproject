@@ -14,6 +14,7 @@ class StartScreen {
     public draw() {
         this.canvas.writeTextToCanvas('Waar is deze geschiedenis?', 125, this.canvas.getWidth() / 2, this.canvas.getHeight() / 4.2, 'black', 'center', "Old English Text MT");
         this.canvas.writeButtonToCanvas("./assets/images/oldButton.png", this.canvas.getCenter().X - 125, this.canvas.getCenter().Y + 250, "Start", 35, this.canvas.getCenter().X, this.canvas.getCenter().Y + 340, "black", "center", "Old English Text MT");
+        this.canvas.writeImageToCanvas('./assets/images/emblem-with-a-wind-rose-old-compass-and-sailboat-vector-20874003.png', this.canvas.getWidth()/ 15, this.canvas.getHeight()/ 1.8, 350, 350)
         this.buttonPressed = false;
 
         document.getElementById("wereld").style.top = '25%'; 
@@ -26,10 +27,10 @@ class StartScreen {
         document.getElementById('name').style.width = '24%';
         document.getElementById('name').style.height = '8%';
 
-        document.getElementById('compass').style.top = '60%';
-        document.getElementById('compass').style.left = '6.5%';
-        document.getElementById('compass').style.width = '20%';
-        document.getElementById('compass').style.height = '40%';
+        // document.getElementById('compass').style.top = '60%';
+        // document.getElementById('compass').style.left = '6.5%';
+        // document.getElementById('compass').style.width = '20%';
+        // document.getElementById('compass').style.height = '40%';
 
         window.addEventListener("click", (event: MouseEvent) => {
             if (this.buttonPressed == false) {
