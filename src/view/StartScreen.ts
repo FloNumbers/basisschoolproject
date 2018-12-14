@@ -27,26 +27,21 @@ class StartScreen {
         document.getElementById('name').style.width = '24%';
         document.getElementById('name').style.height = '8%';
 
-        // document.getElementById('compass').style.top = '60%';
-        // document.getElementById('compass').style.left = '6.5%';
-        // document.getElementById('compass').style.width = '20%';
-        // document.getElementById('compass').style.height = '40%';
-
         window.addEventListener("click", (event: MouseEvent) => {
             if (this.buttonPressed == false) {
                 if (event.x > this.canvas.getCenter().X - 125 && event.x < this.canvas.getCenter().X + 125) {
                     if (event.y > this.canvas.getCenter().Y + 250 && event.y < this.canvas.getCenter().Y + 420) {
-                        let names = (<HTMLInputElement>document.getElementById('name')); 
 
-                        console.log(names.value);
+                        let names = (<HTMLInputElement>document.getElementById('name')); 
                         names.type = "hidden";  
+                        this.player.setName(names.value);
+                        console.log(names.value);
+
                         document.getElementById("wereld").setAttribute('style', 'hidden');
-                        // document.getElementById("compass").setAttribute('style', 'hidden');
                         this.canvas.clearScreen();
                         this.europeScreen.draw();
                         this.player.setName(names.value);
                         this.buttonPressed = true;
-
                     }
                 }
             }
