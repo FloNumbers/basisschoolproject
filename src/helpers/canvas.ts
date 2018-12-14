@@ -3,7 +3,64 @@ class Canvas {
     private ctx: CanvasRenderingContext2D;
     private selectedCountry: string = '';
     private selectedProvince: string;
-
+    private countries: Array<any> = [
+        { country: 'Nederland', red: 255, green: 106, blue: 0 },
+        { country: 'België', red: 140, green: 255, blue: 172 },
+        { country: 'Luxemburg', red: 255, green: 191, blue: 0 },
+        { country: 'Frankrijk', red: 20, green: 51, blue: 255 },
+        { country: 'Spanje', red: 255, green: 0, blue: 25 },
+        { country: 'Portugal', red: 255, green: 221, blue: 0 },
+        { country: 'Italië', red: 0, green: 255, blue: 59 },
+        { country: 'Zwitserland', red: 255, green: 40, blue: 115 },
+        { country: 'Duitsland', red: 81, green: 165, blue: 255 },
+        { country: 'Oostenrijk', red: 255, green: 151, blue: 25 },
+        { country: 'Polen', red: 210, green: 255, blue: 96 },
+        { country: 'Noorwegen', red: 255, green: 91, blue: 181 },
+        { country: 'Zweden', red: 255, green: 57, blue: 22 },
+        { country: 'Finland', red: 114, green: 255, blue: 198 },
+        { country: 'Estland', red: 163, green: 255, blue: 25 },
+        { country: 'Letland', red: 255, green: 169, blue: 40 },
+        { country: 'Litouwen', red: 178, green: 182, blue: 255 },
+        { country: 'Tsjechië', red: 255, green: 152, blue: 142 },
+        { country: 'Denemarken', red: 55, green: 0, blue: 255 },
+        { country: 'Engeland', red: 116, green: 89, blue: 255 },
+        { country: 'Ierland', red: 189, green: 84, blue: 255 },
+        { country: 'Noord-Ierland', red: 205, green: 178, blue: 255 },
+        { country: 'Ijsland', red: 137, green: 243, blue: 255 },
+        { country: 'Rusland', red: 255, green: 131, blue: 119 },
+        { country: 'Wit-Rusland', red: 124, green: 144, blue: 255 },
+        { country: 'Kaliningrad', red: 2, green: 255, blue: 255 },
+        { country: 'Oekraïne', red: 20, green: 255, blue: 196 },
+        { country: 'Moldavië', red: 231, green: 255, blue: 99 },
+        { country: 'Roemenië', red: 114, green: 112, blue: 255 },
+        { country: 'Slowakije', red: 255, green: 21, blue: 0 },
+        { country: 'Hongarije', red: 255, green: 0, blue: 255 },
+        { country: 'Kroatië', red: 48, green: 213, blue: 255 },
+        { country: 'Bosnië', red: 255, green: 181, blue: 215 },
+        { country: 'Servië', red: 193, green: 255, blue: 223 },
+        { country: 'Montenegro', red: 255, green: 94, blue: 110 },
+        { country: 'Slovenië', red: 229, green: 255, blue: 63 },
+        { country: 'Bulgarije', red: 255, green: 0, blue: 102 },
+        { country: 'Turkije', red: 206, green: 73, blue: 255 },
+        { country: 'Macedonië', red: 255, green: 196, blue: 248 },
+        { country: 'Albanië', red: 152, green: 114, blue: 255 },
+        { country: 'Griekenland', red: 255, green: 246, blue: 2 },
+        { country: 'Corsica', red: 255, green: 197, blue: 96 }
+    ]
+    private netherlandsProvince: Array<any> = [
+        {province:'Zeeland', red:0, green:102, blue:204},
+        {province:'Noord-Brabant', red:255, green:204, blue:0},
+        {province:'Limburg', red:183, green:75, blue:42},
+        {province:'Zuid-Holland', red:166, green:161, blue:20},
+        {province:'Noord-Holland', red:255, green:130, blue:9},
+        {province:'Flevoland', red:255, green:140, blue:167},
+        {province:'Utrecht', red:0, green:105, blue:120},
+        {province:'Gelderland', red:0, green:145, blue:215},
+        {province:'Overijssel', red:192, green:213, blue:0},
+        {province:'Drenthe', red:102, green:153, blue:51},
+        {province:'Groningen', red:200, green:63, blue:105},
+        {province:'Friesland', red:73, green:222, blue:232}
+    ]
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
@@ -92,257 +149,13 @@ class Canvas {
             let clickEventColor = this.ctx.getImageData(event.x, event.y, 1, 1).data
             // console.log(event.x, event.y)
             // console.log(this.ctx.getImageData(event.x, event.y, 1, 1).data)
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 106 &&
-                clickEventColor[2] == 0) {
-                console.log('Nederland')
-                this.selectedCountry = 'Nederland'
-            }
-            if (clickEventColor[0] == 140 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 172) {
-                console.log('België')
-                this.selectedCountry = 'België'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 191 &&
-                clickEventColor[2] == 0) {
-                console.log('Luxemburg')
-                this.selectedCountry = 'Luxemburg'
-            }
-            if (clickEventColor[0] == 20 &&
-                clickEventColor[1] == 51 &&
-                clickEventColor[2] == 255) {
-                console.log('Frankrijk')
-                this.selectedCountry = 'Frankrijk'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 0 &&
-                clickEventColor[2] == 25) {
-                console.log('Spanje')
-                this.selectedCountry = 'Spanje'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 221 &&
-                clickEventColor[2] == 0) {
-                console.log('Portugal')
-                this.selectedCountry = 'Portugal'
-            }
-            if (clickEventColor[0] == 0 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 59) {
-                console.log('Italië')
-                this.selectedCountry = 'Italië'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 40 &&
-                clickEventColor[2] == 115) {
-                console.log('Zwitserland')
-                this.selectedCountry = 'Zwitserland'
-            }
-            if (clickEventColor[0] == 81 &&
-                clickEventColor[1] == 165 &&
-                clickEventColor[2] == 255) {
-                console.log('Duitsland')
-                this.selectedCountry = 'Duitsland'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 151 &&
-                clickEventColor[2] == 25) {
-                console.log('Oostenrijk')
-                this.selectedCountry = 'Duitsland'
-            }
-            if (clickEventColor[0] == 210 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 96) {
-                console.log('Polen')
-                this.selectedCountry = 'Polen'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 91 &&
-                clickEventColor[2] == 181) {
-                console.log('Noorwegen')
-                this.selectedCountry = 'Noorwegen'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 57 &&
-                clickEventColor[2] == 22) {
-                console.log('Zweden')
-                this.selectedCountry = 'Zweden'
-            }
-            if (clickEventColor[0] == 114 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 198) {
-                console.log('Finland')
-                this.selectedCountry = 'Finland'
-            }
-            if (clickEventColor[0] == 163 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 25) {
-                console.log('Estland')
-                this.selectedCountry = 'Estland'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 169 &&
-                clickEventColor[2] == 40) {
-                console.log('Letland')
-                this.selectedCountry = 'Letland'
-            }
-            if (clickEventColor[0] == 178 &&
-                clickEventColor[1] == 182 &&
-                clickEventColor[2] == 255) {
-                console.log('Litouwen')
-                this.selectedCountry = 'Litouwen'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 152 &&
-                clickEventColor[2] == 142) {
-                console.log('Tsjechië')
-                this.selectedCountry = 'Tsjechië'
-            }
-            if (clickEventColor[0] == 55 &&
-                clickEventColor[1] == 0 &&
-                clickEventColor[2] == 255) {
-                console.log('Denemarken')
-                this.selectedCountry = 'Denemarken'
-            }
-            if (clickEventColor[0] == 116 &&
-                clickEventColor[1] == 89 &&
-                clickEventColor[2] == 255) {
-                console.log('Engeland')
-                this.selectedCountry = 'Engeland'
-            }
-            if (clickEventColor[0] == 189 &&
-                clickEventColor[1] == 84 &&
-                clickEventColor[2] == 255) {
-                console.log('Ierland')
-                this.selectedCountry = 'Ierland'
-            }
-            if (clickEventColor[0] == 205 &&
-                clickEventColor[1] == 178 &&
-                clickEventColor[2] == 255) {
-                console.log('Noord-Ierland')
-                this.selectedCountry = 'Noord-Ierland'
-            }
-            if (clickEventColor[0] == 137 &&
-                clickEventColor[1] == 243 &&
-                clickEventColor[2] == 255) {
-                console.log('Ijsland')
-                this.selectedCountry = 'Ijsland'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 131 &&
-                clickEventColor[2] == 119) {
-                console.log('Rusland')
-                this.selectedCountry = 'Rusland'
-            }
-            if (clickEventColor[0] == 124 &&
-                clickEventColor[1] == 144 &&
-                clickEventColor[2] == 255) {
-                console.log('Wit-Rusland')
-                this.selectedCountry = 'Wit-Rusland'
-            }
-            if (clickEventColor[0] == 2 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 255) {
-                console.log('Kaliningrad')
-                this.selectedCountry = 'Kaliningrad'
-            }
-            if (clickEventColor[0] == 20 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 196) {
-                console.log('Oekraïne')
-                this.selectedCountry = 'Oekraïne'
-            }
-            if (clickEventColor[0] == 231 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 99) {
-                console.log('Moldavië')
-                this.selectedCountry = 'Moldavië'
-            }
-            if (clickEventColor[0] == 114 &&
-                clickEventColor[1] == 112 &&
-                clickEventColor[2] == 255) {
-                console.log('Roemenië')
-                this.selectedCountry = 'Roemenië'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 21 &&
-                clickEventColor[2] == 0) {
-                console.log('Slowakije')
-                this.selectedCountry = 'Slowakije'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 0 &&
-                clickEventColor[2] == 255) {
-                console.log('Hongarije')
-                this.selectedCountry = 'Hongarije'
-            }
-            if (clickEventColor[0] == 48 &&
-                clickEventColor[1] == 213 &&
-                clickEventColor[2] == 255) {
-                console.log('Kroatië')
-                this.selectedCountry = 'Kroatië'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 181 &&
-                clickEventColor[2] == 215) {
-                console.log('Bosnië')
-                this.selectedCountry = 'Bosnië'
-            }
-            if (clickEventColor[0] == 193 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 223) {
-                console.log('Servië')
-                this.selectedCountry = 'Servië'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 94 &&
-                clickEventColor[2] == 110) {
-                console.log('Montenegro')
-                this.selectedCountry = 'Montenegro'
-            }
-            if (clickEventColor[0] == 229 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 63) {
-                console.log('Slovenië')
-                this.selectedCountry = 'Slovenië'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 0 &&
-                clickEventColor[2] == 102) {
-                console.log('Bulgarije')
-                this.selectedCountry = 'Bulgarije'
-            }
-            if (clickEventColor[0] == 206 &&
-                clickEventColor[1] == 73 &&
-                clickEventColor[2] == 255) {
-                console.log('Turkije')
-                this.selectedCountry = 'Turkije'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 196 &&
-                clickEventColor[2] == 248) {
-                console.log('Macedonië')
-                this.selectedCountry = 'Macedonië'
-            }
-            if (clickEventColor[0] == 152 &&
-                clickEventColor[1] == 114 &&
-                clickEventColor[2] == 255) {
-                console.log('Albanië')
-                this.selectedCountry = 'Albanië'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 246 &&
-                clickEventColor[2] == 2) {
-                console.log('Griekenland')
-                this.selectedCountry = 'Griekenland'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 197 &&
-                clickEventColor[2] == 96) {
-                console.log('Corsica')
-                this.selectedCountry = 'Corsica'
+            for (let index = 0; index < this.countries.length; index++) {
+                if (clickEventColor[0] == this.countries[index].red &&
+                    clickEventColor[1] == this.countries[index].green &&
+                    clickEventColor[2] == this.countries[index].blue) {
+                    console.log(this.countries[index].country)
+                    this.selectedCountry = this.countries[index].country
+                }
             }
             if (this.selectedCountry !== '') {
                 this.clearArea(this.getCenter().X, 150, 450, 400)
@@ -370,89 +183,13 @@ class Canvas {
             let clickEventColor = this.ctx.getImageData(event.x, event.y, 1, 1).data
             // console.log(event.x, event.y)
             // console.log(this.ctx.getImageData(event.x, event.y, 1, 1).data)
-            if (clickEventColor[0] == 0 &&
-                clickEventColor[1] == 102 &&
-                clickEventColor[2] == 204
-            ) {
-                console.log('Zeeland')
-                this.selectedProvince = 'Zeeland'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 204 &&
-                clickEventColor[2] == 0
-            ) {
-                console.log('Noord-Brabant')
-                this.selectedProvince = 'Noord-Brabant'
-            }
-            if (clickEventColor[0] == 183 &&
-                clickEventColor[1] == 75 &&
-                clickEventColor[2] == 42
-            ) {
-                console.log('Limburg')
-                this.selectedProvince = 'Limburg'
-            }
-            if (clickEventColor[0] == 166 &&
-                clickEventColor[1] == 161 &&
-                clickEventColor[2] == 20
-            ) {
-                console.log('Zuid-Holland')
-                this.selectedProvince = 'Zuid-Holland'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 130 &&
-                clickEventColor[2] == 9
-            ) {
-                console.log('Noord-Holland')
-                this.selectedProvince = 'Noord-Holland'
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 140 &&
-                clickEventColor[2] == 167
-            ) {
-                console.log('Flevoland')
-                this.selectedProvince = 'Flevoland'
-            }
-            if (clickEventColor[0] == 0 &&
-                clickEventColor[1] == 105 &&
-                clickEventColor[2] == 120
-            ) {
-                console.log('Utrecht')
-                this.selectedProvince = 'Utrecht'
-            }
-            if (clickEventColor[0] == 0 &&
-                clickEventColor[1] == 145 &&
-                clickEventColor[2] == 215
-            ) {
-                console.log('Gelderland')
-                this.selectedProvince = 'Gelderland'
-            }
-            if (clickEventColor[0] == 192 &&
-                clickEventColor[1] == 213 &&
-                clickEventColor[2] == 0
-            ) {
-                console.log('Overijsel')
-                this.selectedProvince = 'Overijsel'
-            }
-            if (clickEventColor[0] == 102 &&
-                clickEventColor[1] == 153 &&
-                clickEventColor[2] == 51
-            ) {
-                console.log('Drenthe')
-                this.selectedProvince = 'Drenthe'
-            }
-            if (clickEventColor[0] == 200 &&
-                clickEventColor[1] == 63 &&
-                clickEventColor[2] == 105
-            ) {
-                console.log('Groningen')
-                this.selectedProvince = 'Groningen'
-            }
-            if (clickEventColor[0] == 73 &&
-                clickEventColor[1] == 222 &&
-                clickEventColor[2] == 232
-            ) {
-                console.log('Friesland')
-                this.selectedProvince = 'Friesland'
+            for (let index = 0; index < this.netherlandsProvince.length; index++) {
+                if (clickEventColor[0] == this.netherlandsProvince[index].red &&
+                    clickEventColor[1] == this.netherlandsProvince[index].green &&
+                    clickEventColor[2] == this.netherlandsProvince[index].blue) {
+                    console.log(this.netherlandsProvince[index].province)
+                    this.selectedProvince = this.netherlandsProvince[index].province
+                }
             }
             if (this.getSelectedProvince() == answer) {
                 alert("GOED");
