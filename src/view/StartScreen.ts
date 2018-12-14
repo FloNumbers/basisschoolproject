@@ -16,14 +16,20 @@ class StartScreen {
         this.canvas.writeButtonToCanvas("./assets/images/oldButton.png", this.canvas.getCenter().X - 125, this.canvas.getCenter().Y + 250, "Start", 35, this.canvas.getCenter().X, this.canvas.getCenter().Y + 340, "black", "center", "Old English Text MT");
         this.buttonPressed = false;
 
-        document.getElementById("wereld").style.top = '25%'; /* DIT DOEN VOOR PLAATSING */
-        document.getElementById('wereld').style.left = '40.6%';
+        document.getElementById("wereld").style.top = '25%'; 
+        document.getElementById('wereld').style.left = '40%';
+        document.getElementById('wereld').style.width = '20%';
+        document.getElementById('wereld').style.height = '40%';
 
         document.getElementById('name').style.top = '65%';
-        document.getElementById('name').style.left = '40.2%';
+        document.getElementById('name').style.left = '38%';
+        document.getElementById('name').style.width = '24%';
+        document.getElementById('name').style.height = '8%';
 
         document.getElementById('compass').style.top = '60%';
         document.getElementById('compass').style.left = '6.5%';
+        document.getElementById('compass').style.width = '20%';
+        document.getElementById('compass').style.height = '40%';
 
         window.addEventListener("click", (event: MouseEvent) => {
             if (this.buttonPressed == false) {
