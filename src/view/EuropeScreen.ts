@@ -29,8 +29,8 @@ class EuropeScreen extends Mapview {
     private clickCountry() {
         window.addEventListener("click", (event: MouseEvent) => {
             if (this.buttonPressed == false) {
-                if (event.x > this.canvas.getCenter().X + 100 && event.x < (this.canvas.getCenter().X + 100) + 222) {
-                    if (event.y > this.canvas.getCenter().Y + 100 && event.y < this.canvas.getCenter().Y + 139) {
+                if (event.x > this.canvas.getCenter().X + 85 && event.x < (this.canvas.getCenter().X + 85) + 250) {
+                    if (event.y > this.canvas.getCenter().Y + 45 && event.y < this.canvas.getCenter().Y + 215) {
                         if (this.canvas.getSelectedCountry() == 'Nederland') {
                             this.buttonPressed = true;
                             this.canvas.resetSelectedCountry()

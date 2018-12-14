@@ -348,7 +348,7 @@ class Canvas {
                 this.clearArea(this.getCenter().X, 150, 450, 400)
                 this.writeTextToCanvas(this.selectedCountry, 35, this.getCenter().X + 211, 200, "black", "center", "Old English Text MT")
                 if (this.selectedCountry == 'Nederland') {
-                    this.writeCountryButton("./assets/images/buttonYellow.png", this.getCenter().X + 100, this.getCenter().Y + 100, "Start", 35, this.getCenter().X + 211, this.getCenter().Y + 130, "black", "center", "Old English Text MT");
+                    this.writeCountryButton("./assets/images/oldButton.png", this.getCenter().X + 85, this.getCenter().Y + 45, "Start", 35, this.getCenter().X + 211, this.getCenter().Y + 130, "black", "center", "Old English Text MT");
                 }
             }
         });
@@ -456,6 +456,7 @@ class Canvas {
             }
             if (this.getSelectedProvince() == answer) {
                 alert("GOED");
+                this.resetSelectedProvince();
             }
         });
     }
