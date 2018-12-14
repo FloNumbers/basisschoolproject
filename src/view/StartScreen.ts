@@ -41,7 +41,7 @@ class StartScreen {
                         console.log(names.value);
                         names.type = "hidden";  
                         document.getElementById("wereld").setAttribute('style', 'hidden');
-                        document.getElementById("compass").setAttribute('style', 'hidden');
+                        // document.getElementById("compass").setAttribute('style', 'hidden');
                         this.canvas.clearScreen();
                         this.europeScreen.draw();
                         this.player.setName(names.value);
