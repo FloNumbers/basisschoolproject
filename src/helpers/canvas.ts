@@ -25,7 +25,9 @@ class Canvas {
         this.ctx.textAlign = alignment;
         this.ctx.fillText(text, xCoordinate, yCoordinate);
     }
-
+    public returnCtx() {
+        return this.ctx;
+    }
     /**
  * Function to write the image to the canvas
  * @param {string} src 
@@ -343,23 +345,28 @@ class Canvas {
                 this.selectedCountry = 'Corsica'
             }
             if (this.selectedCountry !== '') {
-                this.clearArea(800, 100, 400, 300)
-                this.writeTextToCanvas(this.selectedCountry, 30, 1000, 200, 'black', 'center', 'Old English Text MT')
+                this.clearArea(this.getCenter().X, 150, 450, 400)
+                this.writeTextToCanvas(this.selectedCountry, 35, this.getCenter().X + 211, 200, "black", "center", "Old English Text MT")
+                if (this.selectedCountry == 'Nederland') {
+                    this.writeCountryButton("./assets/images/buttonYellow.png", this.getCenter().X + 100, this.getCenter().Y + 100, "Start", 35, this.getCenter().X + 211, this.getCenter().Y + 130, "black", "center", "Old English Text MT");
+                }
             }
         });
     }
     public getSelectedCountry() {
         if (this.selectedCountry !== '') {
             return this.selectedCountry
-        } else {return null}
+        } else { return null }
     }
 
     public resetSelectedCountry() {
         this.selectedCountry = ''
     }
 
-    public colorClickNederland() {
+    public colorClickNederland(question:string, answer:string) {
         this.canvas.addEventListener("click", (event: MouseEvent) => {
+            let antwoord = "Noord-Brabant";
+
             let clickEventColor = this.ctx.getImageData(event.x, event.y, 1, 1).data
             // console.log(event.x, event.y)
             // console.log(this.ctx.getImageData(event.x, event.y, 1, 1).data)
@@ -447,14 +454,30 @@ class Canvas {
                 console.log('Friesland')
                 this.selectedProvince = 'Friesland'
             }
+            if (this.getSelectedProvince() == answer) {
+                alert("GOED");
+            }
         });
     }
 
-    public getClickedProvince():string{
+    public getSelectedProvince(): string {
         return this.selectedProvince;
+    }
+    public resetSelectedProvince() {
+        this.selectedProvince = ''
     }
 
     public clearArea(x: number, y: number, width: number, height: number) {
         this.ctx.clearRect(x, y, width, height)
+
+
+    }
+    public writeCountryButton(imageSource: string, imageX: number, imageY: number, imageText: string, imageTextSize: number, imageTextX: number, imageTextY: number, imageTextColor: string, imageTextAlignment: CanvasTextAlign, imageTextFont: string) {
+        let buttonElement = document.createElement("img");
+        buttonElement.src = imageSource;
+
+        this.ctx.drawImage(buttonElement, imageX, imageY);
+        this.writeTextToCanvas(imageText, imageTextSize, imageTextX, imageTextY, imageTextColor, imageTextAlignment, imageTextFont);
+
     }
 }
