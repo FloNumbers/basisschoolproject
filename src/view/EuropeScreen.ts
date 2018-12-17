@@ -1,7 +1,6 @@
 class EuropeScreen extends Mapview {
 
     private europeMap: HTMLImageElement
-    private countryScreen: CountryScreen;
     private buttonPressed: boolean;
 
     constructor(canvas: HTMLCanvasElement) {
@@ -9,7 +8,6 @@ class EuropeScreen extends Mapview {
         this.canvas.colorClick()
         this.europeMap = new Image()
         this.europeMap.src = './assets/images/mapEurope.png'
-        this.countryScreen = new CountryScreen(canvas);
         this.clickCountry()
     }
 
@@ -34,8 +32,7 @@ class EuropeScreen extends Mapview {
                         if (this.canvas.getSelectedCountry() == 'Nederland') {
                             this.buttonPressed = true;
                             this.canvas.resetSelectedCountry()
-                            this.canvas.clearScreen();
-                            this.countryScreen.draw()
+                            ScreenSwitch.draw('countryScreen')
                         }
                     }
                 }

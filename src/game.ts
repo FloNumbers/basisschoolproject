@@ -1,17 +1,16 @@
 class Game {
-    private canvas:Canvas;
-    private mathHelper:MathHelper;
-    private question:Question;
-    private player:Player;
-    private highscore:Highscore;
-    private introText:IntroText;
-    private startScreen:StartScreen;
-    private europeScreen:EuropeScreen;
-    private countryScreen:CountryScreen;
-    private shopScreen:ShopScreen;
+    private canvas: Canvas;
+    private mathHelper: MathHelper;
+    private question: Question;
+    private player: Player;
+    private highscore: Highscore;
+    private introText: IntroText;
+    private startScreen: StartScreen;
+    private europeScreen: EuropeScreen;
+    private countryScreen: CountryScreen;
+    private shopScreen: ShopScreen;
 
-
-    constructor(canvas:HTMLCanvasElement){
+    constructor(canvas: HTMLCanvasElement) {
         const canvasElement: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("canvas")
         this.canvas = new Canvas(canvasElement);
         this.mathHelper = new MathHelper;
@@ -19,16 +18,18 @@ class Game {
         this.player = new Player;
         this.highscore = new Highscore;
         this.introText = new IntroText;
-        this.startScreen = new StartScreen;
-        this.europeScreen = new EuropeScreen(canvas);
-        this.countryScreen = new CountryScreen(canvas);
-        this.shopScreen = new ShopScreen;
+        ScreenSwitch.makeScreens(canvas)
+        // this.startScreen = new StartScreen;
+        // this.europeScreen = new EuropeScreen(canvas);
+        // this.countryScreen = new CountryScreen(canvas);
+        // this.shopScreen = new ShopScreen;
     }
-     public draw(){
-        this.startScreen.draw();
+    public draw() {
+        // this.startScreen.draw();
         // this.europeScreen.draw();
-            // this.countryScreen.draw();
+        // this.countryScreen.draw();  
         // this.shopScreen.draw();
+        ScreenSwitch.draw('startScreen')
     }
     public gameLoop() {
         this.draw();
