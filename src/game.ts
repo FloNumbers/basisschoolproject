@@ -19,6 +19,7 @@ class Game {
         this.highscore = new Highscore;
         this.introText = new IntroText;
         ScreenSwitch.makeScreens(canvas)
+        PlayerHandler.makePlayer()
         // this.startScreen = new StartScreen;
         // this.europeScreen = new EuropeScreen(canvas);
         // this.countryScreen = new CountryScreen(canvas);

@@ -11,7 +11,6 @@ namespace ScreenSwitch {
     export function draw(currentScreen: string) {
         this.canvas.clearScreen()
         if (currentScreen == 'startScreen') {
-            console.log('check')
             this.startScreen.draw();
         }
         if (currentScreen == 'europeScreen') {
@@ -23,6 +22,5 @@ namespace ScreenSwitch {
         if (currentScreen == 'shopScreen') {
             this.shopScreen.draw();
         }
-        console.log(currentScreen)
     }
 }
