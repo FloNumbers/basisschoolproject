@@ -2,11 +2,13 @@ class ShopScreen {
     private canvas: Canvas;
     private player: Player;
     public hints: number = 0;
+    private listeners: Array<(event: MouseEvent) => void>;
 
     constructor() {
         const canvasElement: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('canvas');
         this.canvas = new Canvas(canvasElement)
         this.player = new Player()
+        this.listeners = [];
     }
     public draw() {
         this.canvas.writeTextToCanvas('Winkel', 150, this.canvas.getCenter().X, this.canvas.getCenter().Y - 260, "black", "center", "Old English Text MT")
@@ -17,6 +19,8 @@ class ShopScreen {
         this.drawShopBoxes(200, -25)
         this.canvas.writeTextToCanvas('Music :', 100, this.canvas.getCenter().X - 410, this.canvas.getCenter().Y + 300, "black", "center", "Old English Text MT")
         this.drawShopBoxes(200, -225)
+        this.canvas.writeButtonToCanvas("./assets/images/oldButton.png", this.canvas.getCenter().X + 325, this.canvas.getCenter().Y + 175, "terug", 35, this.canvas.getCenter().X + 450, this.canvas.getCenter().Y + 260, "black", "center", "Old English Text MT");
+        this.shopOutHandler()
 
     }
 
@@ -24,13 +28,15 @@ class ShopScreen {
         for (let index = 0; index < 3; index++) {
             this.canvas.drawShopBox(this.canvas.getCenter().X - xBox + (index * 130), this.canvas.getCenter().Y - yBox)
             this.canvas.writeTextToCanvas("Koop", 50, this.canvas.getCenter().X - xBox + 50 + (index * 130), this.canvas.getCenter().Y - yBox - 20, "black", "center", "Old English Text MT")
-            window.addEventListener("click", (event: MouseEvent) => {
+            let listenerShopBoxesCheckMark = (event: MouseEvent) => {
                 if (event.x > this.canvas.getCenter().X - xBox + (index * 130) && event.x < this.canvas.getCenter().X - xBox + 100 + (index * 130)) {
                     if (event.y > this.canvas.getCenter().Y - yBox && event.y < this.canvas.getCenter().Y - yBox + 100) {
                         this.canvas.writeImageToCanvas("assets/images/checkmark.png", this.canvas.getCenter().X - xBox + (index * 130), this.canvas.getCenter().Y - yBox, 100, 100)
                     }
                 }
-            })
+            }
+            this.listeners.push(listenerShopBoxesCheckMark)
+            window.addEventListener('click', listenerShopBoxesCheckMark)
         }
     }
 
@@ -39,7 +45,7 @@ class ShopScreen {
         for (let index = 0; index < 3; index++) {
             this.canvas.writeTextToCanvas(`You have ${this.hints} hints`, 50, this.canvas.getCenter().X + 450, this.canvas.getCenter().Y - 100, "black", "center", "Old English Text MT")
             this.canvas.writeTextToCanvas(`${this.player.getScore()} points`, 50, this.canvas.getCenter().X - 410, this.canvas.getCenter().Y - 250, "black", "center", "Old English Text MT")
-            window.addEventListener("click", (event: MouseEvent) => {
+            let listenerHintShop = (event: MouseEvent) => {
                 if (event.x > this.canvas.getCenter().X - xBox + (index * 130) && event.x < this.canvas.getCenter().X - xBox + 100 + (index * 130)) {
                     if (event.y > this.canvas.getCenter().Y - yBox && event.y < this.canvas.getCenter().Y - yBox + 100) {
                         if (this.player.getScore() >= 10) {
@@ -55,8 +61,27 @@ class ShopScreen {
                         }
                     }
                 }
-            })
+            }
+            this.listeners.push(listenerHintShop)
+            window.addEventListener('click', listenerHintShop)
 
         }
+    }
+    private removeShopButtons() {
+        this.listeners.forEach(e =>{
+            window.removeEventListener('click', e);
+        });
+    }
+ 
+    public shopOutHandler() {
+        window.addEventListener("click", (event: MouseEvent) => {
+            if (event.x > this.canvas.getCenter().X + 325 && event.x < this.canvas.getCenter().X + 575) {
+                if (event.y > this.canvas.getCenter().Y + 200 && event.y < this.canvas.getCenter().Y + 370) {
+                    ScreenSwitch.draw('countryScreen')
+                    this.removeShopButtons()
+                }
+            }
+        }
+        )
     }
 } 
