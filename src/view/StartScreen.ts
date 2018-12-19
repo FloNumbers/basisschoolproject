@@ -7,7 +7,6 @@ class StartScreen {
     constructor() {
         const canvasElement: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('canvas');
         this.canvas = new Canvas(canvasElement);
-        this.europeScreen = new EuropeScreen(canvasElement);
         this.player = new Player();
     }
 
@@ -39,7 +38,7 @@ class StartScreen {
 
                         document.getElementById("wereld").setAttribute('style', 'hidden');
                         this.canvas.clearScreen();
-                        this.europeScreen.draw();
+                        ScreenSwitch.draw('europeScreen')
                         this.player.setName(names.value);
                         this.buttonPressed = true;
                     }
