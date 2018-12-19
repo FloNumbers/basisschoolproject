@@ -3,6 +3,8 @@ class Canvas {
     private ctx: CanvasRenderingContext2D;
     private selectedCountry: string = '';
     private selectedProvince: string;
+    private questionNumber:number = 0;
+    private question:Question;
     private countries: Array<any> = [
         { country: 'Nederland', red: 255, green: 106, blue: 0 },
         { country: 'België', red: 140, green: 255, blue: 172 },
@@ -64,6 +66,7 @@ class Canvas {
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
+        this.question = new Question;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.ctx = this.canvas.getContext("2d");
@@ -149,6 +152,7 @@ class Canvas {
             let clickEventColor = this.ctx.getImageData(event.x, event.y, 1, 1).data
             // console.log(event.x, event.y)
             // console.log(this.ctx.getImageData(event.x, event.y, 1, 1).data)
+            
             for (let index = 0; index < this.countries.length; index++) {
                 if (clickEventColor[0] == this.countries[index].red &&
                     clickEventColor[1] == this.countries[index].green &&
@@ -178,8 +182,8 @@ class Canvas {
 
     public colorClickNederland(question:string, answer:string) {
         this.canvas.addEventListener("click", (event: MouseEvent) => {
-            let antwoord = "Noord-Brabant";
-
+            
+            
             let clickEventColor = this.ctx.getImageData(event.x, event.y, 1, 1).data
             // console.log(event.x, event.y)
             // console.log(this.ctx.getImageData(event.x, event.y, 1, 1).data)
@@ -190,12 +194,34 @@ class Canvas {
                     console.log(this.netherlandsProvince[index].province)
                     this.selectedProvince = this.netherlandsProvince[index].province
                 }
-            }
-            if (this.getSelectedProvince() == answer) {
-                alert("GOED");
-                this.resetSelectedProvince();
-            }
-        });
+
+                
+                    if (this.getSelectedProvince() === this.question.getQuestion(this.questionNumber).answer) {
+                        alert("GOED");
+                        this.questionNumber++
+                        if (this.questionNumber > 6){
+                            this.clearArea(this.getWidth()/1.9, 0,this.getWidth()/2 , this.getHeight()/1.8);
+                            this.writeTextToCanvas(`Je hebt alle vragen goed beantwoord!!`, 40, this.getWidth() / 1.35, this.getHeight() / 2.8, 'black', 'center', 'Pristina')
+                        }
+                        else{
+                        this.resetSelectedProvince();
+                        this.clearArea(this.getWidth()/1.9, 0,this.getWidth()/2 , this.getHeight()/1.8);
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.7, 'black', 'center', 'Pristina')
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion2}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.2, 'black', 'center', 'Pristina')
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion3}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.8, 'black', 'center', 'Pristina')
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion4}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.5, 'black', 'center', 'Pristina')
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion5}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.2, 'black', 'center', 'Pristina')
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).question}`, 30, this.getWidth() / 1.35, this.getHeight() / 1.9, 'black', 'center', 'Pristina')
+                        }
+                        
+
+                }
+                // else if(this.getSelectedProvince() !== this.question.getQuestion(this.questionNumber).answer){
+                //     alert('helaas probeer het nog eens');
+                // }
+            
+        }
+    });
     }
 
     public getSelectedProvince(): string {
@@ -216,6 +242,8 @@ class Canvas {
 
         this.ctx.drawImage(buttonElement, imageX, imageY);
         this.writeTextToCanvas(imageText, imageTextSize, imageTextX, imageTextY, imageTextColor, imageTextAlignment, imageTextFont);
-
+    }
+    public getquestionNumber():number{
+        return this.questionNumber;
     }
 }
