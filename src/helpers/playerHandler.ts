@@ -8,12 +8,12 @@ namespace PlayerHandler {
         this.player.name = name
     }
 
-    export function getScore() {
-        this.player.score
+    export function getScore(): number {
+        return this.player.score
     }
 
-    export function getName() {
-        this.player.name
+    export function getName(): string {
+        return this.player.name
     }
 
     export function scoreMinus(minusAmount: number) {
