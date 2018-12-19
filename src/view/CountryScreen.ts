@@ -1,10 +1,11 @@
 class CountryScreen extends Mapview {
     private questionImage: HTMLImageElement;
     private shopButton: HTMLImageElement;
-    private shopScreen: ShopScreen;
     private question: Question;
     private selectedProvince: string;
     private player: Player;
+    private listeners: Array<(event: MouseEvent) => void>;
+
     constructor(canvas: HTMLCanvasElement) {
 
         super(canvas);
@@ -12,9 +13,9 @@ class CountryScreen extends Mapview {
         this.shopButton = new Image();
         this.shopButton.src = "./assets/images/oldButton.png"
         this.questionImage.src = "./assets/images/questionpaper.png"
-        this.shopScreen = new ShopScreen;
         this.question = new Question();
         this.player = new Player();
+        this.listeners = [];
 
     }
 
@@ -33,15 +34,24 @@ class CountryScreen extends Mapview {
         this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).introToQuestion5}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 2.2, 'black', 'center', 'Pristina')
         this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).question}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 1.9, 'black', 'center', 'Pristina')
 
-        window.addEventListener("click", (event: MouseEvent) => {
+        let listenerToShop = (event: MouseEvent) => {
             if (event.x > this.canvas.getWidth() / 1.4 && event.x < this.canvas.getWidth() / 1.4 + this.shopButton.width) {
                 if (event.y > this.canvas.getHeight() / 1.3 && event.y < this.canvas.getHeight() / 1.4 + this.shopButton.height) {
-                    this.canvas.clearScreen();
-                    this.shopScreen.draw();
+                    ScreenSwitch.draw('shopScreen')
+                    this.removeButtons()
                     //hier functie voor de pagina.
                 }
             }
-        });
+        }
+        this.listeners.push(listenerToShop)
+        window.addEventListener('click', listenerToShop)
 
     }
+
+    private removeButtons() {
+        this.listeners.forEach(e =>{
+            window.removeEventListener('click', e);
+        });
+    }
+
 }

@@ -11,6 +11,7 @@ class ShopScreen {
         this.listeners = [];
     }
     public draw() {
+        console.log('test')
         this.canvas.writeTextToCanvas('Winkel', 150, this.canvas.getCenter().X, this.canvas.getCenter().Y - 260, "black", "center", "Old English Text MT")
         this.canvas.writeTextToCanvas('Hints :', 100, this.canvas.getCenter().X - 399, this.canvas.getCenter().Y - 100, "black", 'center', "Old English Text MT")
         this.drawShopBoxes(200, 175)
@@ -67,21 +68,22 @@ class ShopScreen {
 
         }
     }
-    private removeShopButtons() {
+    private removeButtons() {
         this.listeners.forEach(e =>{
             window.removeEventListener('click', e);
         });
     }
  
     public shopOutHandler() {
-        window.addEventListener("click", (event: MouseEvent) => {
+        let shopOutListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X + 325 && event.x < this.canvas.getCenter().X + 575) {
                 if (event.y > this.canvas.getCenter().Y + 200 && event.y < this.canvas.getCenter().Y + 370) {
+                    this.removeButtons()
                     ScreenSwitch.draw('countryScreen')
-                    this.removeShopButtons()
                 }
             }
         }
-        )
+        this.listeners.push(shopOutListener)
+        window.addEventListener('click', shopOutListener)
     }
 } 

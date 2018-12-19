@@ -47,9 +47,6 @@ class Player {
     setName(name) {
         this.name = name;
     }
-    getName() {
-        return this.name;
-    }
 }
 class Question {
     constructor() {
@@ -123,11 +120,6 @@ class Question {
         return { introToQuestion: quiz[index].introToQuestion, introToQuestion2: quiz[index].introToQuestion2, introToQuestion3: quiz[index].introToQuestion3, introToQuestion4: quiz[index].introToQuestion4, introToQuestion5: quiz[index].introToQuestion5, question: quiz[index].question, answer: quiz[index].answer, };
     }
 }
-class MathHelper {
-    randomNumber(min, max) {
-        return Math.round(Math.random() * (max - min) + min);
-    }
-}
 var ScreenSwitch;
 (function (ScreenSwitch) {
     function makeScreens(canvas) {
@@ -159,476 +151,6 @@ class Canvas {
     constructor(canvas) {
         this.selectedCountry = '';
         this.questionNumber = 0;
-        this.canvas = canvas;
-        this.question = new Question;
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-        this.ctx = this.canvas.getContext("2d");
-    }
-    writeTextToCanvas(text, fontSize, xCoordinate, yCoordinate, color = "white", alignment = "center", font) {
-        this.ctx.font = `${fontSize}px ${font}`;
-        this.ctx.fillStyle = color;
-        this.ctx.textAlign = alignment;
-        this.ctx.fillText(text, xCoordinate, yCoordinate);
-    }
-    returnCtx() {
-        return this.ctx;
-    }
-    writeImageToCanvas(src, xCoordinate, yCoordinate, width, height) {
-        const image = new Image();
-        image.src = src;
-        image.onload = () => {
-            this.ctx.drawImage(image, xCoordinate, yCoordinate, width, height);
-        };
-    }
-    getWidth() {
-        return this.canvas.width;
-    }
-    getHeight() {
-        return this.canvas.height;
-    }
-    getCenter() {
-        return { X: this.getWidth() / 2, Y: this.getHeight() / 2 };
-    }
-    clearScreen() {
-        this.ctx.clearRect(0, 0, this.getWidth(), this.getHeight());
-    }
-    writeButtonToCanvas(imageSource, imageX, imageY, imageText, imageTextSize, imageTextX, imageTextY, imageTextColor, imageTextAlignment, imageTextFont) {
-        let buttonElement = document.createElement("img");
-        buttonElement.src = imageSource;
-        buttonElement.addEventListener("load", () => {
-            this.ctx.drawImage(buttonElement, imageX, imageY);
-            this.writeTextToCanvas(imageText, imageTextSize, imageTextX, imageTextY, imageTextColor, imageTextAlignment, imageTextFont);
-        });
-    }
-    drawShopBox(x, y) {
-        this.ctx.fillRect(x, y, 100, 100);
-        this.ctx.stroke();
-        this.ctx.clearRect(x + 10, y + 10, 80, 80);
-        this.ctx.stroke();
-    }
-    writeImageToCanvasPreload(image, xCoordinate, yCoordinate, width, height) {
-        this.ctx.drawImage(image, xCoordinate, yCoordinate, width, height);
-    }
-    colorClick() {
-        this.canvas.addEventListener("click", (event) => {
-            let clickEventColor = this.ctx.getImageData(event.x, event.y, 1, 1).data;
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 106 &&
-                clickEventColor[2] == 0) {
-                console.log('Nederland');
-                this.selectedCountry = 'Nederland';
-            }
-            if (clickEventColor[0] == 140 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 172) {
-                console.log('België');
-                this.selectedCountry = 'België';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 191 &&
-                clickEventColor[2] == 0) {
-                console.log('Luxemburg');
-                this.selectedCountry = 'Luxemburg';
-            }
-            if (clickEventColor[0] == 20 &&
-                clickEventColor[1] == 51 &&
-                clickEventColor[2] == 255) {
-                console.log('Frankrijk');
-                this.selectedCountry = 'Frankrijk';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 0 &&
-                clickEventColor[2] == 25) {
-                console.log('Spanje');
-                this.selectedCountry = 'Spanje';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 221 &&
-                clickEventColor[2] == 0) {
-                console.log('Portugal');
-                this.selectedCountry = 'Portugal';
-            }
-            if (clickEventColor[0] == 0 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 59) {
-                console.log('Italië');
-                this.selectedCountry = 'Italië';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 40 &&
-                clickEventColor[2] == 115) {
-                console.log('Zwitserland');
-                this.selectedCountry = 'Zwitserland';
-            }
-            if (clickEventColor[0] == 81 &&
-                clickEventColor[1] == 165 &&
-                clickEventColor[2] == 255) {
-                console.log('Duitsland');
-                this.selectedCountry = 'Duitsland';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 151 &&
-                clickEventColor[2] == 25) {
-                console.log('Oostenrijk');
-                this.selectedCountry = 'Duitsland';
-            }
-            if (clickEventColor[0] == 210 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 96) {
-                console.log('Polen');
-                this.selectedCountry = 'Polen';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 91 &&
-                clickEventColor[2] == 181) {
-                console.log('Noorwegen');
-                this.selectedCountry = 'Noorwegen';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 57 &&
-                clickEventColor[2] == 22) {
-                console.log('Zweden');
-                this.selectedCountry = 'Zweden';
-            }
-            if (clickEventColor[0] == 114 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 198) {
-                console.log('Finland');
-                this.selectedCountry = 'Finland';
-            }
-            if (clickEventColor[0] == 163 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 25) {
-                console.log('Estland');
-                this.selectedCountry = 'Estland';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 169 &&
-                clickEventColor[2] == 40) {
-                console.log('Letland');
-                this.selectedCountry = 'Letland';
-            }
-            if (clickEventColor[0] == 178 &&
-                clickEventColor[1] == 182 &&
-                clickEventColor[2] == 255) {
-                console.log('Litouwen');
-                this.selectedCountry = 'Litouwen';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 152 &&
-                clickEventColor[2] == 142) {
-                console.log('Tsjechië');
-                this.selectedCountry = 'Tsjechië';
-            }
-            if (clickEventColor[0] == 55 &&
-                clickEventColor[1] == 0 &&
-                clickEventColor[2] == 255) {
-                console.log('Denemarken');
-                this.selectedCountry = 'Denemarken';
-            }
-            if (clickEventColor[0] == 116 &&
-                clickEventColor[1] == 89 &&
-                clickEventColor[2] == 255) {
-                console.log('Engeland');
-                this.selectedCountry = 'Engeland';
-            }
-            if (clickEventColor[0] == 189 &&
-                clickEventColor[1] == 84 &&
-                clickEventColor[2] == 255) {
-                console.log('Ierland');
-                this.selectedCountry = 'Ierland';
-            }
-            if (clickEventColor[0] == 205 &&
-                clickEventColor[1] == 178 &&
-                clickEventColor[2] == 255) {
-                console.log('Noord-Ierland');
-                this.selectedCountry = 'Noord-Ierland';
-            }
-            if (clickEventColor[0] == 137 &&
-                clickEventColor[1] == 243 &&
-                clickEventColor[2] == 255) {
-                console.log('Ijsland');
-                this.selectedCountry = 'Ijsland';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 131 &&
-                clickEventColor[2] == 119) {
-                console.log('Rusland');
-                this.selectedCountry = 'Rusland';
-            }
-            if (clickEventColor[0] == 124 &&
-                clickEventColor[1] == 144 &&
-                clickEventColor[2] == 255) {
-                console.log('Wit-Rusland');
-                this.selectedCountry = 'Wit-Rusland';
-            }
-            if (clickEventColor[0] == 2 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 255) {
-                console.log('Kaliningrad');
-                this.selectedCountry = 'Kaliningrad';
-            }
-            if (clickEventColor[0] == 20 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 196) {
-                console.log('Oekraïne');
-                this.selectedCountry = 'Oekraïne';
-            }
-            if (clickEventColor[0] == 231 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 99) {
-                console.log('Moldavië');
-                this.selectedCountry = 'Moldavië';
-            }
-            if (clickEventColor[0] == 114 &&
-                clickEventColor[1] == 112 &&
-                clickEventColor[2] == 255) {
-                console.log('Roemenië');
-                this.selectedCountry = 'Roemenië';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 21 &&
-                clickEventColor[2] == 0) {
-                console.log('Slowakije');
-                this.selectedCountry = 'Slowakije';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 0 &&
-                clickEventColor[2] == 255) {
-                console.log('Hongarije');
-                this.selectedCountry = 'Hongarije';
-            }
-            if (clickEventColor[0] == 48 &&
-                clickEventColor[1] == 213 &&
-                clickEventColor[2] == 255) {
-                console.log('Kroatië');
-                this.selectedCountry = 'Kroatië';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 181 &&
-                clickEventColor[2] == 215) {
-                console.log('Bosnië');
-                this.selectedCountry = 'Bosnië';
-            }
-            if (clickEventColor[0] == 193 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 223) {
-                console.log('Servië');
-                this.selectedCountry = 'Servië';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 94 &&
-                clickEventColor[2] == 110) {
-                console.log('Montenegro');
-                this.selectedCountry = 'Montenegro';
-            }
-            if (clickEventColor[0] == 229 &&
-                clickEventColor[1] == 255 &&
-                clickEventColor[2] == 63) {
-                console.log('Slovenië');
-                this.selectedCountry = 'Slovenië';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 0 &&
-                clickEventColor[2] == 102) {
-                console.log('Bulgarije');
-                this.selectedCountry = 'Bulgarije';
-            }
-            if (clickEventColor[0] == 206 &&
-                clickEventColor[1] == 73 &&
-                clickEventColor[2] == 255) {
-                console.log('Turkije');
-                this.selectedCountry = 'Turkije';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 196 &&
-                clickEventColor[2] == 248) {
-                console.log('Macedonië');
-                this.selectedCountry = 'Macedonië';
-            }
-            if (clickEventColor[0] == 152 &&
-                clickEventColor[1] == 114 &&
-                clickEventColor[2] == 255) {
-                console.log('Albanië');
-                this.selectedCountry = 'Albanië';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 246 &&
-                clickEventColor[2] == 2) {
-                console.log('Griekenland');
-                this.selectedCountry = 'Griekenland';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 197 &&
-                clickEventColor[2] == 96) {
-                console.log('Corsica');
-                this.selectedCountry = 'Corsica';
-            }
-            if (this.selectedCountry !== '') {
-                this.clearArea(this.getCenter().X, 150, 450, 400);
-                this.writeTextToCanvas(this.selectedCountry, 35, this.getCenter().X + 211, 200, "black", "center", "Old English Text MT");
-                if (this.selectedCountry == 'Nederland') {
-                    this.writeCountryButton("./assets/images/oldButton.png", this.getCenter().X + 85, this.getCenter().Y + 45, "Start", 35, this.getCenter().X + 211, this.getCenter().Y + 130, "black", "center", "Old English Text MT");
-                }
-            }
-        });
-    }
-    getSelectedCountry() {
-        if (this.selectedCountry !== '') {
-            return this.selectedCountry;
-        }
-        else {
-            return null;
-        }
-    }
-    resetSelectedCountry() {
-        this.selectedCountry = '';
-    }
-    colorClickNederland(question, answer) {
-        this.canvas.addEventListener("click", (event) => {
-            let clickEventColor = this.ctx.getImageData(event.x, event.y, 2, 1).data;
-            if (clickEventColor[0] == 0 &&
-                clickEventColor[1] == 102 &&
-                clickEventColor[2] == 204) {
-                console.log('Zeeland');
-                this.selectedProvince = 'Zeeland';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 204 &&
-                clickEventColor[2] == 0) {
-                console.log('Noord-Brabant');
-                this.selectedProvince = 'Noord-Brabant';
-            }
-            if (clickEventColor[0] == 183 &&
-                clickEventColor[1] == 75 &&
-                clickEventColor[2] == 42) {
-                console.log('Limburg');
-                this.selectedProvince = 'Limburg';
-            }
-            if (clickEventColor[0] == 166 &&
-                clickEventColor[1] == 161 &&
-                clickEventColor[2] == 20) {
-                console.log('Zuid-Holland');
-                this.selectedProvince = 'Zuid-Holland';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 130 &&
-                clickEventColor[2] == 9) {
-                console.log('Noord-Holland');
-                this.selectedProvince = 'Noord-Holland';
-            }
-            if (clickEventColor[0] == 255 &&
-                clickEventColor[1] == 140 &&
-                clickEventColor[2] == 167) {
-                console.log('Flevoland');
-                this.selectedProvince = 'Flevoland';
-            }
-            if (clickEventColor[0] == 0 &&
-                clickEventColor[1] == 105 &&
-                clickEventColor[2] == 120) {
-                console.log('Utrecht');
-                this.selectedProvince = 'Utrecht';
-            }
-            if (clickEventColor[0] == 0 &&
-                clickEventColor[1] == 145 &&
-                clickEventColor[2] == 215) {
-                console.log('Gelderland');
-                this.selectedProvince = 'Gelderland';
-            }
-            if (clickEventColor[0] == 192 &&
-                clickEventColor[1] == 213 &&
-                clickEventColor[2] == 0) {
-                console.log('Overijsel');
-                this.selectedProvince = 'Overijsel';
-            }
-            if (clickEventColor[0] == 102 &&
-                clickEventColor[1] == 153 &&
-                clickEventColor[2] == 51) {
-                console.log('Drenthe');
-                this.selectedProvince = 'Drenthe';
-            }
-            if (clickEventColor[0] == 200 &&
-                clickEventColor[1] == 63 &&
-                clickEventColor[2] == 105) {
-                console.log('Groningen');
-                this.selectedProvince = 'Groningen';
-            }
-            if (clickEventColor[0] == 73 &&
-                clickEventColor[1] == 222 &&
-                clickEventColor[2] == 232) {
-                console.log('Friesland');
-                this.selectedProvince = 'Friesland';
-            }
-            if (this.getSelectedProvince() === this.question.getQuestion(this.questionNumber).answer) {
-                alert("GOED");
-                this.questionNumber++;
-                if (this.questionNumber > 6) {
-                    this.clearArea(this.getWidth() / 1.9, 0, this.getWidth() / 2, this.getHeight() / 1.8);
-                    this.writeTextToCanvas(`Je hebt alle vragen goed beantwoord!!`, 40, this.getWidth() / 1.35, this.getHeight() / 2.8, 'black', 'center', 'Pristina');
-                }
-                else {
-                    this.resetSelectedProvince();
-                    this.clearArea(this.getWidth() / 1.9, 0, this.getWidth() / 2, this.getHeight() / 1.8);
-                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.7, 'black', 'center', 'Pristina');
-                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion2}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.2, 'black', 'center', 'Pristina');
-                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion3}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.8, 'black', 'center', 'Pristina');
-                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion4}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.5, 'black', 'center', 'Pristina');
-                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion5}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.2, 'black', 'center', 'Pristina');
-                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).question}`, 30, this.getWidth() / 1.35, this.getHeight() / 1.9, 'black', 'center', 'Pristina');
-                }
-            }
-        });
-    }
-    getSelectedProvince() {
-        return this.selectedProvince;
-    }
-    resetSelectedProvince() {
-        this.selectedProvince = '';
-    }
-    clearArea(x, y, width, height) {
-        this.ctx.clearRect(x, y, width, height);
-    }
-    writeCountryButton(imageSource, imageX, imageY, imageText, imageTextSize, imageTextX, imageTextY, imageTextColor, imageTextAlignment, imageTextFont) {
-        let buttonElement = document.createElement("img");
-        buttonElement.src = imageSource;
-        this.ctx.drawImage(buttonElement, imageX, imageY);
-        this.writeTextToCanvas(imageText, imageTextSize, imageTextX, imageTextY, imageTextColor, imageTextAlignment, imageTextFont);
-    }
-    getquestionNumber() {
-        return this.questionNumber;
-    }
-}
-var PlayerHandler;
-(function (PlayerHandler) {
-    function makePlayer() {
-        this.player = new Player;
-    }
-    PlayerHandler.makePlayer = makePlayer;
-    function setName(name) {
-        this.player.name = name;
-    }
-    PlayerHandler.setName = setName;
-    function getScore() {
-        this.player.score;
-    }
-    PlayerHandler.getScore = getScore;
-    function getName() {
-        this.player.name;
-    }
-    PlayerHandler.getName = getName;
-    function scoreMinus(minusAmount) {
-        this.player.score -= minusAmount;
-    }
-    PlayerHandler.scoreMinus = scoreMinus;
-    function scorePlus(plusAmount) {
-        this.player.score += plusAmount;
-    }
-    PlayerHandler.scorePlus = scorePlus;
-})(PlayerHandler || (PlayerHandler = {}));
-class CountryScreen extends Mapview {
-    constructor(canvas) {
-        super(canvas);
         this.countries = [
             { country: 'Nederland', red: 255, green: 106, blue: 0 },
             { country: 'België', red: 140, green: 255, blue: 172 },
@@ -687,13 +209,180 @@ class CountryScreen extends Mapview {
             { province: 'Groningen', red: 200, green: 63, blue: 105 },
             { province: 'Friesland', red: 73, green: 222, blue: 232 }
         ];
+        this.canvas = canvas;
+        this.question = new Question;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.ctx = this.canvas.getContext("2d");
+    }
+    writeTextToCanvas(text, fontSize, xCoordinate, yCoordinate, color = "white", alignment = "center", font) {
+        this.ctx.font = `${fontSize}px ${font}`;
+        this.ctx.fillStyle = color;
+        this.ctx.textAlign = alignment;
+        this.ctx.fillText(text, xCoordinate, yCoordinate);
+    }
+    returnCtx() {
+        return this.ctx;
+    }
+    writeImageToCanvas(src, xCoordinate, yCoordinate, width, height) {
+        const image = new Image();
+        image.src = src;
+        image.onload = () => {
+            this.ctx.drawImage(image, xCoordinate, yCoordinate, width, height);
+        };
+    }
+    getWidth() {
+        return this.canvas.width;
+    }
+    getHeight() {
+        return this.canvas.height;
+    }
+    getCenter() {
+        return { X: this.getWidth() / 2, Y: this.getHeight() / 2 };
+    }
+    clearScreen() {
+        this.ctx.clearRect(0, 0, this.getWidth(), this.getHeight());
+    }
+    writeButtonToCanvas(imageSource, imageX, imageY, imageText, imageTextSize, imageTextX, imageTextY, imageTextColor, imageTextAlignment, imageTextFont) {
+        let buttonElement = document.createElement("img");
+        buttonElement.src = imageSource;
+        buttonElement.addEventListener("load", () => {
+            this.ctx.drawImage(buttonElement, imageX, imageY);
+            this.writeTextToCanvas(imageText, imageTextSize, imageTextX, imageTextY, imageTextColor, imageTextAlignment, imageTextFont);
+        });
+    }
+    drawShopBox(x, y) {
+        this.ctx.fillRect(x, y, 100, 100);
+        this.ctx.stroke();
+        this.ctx.clearRect(x + 10, y + 10, 80, 80);
+        this.ctx.stroke();
+    }
+    writeImageToCanvasPreload(image, xCoordinate, yCoordinate, width, height) {
+        this.ctx.drawImage(image, xCoordinate, yCoordinate, width, height);
+    }
+    colorClick() {
+        this.canvas.addEventListener("click", (event) => {
+            let clickEventColor = this.ctx.getImageData(event.x, event.y, 1, 1).data;
+            for (let index = 0; index < this.countries.length; index++) {
+                if (clickEventColor[0] == this.countries[index].red &&
+                    clickEventColor[1] == this.countries[index].green &&
+                    clickEventColor[2] == this.countries[index].blue) {
+                    console.log(this.countries[index].country);
+                    this.selectedCountry = this.countries[index].country;
+                }
+            }
+            if (this.selectedCountry !== '') {
+                this.clearArea(this.getCenter().X, 150, 450, 400);
+                this.writeTextToCanvas(this.selectedCountry, 35, this.getCenter().X + 211, 200, "black", "center", "Old English Text MT");
+                if (this.selectedCountry == 'Nederland') {
+                    this.writeCountryButton("./assets/images/oldButton.png", this.getCenter().X + 85, this.getCenter().Y + 45, "Start", 35, this.getCenter().X + 211, this.getCenter().Y + 130, "black", "center", "Old English Text MT");
+                }
+            }
+        });
+    }
+    getSelectedCountry() {
+        if (this.selectedCountry !== '') {
+            return this.selectedCountry;
+        }
+        else {
+            return null;
+        }
+    }
+    resetSelectedCountry() {
+        this.selectedCountry = '';
+    }
+    colorClickNederland(question, answer) {
+        this.canvas.addEventListener("click", (event) => {
+            let clickEventColor = this.ctx.getImageData(event.x, event.y, 1, 1).data;
+            for (let index = 0; index < this.netherlandsProvince.length; index++) {
+                if (clickEventColor[0] == this.netherlandsProvince[index].red &&
+                    clickEventColor[1] == this.netherlandsProvince[index].green &&
+                    clickEventColor[2] == this.netherlandsProvince[index].blue) {
+                    console.log(this.netherlandsProvince[index].province);
+                    this.selectedProvince = this.netherlandsProvince[index].province;
+                }
+                if (this.getSelectedProvince() === this.question.getQuestion(this.questionNumber).answer) {
+                    alert("GOED");
+                    this.questionNumber++;
+                    if (this.questionNumber > 6) {
+                        this.clearArea(this.getWidth() / 1.9, 0, this.getWidth() / 2, this.getHeight() / 1.8);
+                        this.writeTextToCanvas(`Je hebt alle vragen goed beantwoord!!`, 40, this.getWidth() / 1.35, this.getHeight() / 2.8, 'black', 'center', 'Pristina');
+                    }
+                    else {
+                        this.resetSelectedProvince();
+                        this.clearArea(this.getWidth() / 1.9, 0, this.getWidth() / 2, this.getHeight() / 1.8);
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.7, 'black', 'center', 'Pristina');
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion2}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.2, 'black', 'center', 'Pristina');
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion3}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.8, 'black', 'center', 'Pristina');
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion4}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.5, 'black', 'center', 'Pristina');
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion5}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.2, 'black', 'center', 'Pristina');
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).question}`, 30, this.getWidth() / 1.35, this.getHeight() / 1.9, 'black', 'center', 'Pristina');
+                    }
+                }
+            }
+        });
+    }
+    getSelectedProvince() {
+        return this.selectedProvince;
+    }
+    resetSelectedProvince() {
+        this.selectedProvince = '';
+    }
+    clearArea(x, y, width, height) {
+        this.ctx.clearRect(x, y, width, height);
+    }
+    writeCountryButton(imageSource, imageX, imageY, imageText, imageTextSize, imageTextX, imageTextY, imageTextColor, imageTextAlignment, imageTextFont) {
+        let buttonElement = document.createElement("img");
+        buttonElement.src = imageSource;
+        this.ctx.drawImage(buttonElement, imageX, imageY);
+        this.writeTextToCanvas(imageText, imageTextSize, imageTextX, imageTextY, imageTextColor, imageTextAlignment, imageTextFont);
+    }
+    getquestionNumber() {
+        return this.questionNumber;
+    }
+}
+class MathHelper {
+    randomNumber(min, max) {
+        return Math.round(Math.random() * (max - min) + min);
+    }
+}
+var PlayerHandler;
+(function (PlayerHandler) {
+    function makePlayer() {
+        this.player = new Player;
+    }
+    PlayerHandler.makePlayer = makePlayer;
+    function setName(name) {
+        this.player.name = name;
+    }
+    PlayerHandler.setName = setName;
+    function getScore() {
+        this.player.score;
+    }
+    PlayerHandler.getScore = getScore;
+    function getName() {
+        this.player.name;
+    }
+    PlayerHandler.getName = getName;
+    function scoreMinus(minusAmount) {
+        this.player.score -= minusAmount;
+    }
+    PlayerHandler.scoreMinus = scoreMinus;
+    function scorePlus(plusAmount) {
+        this.player.score += plusAmount;
+    }
+    PlayerHandler.scorePlus = scorePlus;
+})(PlayerHandler || (PlayerHandler = {}));
+class CountryScreen extends Mapview {
+    constructor(canvas) {
+        super(canvas);
         this.questionImage = new Image();
         this.shopButton = new Image();
         this.shopButton.src = "./assets/images/oldButton.png";
         this.questionImage.src = "./assets/images/questionpaper.png";
-        this.shopScreen = new ShopScreen;
         this.question = new Question();
         this.player = new Player();
+        this.listeners = [];
     }
     draw() {
         console.log(this.question.getQuestion(2).question);
@@ -707,13 +396,20 @@ class CountryScreen extends Mapview {
         this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).introToQuestion4}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 2.5, 'black', 'center', 'Pristina');
         this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).introToQuestion5}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 2.2, 'black', 'center', 'Pristina');
         this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).question}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 1.9, 'black', 'center', 'Pristina');
-        window.addEventListener("click", (event) => {
+        let listenerToShop = (event) => {
             if (event.x > this.canvas.getWidth() / 1.4 && event.x < this.canvas.getWidth() / 1.4 + this.shopButton.width) {
                 if (event.y > this.canvas.getHeight() / 1.3 && event.y < this.canvas.getHeight() / 1.4 + this.shopButton.height) {
-                    this.canvas.clearScreen();
-                    this.shopScreen.draw();
+                    ScreenSwitch.draw('shopScreen');
+                    this.removeButtons();
                 }
             }
+        };
+        this.listeners.push(listenerToShop);
+        window.addEventListener('click', listenerToShop);
+    }
+    removeButtons() {
+        this.listeners.forEach(e => {
+            window.removeEventListener('click', e);
         });
     }
 }
@@ -757,6 +453,7 @@ class ShopScreen {
         this.listeners = [];
     }
     draw() {
+        console.log('test');
         this.canvas.writeTextToCanvas('Winkel', 150, this.canvas.getCenter().X, this.canvas.getCenter().Y - 260, "black", "center", "Old English Text MT");
         this.canvas.writeTextToCanvas('Hints :', 100, this.canvas.getCenter().X - 399, this.canvas.getCenter().Y - 100, "black", 'center', "Old English Text MT");
         this.drawShopBoxes(200, 175);
@@ -809,20 +506,22 @@ class ShopScreen {
             window.addEventListener('click', listenerHintShop);
         }
     }
-    removeShopButtons() {
+    removeButtons() {
         this.listeners.forEach(e => {
             window.removeEventListener('click', e);
         });
     }
     shopOutHandler() {
-        window.addEventListener("click", (event) => {
+        let shopOutListener = (event) => {
             if (event.x > this.canvas.getCenter().X + 325 && event.x < this.canvas.getCenter().X + 575) {
                 if (event.y > this.canvas.getCenter().Y + 200 && event.y < this.canvas.getCenter().Y + 370) {
+                    this.removeButtons();
                     ScreenSwitch.draw('countryScreen');
-                    this.removeShopButtons();
                 }
             }
-        });
+        };
+        this.listeners.push(shopOutListener);
+        window.addEventListener('click', shopOutListener);
     }
 }
 class StartScreen {
