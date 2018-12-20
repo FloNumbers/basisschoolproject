@@ -191,7 +191,7 @@ class IntroText {
             intro3: 'en het Russische alfabet heeft weer vier letters die het Oekraïense alfabet niet heeft.',
             intro4: 'Oekraïne is de trotse houder van het wereldrecord langste plantenbak',
             intro5: 'De bak is 2847,49 meter lang en was volgebouwd met 80.693 bloemen en planten.',
-            intro6: 'Het Mc-Donalds-restaurant op het Vokzalna-plein is Kiev is een van de drukst bezochte McDonalds-vestigingen ter wereld'
+            intro6: 'De McDonalds op het Vokzalna-plein is Kiev is een van de drukst bezochte McDonalds-vestigingen ter wereld'
         },
         {
             intro1: 'Moldavië, het land is rijk aan cultureel erfgoed: gekenmerkt door de vele kerken en kloosters uit de 15de eeuw.',
