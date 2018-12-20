@@ -3,8 +3,11 @@ class Canvas {
     private ctx: CanvasRenderingContext2D;
     private selectedCountry: string = '';
     private selectedProvince: string;
+    private countryIndex: number = null;
     private questionNumber:number = 0;
     private question:Question;
+    private introText: IntroText;
+    private europeMap: HTMLImageElement
     private countries: Array<any> = [
         { country: 'Nederland', red: 255, green: 106, blue: 0 },
         { country: 'België', red: 140, green: 255, blue: 172 },
@@ -27,11 +30,8 @@ class Canvas {
         { country: 'Denemarken', red: 55, green: 0, blue: 255 },
         { country: 'Engeland', red: 116, green: 89, blue: 255 },
         { country: 'Ierland', red: 189, green: 84, blue: 255 },
-        { country: 'Noord-Ierland', red: 205, green: 178, blue: 255 },
         { country: 'Ijsland', red: 137, green: 243, blue: 255 },
         { country: 'Rusland', red: 255, green: 131, blue: 119 },
-        { country: 'Wit-Rusland', red: 124, green: 144, blue: 255 },
-        { country: 'Kaliningrad', red: 2, green: 255, blue: 255 },
         { country: 'Oekraïne', red: 20, green: 255, blue: 196 },
         { country: 'Moldavië', red: 231, green: 255, blue: 99 },
         { country: 'Roemenië', red: 114, green: 112, blue: 255 },
@@ -47,7 +47,10 @@ class Canvas {
         { country: 'Macedonië', red: 255, green: 196, blue: 248 },
         { country: 'Albanië', red: 152, green: 114, blue: 255 },
         { country: 'Griekenland', red: 255, green: 246, blue: 2 },
-        { country: 'Corsica', red: 255, green: 197, blue: 96 }
+        { country: 'Corsica', red: 255, green: 197, blue: 96 },
+        { country: 'Noord-Ierland', red: 205, green: 178, blue: 255 },
+        { country: 'Wit-Rusland', red: 124, green: 144, blue: 255 },
+        { country: 'Kaliningrad', red: 2, green: 255, blue: 255 }
     ]
     private netherlandsProvince: Array<any> = [
         {province:'Zeeland', red:0, green:102, blue:204},
@@ -67,9 +70,13 @@ class Canvas {
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.question = new Question;
+        this.introText = new IntroText; 
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.ctx = this.canvas.getContext("2d");
+
+        this.europeMap = new Image()
+        this.europeMap.src = './assets/images/mapEurope.png'
     }
     public writeTextToCanvas(
         text: string,
@@ -158,14 +165,23 @@ class Canvas {
                     clickEventColor[1] == this.countries[index].green &&
                     clickEventColor[2] == this.countries[index].blue) {
                     console.log(this.countries[index].country)
+                    this.countryIndex = index
                     this.selectedCountry = this.countries[index].country
                 }
             }
             if (this.selectedCountry !== '') {
-                this.clearArea(this.getCenter().X, 150, 450, 400)
-                this.writeTextToCanvas(this.selectedCountry, 35, this.getCenter().X + 211, 200, "black", "center", "Old English Text MT")
+                this.clearScreen()
+                this.writeImageToCanvasPreload(this.europeMap, this.getWidth() / 28, this.getWidth() / 19, this.getHeight() - this.getHeight() / 9.3, this.getHeight() - this.getHeight() / 9.3)
+                this.writeTextToCanvas(this.selectedCountry, 35, this.getWidth() / 1.35, this.getHeight() / 4, "black", "center", "Old English Text MT")
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro1, 17, this.getWidth() / 1.35, this.getHeight() / 3.4, "white", "center", "Old English Text MT")
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro2, 17, this.getWidth() / 1.35, this.getHeight() / 3.1, "white", "center", "Old English Text MT")
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro3, 17, this.getWidth() / 1.35, this.getHeight() / 2.85, "white", "center", "Old English Text MT")
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro4, 17, this.getWidth() / 1.35, this.getHeight() / 2.625, "white", "center", "Old English Text MT")
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro5, 17, this.getWidth() / 1.35, this.getHeight() / 2.425, "white", "center", "Old English Text MT")
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro6, 17, this.getWidth() / 1.35, this.getHeight() / 2.25, "white", "center", "Old English Text MT")
+                
                 if (this.selectedCountry == 'Nederland') {
-                    this.writeCountryButton("./assets/images/oldButton.png", this.getCenter().X + 85, this.getCenter().Y + 45, "Start", 35, this.getCenter().X + 211, this.getCenter().Y + 130, "black", "center", "Old English Text MT");
+                    this.writeCountryButton("./assets/images/oldButton.png", this.getWidth() / 1.35 - 125, this.getHeight() / 2, "Start", 35,this.getWidth() / 1.35, this.getHeight() / 1.62, "black", "center", "Old English Text MT");
                 }
             }
         });
