@@ -23,4 +23,16 @@ namespace PlayerHandler {
     export function scorePlus(plusAmount: number) {
         this.player.score += plusAmount
     }
+
+    export function getHints(): number {
+        return this.player.hints
+    }
+
+    export function addHint() {
+        this.player.hints ++
+    }
+
+    export function minusHint() {
+        this.player.hints --
+    }
 }

@@ -36,7 +36,9 @@ class CountryScreen extends Mapview {
         this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).question}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 1.9, 'black', 'center', 'Pristina')
         this.canvas.writeButtonToCanvas(this.shopButton.src, this.canvas.getWidth() / 1.8, this.canvas.getHeight() / 1.35, "Terug", 35, this.canvas.getWidth() / 1.62, this.canvas.getHeight() / 1.18, "black", "center", "Old English Text MT");
         this.backToEuropeHandler()
-
+        this.canvas.writeTextToCanvas(`je hebt ${PlayerHandler.getHints()} hints`, 50, this.canvas.getWidth() / 6, this.canvas.getHeight() / 6, "white", "center", "Old English Text MT")
+        this.canvas.writeButtonToCanvas(this.shopButton.src, this.canvas.getWidth() / 10, this.canvas.getHeight() / 5, "Gebruik hint", 35, this.canvas.getWidth() / 6, this.canvas.getHeight() / 3.5, "black", "center", "Old English Text MT");
+        this.hintHandler()
     }
 
     public backToEuropeHandler() {
@@ -63,6 +65,18 @@ class CountryScreen extends Mapview {
         }
         this.listeners.push(listenerToShop)
         window.addEventListener('click', listenerToShop)
+    }
+
+    public hintHandler() {
+        let hintListener = (event: MouseEvent) => {
+            if (event.x > this.canvas.getWidth() / 10 && event.x < this.canvas.getWidth() / 10 + this.shopButton.width) {
+                if (event.y > this.canvas.getHeight() / 5 && event.y < this.canvas.getHeight() / 5 + this.shopButton.height) {
+                    console.log('test')
+                }
+            }
+        }
+        this.listeners.push(hintListener)
+        window.addEventListener('click', hintListener)
     }
 
     private removeButtons() {

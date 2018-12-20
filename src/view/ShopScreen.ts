@@ -1,7 +1,5 @@
 class ShopScreen {
     private canvas: Canvas;
-    private player: Player;
-    public hints: number = 0;
     private listeners: Array<(event: MouseEvent) => void>;
 
     constructor() {
@@ -42,7 +40,7 @@ class ShopScreen {
     public hintShopHandler(xBox: number, yBox: number) {
         for (let index = 0; index < 3; index++) {
             let isClicked = 0;
-            this.canvas.writeTextToCanvas(`Je hebt ${this.hints} hints`, 50, this.canvas.getCenter().X + 450, this.canvas.getCenter().Y - 100, "black", "center", "Old English Text MT")
+            this.canvas.writeTextToCanvas(`Je hebt ${PlayerHandler.getHints()} hints`, 50, this.canvas.getCenter().X + 450, this.canvas.getCenter().Y - 100, "black", "center", "Old English Text MT")
             this.canvas.writeTextToCanvas(`${PlayerHandler.getScore()} punten`, 50, this.canvas.getCenter().X - 410, this.canvas.getCenter().Y - 250, "black", "center", "Old English Text MT")
             let listenerHintShop = (event: MouseEvent) => {
                 if (event.x > this.canvas.getCenter().X - xBox + (index * 130) && event.x < this.canvas.getCenter().X - xBox + 100 + (index * 130)) {
@@ -51,13 +49,13 @@ class ShopScreen {
                             this.canvas.clearArea(this.canvas.getCenter().X + 250, this.canvas.getCenter().Y - 140, 400, 100)
                             this.canvas.clearArea(this.canvas.getCenter().X - 550, this.canvas.getCenter().Y - 300, 300, 100)
                             isClicked = 1
-                            if (this.hints < 3) {
+                            if (PlayerHandler.getHints() < 3) {
                                 PlayerHandler.scoreMinus(10)
-                                this.hints++
+                                PlayerHandler.addHint()
                             }
-                            this.canvas.writeTextToCanvas(`Je hebt ${this.hints} hints`, 50, this.canvas.getCenter().X + 450, this.canvas.getCenter().Y - 100, "black", "center", "Old English Text MT")
+                            this.canvas.writeTextToCanvas(`Je hebt ${PlayerHandler.getHints()} hints`, 50, this.canvas.getCenter().X + 450, this.canvas.getCenter().Y - 100, "black", "center", "Old English Text MT")
                             this.canvas.writeTextToCanvas(`${PlayerHandler.getScore()} punten`, 50, this.canvas.getCenter().X - 410, this.canvas.getCenter().Y - 250, "black", "center", "Old English Text MT")
-                            console.log(this.hints)
+                            console.log(PlayerHandler.getHints())
                         }
                     }
                 }
