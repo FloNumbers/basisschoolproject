@@ -79,4 +79,34 @@ class Question {
 
 
     }
+
+    public getHint(index: number): { hint: string, questionNumber: number} {
+        let hints = [
+            {
+                hint: "De hoofdstad van het land",
+                questionNumber: 1
+            },
+            {
+                hint: "Noord-oost",
+                questionNumber: 2
+            },
+            {
+                hint: "Aan zee (links)",
+                questionNumber: 3
+            },
+            {
+                hint: "In het midden van het land",
+                questionNumber: 4
+            },
+            {
+                hint: "Je zit in deze provincie op school",
+                questionNumber: 6
+            },
+            {
+                hint: "West",
+                questionNumber: 7
+            }
+        ]
+        return { hint: hints[index].hint, questionNumber: hints[index].questionNumber }
+    }
 }

@@ -72,7 +72,10 @@ class CountryScreen extends Mapview {
         let hintListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getWidth() / 10 && event.x < this.canvas.getWidth() / 10 + this.shopButton.width) {
                 if (event.y > this.canvas.getHeight() / 5 && event.y < this.canvas.getHeight() / 5 + this.shopButton.height) {
-                    console.log('test')
+                    if (PlayerHandler.getHints() > 0)
+                    PlayerHandler.minusHint()
+                    this.canvas.clearArea(this.canvas.getWidth() / 10.5, this.canvas.getHeight() / 10, this.canvas.getWidth() / 6, this.canvas.getHeight() / 12)
+                    this.canvas.writeTextToCanvas(`je hebt ${PlayerHandler.getHints()} hints`, 50, this.canvas.getWidth() / 6, this.canvas.getHeight() / 6, "white", "center", "Old English Text MT")
                 }
             }
         }
