@@ -1,10 +1,8 @@
 class Player {
-    private name:string = '';
-    private score:number = 0;
-    private hints:number = 0;
 
-    constructor(){
-        
+    private player1: any = {
+        name: '',
+        score: 0,
+        hints: 0
     }
-
 }
