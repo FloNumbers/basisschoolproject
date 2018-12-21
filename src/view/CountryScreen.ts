@@ -46,6 +46,7 @@ class CountryScreen extends Mapview {
             if (event.x > this.canvas.getWidth() / 1.8 && event.x < this.canvas.getWidth() / 1.8 + this.shopButton.width) {
                 if (event.y > this.canvas.getHeight() / 1.3 && event.y < this.canvas.getHeight() / 1.4 + this.shopButton.height) {
                     ScreenSwitch.draw('europeScreen')
+                    this.removeButtons();
                 }
             }
         }
