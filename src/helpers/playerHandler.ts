@@ -2,48 +2,55 @@ namespace PlayerHandler {
 
     export function makePlayer(): void {
         this.player = new Player
-        console.log(this.player.player1)
+        console.log(this.player.player)
     }
 
     export function SavePlayer() {
-        localStorage.setItem('Player1', JSON.stringify(this.player.player1))
-        alert(`The save file for ${this.player.player1.name} was saved`)
-        }
+        localStorage.setItem(`Player${this.saveFile}`, JSON.stringify(this.player.player))
+        alert(`The save file for ${this.player.player.name} was saved`)
+    }
 
-    export function loadPlayer(): void {
-        this.player.player1 = JSON.parse(localStorage.getItem('Player1'))
-        alert(`The save file for ${this.player.player1.name} was loaded`)
+    export function createSaveFile(saveFile: number) {
+        this.saveFile = saveFile
+        localStorage.setItem(`Player${this.saveFile}`, JSON.stringify(this.player.player))
+        alert(`A new save file for was created in slot ${saveFile}`)
+    }
+
+    export function loadPlayer(saveFile: number): void {
+        this.saveFile = saveFile
+        this.player.player = JSON.parse(localStorage.getItem(`Player${saveFile}`))
+        alert(`The save file for ${this.player.player.name} was loaded`)
     }
 
     export function setName(name: string) {
-        this.player.player1.name = name
+        this.player.player.name = name
     }
 
     export function getScore(): number {
-        return this.player.player1.score
+        return this.player.player.score
     }
 
     export function getName(): string {
-        return this.player.player1.name
+        return this.player.player.name
     }
 
-    export function scoreMinus(minusAmount: number) { 
-        this.player.player1.score -= minusAmount
+    export function scoreMinus(minusAmount: number) {
+        this.player.player.score -= minusAmount
     }
 
     export function scorePlus(plusAmount: number) {
-        this.player.player1.score += plusAmount
+        this.player.player.score += plusAmount
     }
 
     export function getHints(): number {
-        return this.player.player1.hints
+        return this.player.player.hints
     }
 
     export function addHint() {
-        this.player.player1.hints ++
+        this.player.player.hints++
     }
 
     export function minusHint() {
-        this.player.player1.hints --
+        this.player.player.hints--
     }
 }

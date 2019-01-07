@@ -5,7 +5,9 @@ namespace ScreenSwitch {
         this.startScreen = new StartScreen()
         this.europeScreen = new EuropeScreen(canvas)
         this.countryScreen = new CountryScreen(canvas)
+        this.saveScreen = new SaveScreen(canvas)
         this.shopScreen = new ShopScreen()
+        this.optionsScreen = new OptionsScreen()
     }
 
     export function draw(currentScreen: string) {
@@ -21,6 +23,12 @@ namespace ScreenSwitch {
         }
         if (currentScreen == 'shopScreen') {
             this.shopScreen.draw();
+        }
+        if (currentScreen == 'optionsScreen') {
+            this.optionsScreen.draw();
+        }
+        if (currentScreen == 'saveScreen') {
+            this.saveScreen.draw();
         }
     }
 }
