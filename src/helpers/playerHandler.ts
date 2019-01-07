@@ -53,4 +53,20 @@ namespace PlayerHandler {
     export function minusHint() {
         this.player.player.hints--
     }
+
+    export function setFontStyle(fontStyle: string): void {
+        this.player.player.fontStyle = fontStyle
+    }
+
+    export function getFontStyle() {
+        return this.player.player.fontStyle
+    }
+
+    export function setFontColor(fontColor: string): void {
+        this.player.player.fontColor = fontColor
+    }
+
+    export function getFontColor() {
+        return this.player.player.fontColor
+    }
 }

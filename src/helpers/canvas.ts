@@ -92,6 +92,15 @@ class Canvas {
         this.ctx.textAlign = alignment;
         this.ctx.fillText(text, xCoordinate, yCoordinate);
     }
+
+    public writeStrokeTextToCanvas(fontsize: number, fontstyle: string, color: string, alignment: CanvasTextAlign, text: string, xcoordinate: number, ycoordinate: number) {
+        this.ctx.font = `${fontsize}px ${fontstyle}`;
+        this.ctx.strokeStyle = color;
+        this.ctx.textAlign = alignment;
+        this.ctx.strokeText(text, xcoordinate, ycoordinate);
+
+    }
+
     public returnCtx() {
         return this.ctx;
     }
@@ -184,7 +193,7 @@ class Canvas {
                 this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro4, 24, this.getWidth() / 1.35, this.getHeight() / 2.625, "white", "center", "Pristina")
                 this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro5, 24, this.getWidth() / 1.35, this.getHeight() / 2.425, "white", "center", "Pristina")
                 this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro6, 24, this.getWidth() / 1.35, this.getHeight() / 2.25, "white", "center", "Pristina")
-                
+                  
                 if (this.selectedCountry == 'Nederland') {
                     this.writeCountryButton("./assets/images/oldButton.png", this.getWidth() / 1.35 - 125, this.getHeight() / 2, "Start", 35,this.getWidth() / 1.35, this.getHeight() / 1.62, "black", "center", "Old English Text MT");
                 }
@@ -202,7 +211,7 @@ class Canvas {
     }
 
     public colorClickNederland(question:string, answer:string) {
-        this.canvas.addEventListener("click", (event: MouseEvent) => {
+        this.canvas.addEventListener("click", (event: MouseEvent) => {   
             
             
             let clickEventColor = this.ctx.getImageData(event.x, event.y, 1, 1).data

@@ -1,6 +1,7 @@
 class OptionsScreen {
     private canvas: Canvas;
     private listeners: Array<(event: MouseEvent) => void> = [];
+    private context: h
 
     constructor() {
         const canvasElement: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('canvas');
@@ -8,7 +9,7 @@ class OptionsScreen {
     }
 
     public draw() {
-        this.canvas.writeTextToCanvas('Optiescherm', 125, this.canvas.getWidth() / 2, this.canvas.getHeight() / 4.2, 'black', 'center', 'Old English Text MT')
+        this.canvas.writeTextToCanvas('Optiescherm', 125, this.canvas.getWidth() / 2, this.canvas.getHeight() / 4.2, PlayerHandler.getFontColor(), 'center', 'Old English Text MT')
         this.writeLettertypesToCanvas();
         this.writeTextColourToCanvas();
         this.writeDifficultyToCanvas();
@@ -29,25 +30,27 @@ class OptionsScreen {
     }
 
     public writeLettertypesToCanvas() {
-        this.canvas.writeTextToCanvas('Lettertype:', 50, this.canvas.getWidth() / 2, this.canvas.getHeight() / 3, 'black', 'center', 'Pristina');
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 615, this.canvas.getHeight() / 2.5, 'Pristina', 30, this.canvas.getWidth() / 2 - 510, this.canvas.getHeight() / 2.33, 'black', 'center', 'Pristina ');
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 370, this.canvas.getHeight() / 2.5, 'Old English Text MT', 20, this.canvas.getWidth() / 2 - 260, this.canvas.getHeight() / 2.33, 'black', 'center', 'Old English Text MT   ');
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 111, this.canvas.getHeight() / 2.5, 'Arial', 30, this.canvas.getWidth() / 2, this.canvas.getHeight() / 2.33, 'black', 'center', 'Arial');
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 141, this.canvas.getHeight() / 2.5, 'Times New Roman', 25, this.canvas.getWidth() / 2 + 250, this.canvas.getHeight() / 2.36, 'black', 'center', 'Times New Roman');
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 393, this.canvas.getHeight() / 2.5, 'Comic Sans MS', 25, this.canvas.getWidth() / 2 + 505, this.canvas.getHeight() / 2.33, 'black', 'center', 'Comic Sans MS');
+        this.canvas.writeTextToCanvas('Lettertype:', 50, this.canvas.getWidth() / 2, this.canvas.getHeight() / 3, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle());
+        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 615, this.canvas.getHeight() / 2.5, 'Pristina', 30, this.canvas.getWidth() / 2 - 510, this.canvas.getHeight() / 2.33, PlayerHandler.getFontColor(), 'center', 'Pristina ');
+        this.canvas.writeStrokeTextToCanvas(30, 'Pristina','black', 'center', 'Pristina', this.canvas.getWidth() / 2 - 510, this.canvas.getHeight() / 2);
+        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 370, this.canvas.getHeight() / 2.5, 'Old English Text MT', 20, this.canvas.getWidth() / 2 - 260, this.canvas.getHeight() / 2.33, PlayerHandler.getFontColor(), 'center', 'Old English Text MT');
+        this.canvas.writeStrokeTextToCanvas(20, 'Old English Text MT','black', 'center', 'Old English Text MT', this.canvas.getWidth() / 2 - 260, this.canvas.getHeight() / 2.33)
+        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 111, this.canvas.getHeight() / 2.5, 'Arial', 30, this.canvas.getWidth() / 2, this.canvas.getHeight() / 2.33, PlayerHandler.getFontColor(), 'center', 'Arial');
+        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 141, this.canvas.getHeight() / 2.5, 'Times New Roman', 25, this.canvas.getWidth() / 2 + 250, this.canvas.getHeight() / 2.36, PlayerHandler.getFontColor(), 'center', 'Times New Roman');
+        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 393, this.canvas.getHeight() / 2.5, 'Comic Sans MS', 25, this.canvas.getWidth() / 2 + 505, this.canvas.getHeight() / 2.33, PlayerHandler.getFontColor(), 'center', 'Comic Sans MS');
     }
     public writeTextColourToCanvas() {
-        this.canvas.writeTextToCanvas('Tekstkleur:', 50, this.canvas.getWidth() / 2, this.canvas.getHeight() / 1.8, 'black', 'center', 'Pristina');
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 615, this.canvas.getHeight() / 1.5 - 39, 'Zwart', 30, this.canvas.getWidth() / 2 - 510, this.canvas.getHeight() / 1.53, 'black', 'center', 'Pristina');
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 363, this.canvas.getHeight() / 1.5 - 39, 'Wit', 30, this.canvas.getWidth() / 2 - 260, this.canvas.getHeight() / 1.53, 'black', 'center', 'Pristina');
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 111, this.canvas.getHeight() / 1.5 - 39, 'Blauw', 30, this.canvas.getWidth() / 2, this.canvas.getHeight() / 1.53, 'DarkTurquoise', 'center', 'Pristina');
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 141, this.canvas.getHeight() / 1.5 - 39, 'Roze', 30, this.canvas.getWidth() / 2 + 250, this.canvas.getHeight() / 1.53, 'DeepPink', 'center', 'Pristina');
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 393, this.canvas.getHeight() / 1.5 - 39, 'Groen', 30, this.canvas.getWidth() / 2 + 500, this.canvas.getHeight() / 1.53, 'lime', 'center', 'Pristina');
+        this.canvas.writeTextToCanvas('Tekstkleur:', 50, this.canvas.getWidth() / 2, this.canvas.getHeight() / 1.8, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle());
+        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 615, this.canvas.getHeight() / 1.5 - 39, 'Zwart', 30, this.canvas.getWidth() / 2 - 510, this.canvas.getHeight() / 1.53, 'black', 'center', PlayerHandler.getFontStyle());
+        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 363, this.canvas.getHeight() / 1.5 - 39, 'Wit', 30, this.canvas.getWidth() / 2 - 260, this.canvas.getHeight() / 1.53, 'black', 'center', PlayerHandler.getFontStyle());
+        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 111, this.canvas.getHeight() / 1.5 - 39, 'Blauw', 30, this.canvas.getWidth() / 2, this.canvas.getHeight() / 1.53, 'DarkTurquoise', 'center', PlayerHandler.getFontStyle());
+        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 141, this.canvas.getHeight() / 1.5 - 39, 'Roze', 30, this.canvas.getWidth() / 2 + 250, this.canvas.getHeight() / 1.53, 'DeepPink', 'center', PlayerHandler.getFontStyle());
+        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 393, this.canvas.getHeight() / 1.5 - 39, 'Groen', 30, this.canvas.getWidth() / 2 + 500, this.canvas.getHeight() / 1.53, 'lime', 'center', PlayerHandler.getFontStyle());
     }
     public writeDifficultyToCanvas() {
-        this.canvas.writeTextToCanvas('Moeilijkheidgraad:', 50, this.canvas.getWidth() / 2, this.canvas.getHeight() / 1.25, 'black', 'center', 'Pristina');
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 242, this.canvas.getHeight() / 1.1 - 39, 'Makkelijk', 30, this.canvas.getWidth() / 2 - 135, this.canvas.getHeight() / 1.1 - 10, 'black', 'center', 'Pristina');
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 20, this.canvas.getHeight() / 1.1 - 39, 'Moeilijk', 30, this.canvas.getWidth() / 2 + 125, this.canvas.getHeight() / 1.1 - 10, 'black', 'center', 'Pristina');
+        this.canvas.writeTextToCanvas('Moeilijkheidgraad:', 50, this.canvas.getWidth() / 2, this.canvas.getHeight() / 1.25, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle());
+        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 242, this.canvas.getHeight() / 1.1 - 39, 'Makkelijk', 30, this.canvas.getWidth() / 2 - 135, this.canvas.getHeight() / 1.1 - 10, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle());
+        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 20, this.canvas.getHeight() / 1.1 - 39, 'Moeilijk', 30, this.canvas.getWidth() / 2 + 125, this.canvas.getHeight() / 1.1 - 10, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle());
     }
 
     private removeButtons() {
@@ -62,7 +65,10 @@ class OptionsScreen {
                 if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
 
                     // lettertype 1
+                    PlayerHandler.setFontStyle('Pristina')
                     console.log('Pristina is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen')
                 }
             }
         }
@@ -75,7 +81,11 @@ class OptionsScreen {
                 if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
 
                     // lettertype 2
-                    console.log('Freestyle Script is gedrukt');
+                    PlayerHandler.setFontStyle('Old English Text MT')
+                    console.log('Old English Text MT is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen')
+
                 }
             }
         }
@@ -88,7 +98,10 @@ class OptionsScreen {
                 if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
 
                     // lettertype 3
+                    PlayerHandler.setFontStyle('Arial')
                     console.log('Arial is gedrukt');
+                    ScreenSwitch.draw('optionsScreen')
+
 
                 }
             }
@@ -102,7 +115,11 @@ class OptionsScreen {
                 if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
 
                     // lettertype 4
-                    console.log('Bradley Hand ITC is gedrukt');
+                    PlayerHandler.setFontStyle('Times New Roman')
+                    console.log('Times New Roman is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen')
+
 
                 }
             }
@@ -116,7 +133,10 @@ class OptionsScreen {
                 if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
 
                     // lettertype 5
-                    console.log('Harlow Solid Italic is gedrukt');
+                    PlayerHandler.setFontStyle('Comic Sans MS')
+                    console.log('Comic Sans MS is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen')
 
                 }
             }
@@ -131,7 +151,10 @@ class OptionsScreen {
                 if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
 
                     // Tekstkleur 1
+                    PlayerHandler.setFontColor('Black')
                     console.log('Tekstkleur ZWART is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen')
 
                 }
             }
@@ -145,7 +168,11 @@ class OptionsScreen {
                 if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
 
                     // Tekstkleur 2
+                    PlayerHandler.setFontColor('White')
                     console.log('Tekstkleur WIT is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen')
+
 
                 }
             }
@@ -159,7 +186,10 @@ class OptionsScreen {
                 if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
 
                     // Tekstkleur 3
-                    console.log('Tekstkleur 3 is gedrukt');
+                    PlayerHandler.setFontColor('DarkTurquoise')
+                    console.log('Tekstkleur BLAUW is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen')
 
                 }
             }
@@ -173,8 +203,10 @@ class OptionsScreen {
                 if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
 
                     // Tekstkleur 4
-                    console.log('Tekstkleur 4 is gedrukt');
-
+                    PlayerHandler.setFontColor('DeepPink')
+                    console.log('Tekstkleur ROZE is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen')
                 }
             }
         }
@@ -187,7 +219,10 @@ class OptionsScreen {
                 if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
 
                     // Tekstkleur 5
-                    console.log('Tekstkleur 5 is gedrukt');
+                    PlayerHandler.setFontColor('Lime')
+                    console.log('Tekstkleur GROEN is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen')
 
                 }
             }
@@ -202,7 +237,7 @@ class OptionsScreen {
                 if (event.y > this.canvas.getHeight() / 1.1 - 39 && event.y < this.canvas.getHeight() / 1.1) {
 
                     // difficulty normal
-                    console.log('makkelijk is gedrukt');
+                    console.log('Makkelijk is gedrukt');
 
                 }
             }
@@ -216,7 +251,7 @@ class OptionsScreen {
                 if (event.y > this.canvas.getHeight() / 1.1 - 39 && event.y < this.canvas.getHeight() / 1.1) {
 
                     // difficulty hard
-                    console.log('moelijk is gedrukt');
+                    console.log('Moelijk is gedrukt');
 
                 }
             }
