@@ -154,6 +154,11 @@ class Canvas {
         this.ctx.drawImage(image, xCoordinate, yCoordinate, width, height);
         // }
     }
+    public writeImageToCanvasPreloadOnload(image: HTMLImageElement, xCoordinate: number, yCoordinate: number, width: number, height: number): void {
+        image.onload = () => {
+        this.ctx.drawImage(image, xCoordinate, yCoordinate, width, height);
+        }
+    }
     public colorClick() {
         this.canvas.addEventListener("click", (event: MouseEvent) => {
             let clickEventColor = this.ctx.getImageData(event.x, event.y, 1, 1).data
@@ -173,12 +178,12 @@ class Canvas {
                 this.clearScreen()
                 this.writeImageToCanvasPreload(this.europeMap, this.getWidth() / 28, this.getWidth() / 19, this.getHeight() - this.getHeight() / 9.3, this.getHeight() - this.getHeight() / 9.3)
                 this.writeTextToCanvas(this.selectedCountry, 35, this.getWidth() / 1.35, this.getHeight() / 4, "black", "center", "Old English Text MT")
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro1, 17, this.getWidth() / 1.35, this.getHeight() / 3.4, "white", "center", "Old English Text MT")
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro2, 17, this.getWidth() / 1.35, this.getHeight() / 3.1, "white", "center", "Old English Text MT")
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro3, 17, this.getWidth() / 1.35, this.getHeight() / 2.85, "white", "center", "Old English Text MT")
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro4, 17, this.getWidth() / 1.35, this.getHeight() / 2.625, "white", "center", "Old English Text MT")
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro5, 17, this.getWidth() / 1.35, this.getHeight() / 2.425, "white", "center", "Old English Text MT")
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro6, 17, this.getWidth() / 1.35, this.getHeight() / 2.25, "white", "center", "Old English Text MT")
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro1, 24, this.getWidth() / 1.35, this.getHeight() / 3.4, "white", "center", "Pristina")
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro2, 24, this.getWidth() / 1.35, this.getHeight() / 3.1, "white", "center", "Pristina")
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro3, 24, this.getWidth() / 1.35, this.getHeight() / 2.85, "white", "center", "Pristina")
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro4, 24, this.getWidth() / 1.35, this.getHeight() / 2.625, "white", "center", "Pristina")
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro5, 24, this.getWidth() / 1.35, this.getHeight() / 2.425, "white", "center", "Pristina")
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro6, 24, this.getWidth() / 1.35, this.getHeight() / 2.25, "white", "center", "Pristina")
                 
                 if (this.selectedCountry == 'Nederland') {
                     this.writeCountryButton("./assets/images/oldButton.png", this.getWidth() / 1.35 - 125, this.getHeight() / 2, "Start", 35,this.getWidth() / 1.35, this.getHeight() / 1.62, "black", "center", "Old English Text MT");
@@ -265,5 +270,9 @@ class Canvas {
     }
     public getquestionNumber():number{
         return this.questionNumber;
+    }
+
+    public getColor(sx: number, sy: number, sw: number, sh: number, index: number) {
+        return this.ctx.getImageData(sx, sy, sw, sh).data[index]
     }
 }
