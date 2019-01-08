@@ -8,6 +8,7 @@ namespace ScreenSwitch {
         this.saveScreen = new SaveScreen(canvas)
         this.shopScreen = new ShopScreen()
         this.optionsScreen = new OptionsScreen()
+        this.trophyScreen = new TrophyScreen(canvas)
     }
 
     export function draw(currentScreen: string) {
@@ -29,6 +30,9 @@ namespace ScreenSwitch {
         }
         if (currentScreen == 'saveScreen') {
             this.saveScreen.draw();
+        }
+        if (currentScreen == 'trophyScreen') {
+            this.trophyScreen.draw();
         }
     }
 
@@ -56,5 +60,13 @@ namespace ScreenSwitch {
         if (this.lastScreen == 'saveScreen') {
             this.saveScreen.draw();
         }
+        if (this.lastScreen == 'trophyScreen') {
+            this.trophyScreen.draw();
+        }
     }
+}
+
+
+if (this.saveStatus == 'overwrite') {
+            
 }
