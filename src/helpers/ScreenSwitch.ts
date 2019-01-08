@@ -65,8 +65,3 @@ namespace ScreenSwitch {
         }
     }
 }
-
-
-if (this.saveStatus == 'overwrite') {
-            
-}

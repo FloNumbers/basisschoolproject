@@ -21,6 +21,8 @@ class SaveScreen {
             this.canvas.writeImageToCanvas('./assets/images/Wereldbol.png', this.canvas.getWidth() * (0.25 * index) - this.saveImage.width / 4, this.canvas.getCenter().Y - this.saveImage.height / 3, this.saveImage.width / 2, this.saveImage.height / 2)
         }
         this.clickHandler()
+        this.canvas.writeButtonToCanvas('./assets/images/back-button.png', 20, 20, " ", 35, this.canvas.getCenter().X, this.canvas.getCenter().Y, 'black', 'center', 'ariel');
+        this.backButton()
     }
 
     private removeButtons() {
@@ -36,13 +38,16 @@ class SaveScreen {
                     if (event.y > this.canvas.getCenter().Y - this.saveImage.height / 3 && event.y < this.canvas.getCenter().Y - this.saveImage.height / 3 + this.saveImage.height / 2) {
                         if (this.canvas.getColor(event.x, event.y, 1, 1, 3) !== 0) {
                             if (localStorage.getItem(`Player${index + 1}`)) {
-                                PlayerHandler.loadPlayer(index + 1)
-                                ScreenSwitch.draw('europeScreen')
+                                if (PlayerHandler.getSaveStatus() != 'overwrite') {
+                                    PlayerHandler.loadPlayer(index + 1)
+                                } else if (PlayerHandler.getSaveStatus() == 'overwrite') {
+                                    PlayerHandler.createSaveFile(index + 1)
+                                }
                             } else {
                                 PlayerHandler.createSaveFile(index + 1)
-                                ScreenSwitch.draw('startScreen')
                             }
                             this.removeButtons()
+                            ScreenSwitch.draw('saveScreen')
                         }
                     }
                 }
@@ -50,5 +55,18 @@ class SaveScreen {
             this.listeners.push(loadSaveFile)
             window.addEventListener('click', loadSaveFile)
         }
+    }
+
+    public backButton() {
+        let startListener = (event: MouseEvent) => {
+            if (event.x > 20 && event.x < 95) {
+                if (event.y > 20 && event.y < 95) {
+                    ScreenSwitch.drawPrevious();
+                    this.removeButtons();
+                }
+            }
+        }
+        this.listeners.push(startListener)
+        window.addEventListener('click', startListener)
     }
 }

@@ -2,24 +2,53 @@ namespace PlayerHandler {
 
     export function makePlayer(): void {
         this.player = new Player
+        this.saveStatus = 'dontsave'
         console.log(this.player.player)
     }
 
     export function SavePlayer() {
-        localStorage.setItem(`Player${this.saveFile}`, JSON.stringify(this.player.player))
-        alert(`The save file for ${this.player.player.name} was saved`)
+        if (this.saveStatus == 'save') {
+            localStorage.setItem(`Player${this.saveFile}`, JSON.stringify(this.player.player))
+            alert(`De save voor ${this.player.player.name} is opgeslagen op plek ${this.saveFile}`)
+        }
     }
 
     export function createSaveFile(saveFile: number) {
-        this.saveFile = saveFile
-        localStorage.setItem(`Player${this.saveFile}`, JSON.stringify(this.player.player))
-        alert(`A new save file for was created in slot ${saveFile}`)
+        if (this.saveFile != saveFile) {
+            if (localStorage.getItem(`Player${saveFile}`)) {
+                let confirmation = confirm(`Weet je zeker dat je de save van ${JSON.parse(localStorage.getItem(`Player${saveFile}`)).name} wilt verwijderen en de save van ${this.player.player.name} hier wilt opslaan?`)
+                if (confirmation == true) {
+                    this.saveFile = saveFile
+                    localStorage.setItem(`Player${this.saveFile}`, JSON.stringify(this.player.player))
+                    alert(`De save voor ${this.player.player.name} is opgeslagen op plek ${saveFile}`)
+                    this.saveStatus = 'save'
+                }
+            } else {
+                this.saveFile = saveFile
+                localStorage.setItem(`Player${this.saveFile}`, JSON.stringify(this.player.player))
+                alert(`De save voor ${this.player.player.name} is opgeslagen op plek ${saveFile}`)
+                this.saveStatus = 'save'
+            }
+        } else if (this.saveFile == saveFile) {
+            localStorage.setItem(`Player${this.saveFile}`, JSON.stringify(this.player.player))
+                alert(`De save voor ${this.player.player.name} is opgeslagen op plek ${saveFile}`)
+                this.saveStatus = 'save'
+        }
     }
 
     export function loadPlayer(saveFile: number): void {
         this.saveFile = saveFile
+        this.saveStatus = 'save'
         this.player.player = JSON.parse(localStorage.getItem(`Player${saveFile}`))
-        alert(`The save file for ${this.player.player.name} was loaded`)
+        alert(`De save voor ${this.player.player.name} is geladen`)
+    }
+
+    export function getSaveStatus() {
+        return this.saveStatus
+    }
+
+    export function setSaveStatus(saveStatus: string) {
+        this.saveStatus = saveStatus
     }
 
     export function setName(name: string) {
