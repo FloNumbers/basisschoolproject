@@ -39,6 +39,9 @@ class CountryScreen extends Mapview {
         this.canvas.writeTextToCanvas(`je hebt ${PlayerHandler.getHints()} hints`, 50, this.canvas.getWidth() / 6, this.canvas.getHeight() / 6, PlayerHandler.getFontColor(), "center", "Old English Text MT")
         this.canvas.writeButtonToCanvas(this.shopButton.src, this.canvas.getWidth() / 10, this.canvas.getHeight() / 5, "Gebruik hint", 35, this.canvas.getWidth() / 6, this.canvas.getHeight() / 3.5, "black", "center", "Old English Text MT");
         this.hintHandler()
+        this.canvas.writeButtonToCanvas('./assets/images/settings-button.png', this.canvas.getCenter().X + 610, this.canvas.getCenter().Y + 300, " ", 35, this.canvas.getCenter().X, this.canvas.getCenter().Y, 'black', 'center', 'ariel');
+        ScreenSwitch.screenMemory('countryScreen')
+        this.optionButton()
     }
 
     public backToEuropeHandler() {
@@ -75,15 +78,30 @@ class CountryScreen extends Mapview {
                     if (PlayerHandler.getHints() > 0){
                     PlayerHandler.minusHint()
                     this.canvas.clearArea(this.canvas.getWidth() / 10.5, this.canvas.getHeight() / 10, this.canvas.getWidth() / 6, this.canvas.getHeight() / 12)
-                    this.canvas.writeTextToCanvas(`je hebt ${PlayerHandler.getHints()} hints`, 50, this.canvas.getWidth() / 6, this.canvas.getHeight() / 6, "white", "center", "Old English Text MT")
+                    this.canvas.writeTextToCanvas(`je hebt ${PlayerHandler.getHints()} hints`, 50, this.canvas.getWidth() / 6, this.canvas.getHeight() / 6, PlayerHandler.getFontColor(), "center", "Old English Text MT")
                     this.canvas.clearArea(this.canvas.getWidth() / 1.9, this.canvas.getHeight() / 1.8, 500, 100)
-                    this.canvas.writeTextToCanvas(`${this.question.getHint(this.canvas.getquestionNumber()).hint}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 1.7, 'white', 'center', 'Pristina')
-                    }
+                    this.canvas.writeTextToCanvas(`${this.question.getHint(this.canvas.getquestionNumber()).hint}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 1.7, PlayerHandler.getFontColor(), 'center', 'Pristina')
+                PlayerHandler.SavePlayer()    
+                }
                 }
             }
         }
         this.listeners.push(hintListener)
         window.addEventListener('click', hintListener)
+    }
+
+    private optionButton() {
+        let startListener = (event: MouseEvent) => {
+            if (event.x > this.canvas.getCenter().X + 610 && event.x < this.canvas.getCenter().X + 685) {
+                if (event.y > this.canvas.getCenter().Y + 300 && event.y < this.canvas.getCenter().Y + 375) {
+                    
+                    ScreenSwitch.draw('optionsScreen');
+                    this.removeButtons();
+                }
+            }
+        }
+        this.listeners.push(startListener)
+        window.addEventListener('click', startListener)
     }
 
     private removeButtons() {
