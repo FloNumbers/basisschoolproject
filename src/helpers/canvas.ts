@@ -2,7 +2,7 @@ class Canvas {
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
     private selectedCountry: string = '';
-    private selectedProvince: string;
+    private selectedProvince: string = "";
     private countryIndex: number = null;
     private questionNumber: number = 0;
     private question: Question;
@@ -198,13 +198,13 @@ class Canvas {
                 this.clearScreen()
                 this.writeButtonToCanvas('./assets/images/settings-button.png', this.getCenter().X + 610, this.getCenter().Y + 300, " ", 35, this.getCenter().X, this.getCenter().Y, 'black', 'center', 'ariel');
                 this.writeImageToCanvasPreload(this.europeMap, this.getWidth() / 28, this.getWidth() / 19, this.getHeight() - this.getHeight() / 9.3, this.getHeight() - this.getHeight() / 9.3)
-                this.writeTextToCanvas(this.selectedCountry, 35, this.getWidth() / 1.35, this.getHeight() / 4, "black", "center", "Old English Text MT")
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro1, 24, this.getWidth() / 1.35, this.getHeight() / 3.4, "white", "center", "Pristina")
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro2, 24, this.getWidth() / 1.35, this.getHeight() / 3.1, "white", "center", "Pristina")
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro3, 24, this.getWidth() / 1.35, this.getHeight() / 2.85, "white", "center", "Pristina")
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro4, 24, this.getWidth() / 1.35, this.getHeight() / 2.625, "white", "center", "Pristina")
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro5, 24, this.getWidth() / 1.35, this.getHeight() / 2.425, "white", "center", "Pristina")
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro6, 24, this.getWidth() / 1.35, this.getHeight() / 2.25, "white", "center", "Pristina")
+                this.writeTextToCanvas(this.selectedCountry, 35, this.getWidth() / 1.35, this.getHeight() / 4, PlayerHandler.getFontColor(), "center", "Old English Text MT")
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro1, 24, this.getWidth() / 1.35, this.getHeight() / 3.4, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle())
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro2, 24, this.getWidth() / 1.35, this.getHeight() / 3.1, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle())
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro3, 24, this.getWidth() / 1.35, this.getHeight() / 2.85, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle())
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro4, 24, this.getWidth() / 1.35, this.getHeight() / 2.625, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle())
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro5, 24, this.getWidth() / 1.35, this.getHeight() / 2.425, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle())
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro6, 24, this.getWidth() / 1.35, this.getHeight() / 2.25, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle())
 
                 if (this.selectedCountry == 'Nederland') {
                     this.writeCountryButton("./assets/images/oldButton.png", this.getWidth() / 1.35 - 125, this.getHeight() / 2, "Start", 35, this.getWidth() / 1.35, this.getHeight() / 1.62, "black", "center", "Old English Text MT")

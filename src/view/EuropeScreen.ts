@@ -14,13 +14,13 @@ class EuropeScreen extends Mapview {
     public draw() {
         this.canvas.writeImageToCanvasPreload(this.europeMap, this.canvas.getWidth() / 28, this.canvas.getWidth() / 19, this.canvas.getHeight() - this.canvas.getHeight() / 9.3, this.canvas.getHeight() - this.canvas.getHeight() / 9.3)
         this.canvas.getSelectedCountry()
-        this.canvas.writeTextToCanvas('Kies een land om te beginnen!', 35, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 4, "black", "center", "Old English Text MT")
+        this.canvas.writeTextToCanvas('Kies een land om te beginnen!', 35, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 4, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle())
         this.clickCountry()
         this.canvas.writeButtonToCanvas('./assets/images/settings-button.png', this.canvas.getCenter().X + 610, this.canvas.getCenter().Y + 300, " ", 35, this.canvas.getCenter().X, this.canvas.getCenter().Y, 'black', 'center', 'ariel');
         this.optionButton();
         ScreenSwitch.screenMemory('europeScreen')
 
-        this.canvas.writeButtonToCanvas("./assets/images/oldButton.png", this.canvas.getCenter().X + 350, this.canvas.getCenter().Y + 200, "Save", 35, this.canvas.getCenter().X + 475, this.canvas.getCenter().Y + 290, 'black', "center", "Old English Text MT");
+        this.canvas.writeButtonToCanvas("./assets/images/oldButton.png", this.canvas.getCenter().X + 350, this.canvas.getCenter().Y + 200, "Opslaan", 35, this.canvas.getCenter().X + 475, this.canvas.getCenter().Y + 290, 'black', "center", "Old English Text MT");
         this.saveButton()
     }
 

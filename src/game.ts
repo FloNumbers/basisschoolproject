@@ -21,18 +21,18 @@ class Game {
         this.introText = new IntroText;
         ScreenSwitch.makeScreens(canvas)
         PlayerHandler.makePlayer()
-        this.startScreen = new StartScreen;
+        // this.startScreen = new StartScreen;
         // this.europeScreen = new EuropeScreen(canvas);
         // this.countryScreen = new CountryScreen(canvas);
         // this.shopScreen = new ShopScreen;
         // this.optionsScreen = new OptionsScreen();
     }
     public draw() {
-        this.startScreen.draw();
+        // this.startScreen.draw();
         // this.europeScreen.draw();
         // this.countryScreen.draw();  
         // this.shopScreen.draw();
-        // ScreenSwitch.draw('startScreen')
+        ScreenSwitch.draw('startScreen')
         // this.optionsScreen.draw();
     }
     public gameLoop() {
