@@ -8,7 +8,7 @@ namespace ScreenSwitch {
         this.saveScreen = new SaveScreen(canvas)
         this.shopScreen = new ShopScreen()
         this.optionsScreen = new OptionsScreen()
-        this.trophyScreen = new TrophyScreen(canvas)
+        // this.trophyScreen = new TrophyScreen(canvas)
     }
 
     export function draw(currentScreen: string) {
