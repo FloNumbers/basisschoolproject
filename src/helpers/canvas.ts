@@ -152,6 +152,17 @@ class Canvas {
         });
 
     }
+    public writeButtonAndStrokeTextToCanvas(imageSource: string, imageX: number, imageY: number, imageText: string, imageTextSize: number, imageTextX: number, imageTextY: number, imageTextColor: string, imageTextAlignment: CanvasTextAlign, imageTextFont: string, imageStrokeColor: string) {
+        let buttonElement = document.createElement("img");
+        buttonElement.src = imageSource;
+
+        buttonElement.addEventListener("load", () => {
+            this.ctx.drawImage(buttonElement, imageX, imageY);
+            this.writeTextToCanvas(imageText, imageTextSize, imageTextX, imageTextY, imageTextColor, imageTextAlignment, imageTextFont);
+            this.writeStrokeTextToCanvas(imageTextSize, imageTextFont, imageStrokeColor, imageTextAlignment, imageText, imageTextX, imageTextY);
+        });
+
+    }
     public drawShopBox(x: number, y: number) {
         this.ctx.fillRect(x, y, 100, 100);
         this.ctx.stroke();
