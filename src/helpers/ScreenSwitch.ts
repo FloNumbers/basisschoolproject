@@ -40,6 +40,10 @@ namespace ScreenSwitch {
         this.lastScreen = currentScreen
     }
 
+    export function getScreenMemory() {
+        return this.lastScreen
+    }
+
     export function drawPrevious() {
         this.canvas.clearScreen()
         if (this.lastScreen == 'startScreen') {

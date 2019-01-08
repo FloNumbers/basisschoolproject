@@ -8,6 +8,9 @@ class Canvas {
     private question: Question;
     private introText: IntroText;
     private europeMap: HTMLImageElement
+    private oldButton: HTMLImageElement
+    private settingsButton: HTMLImageElement
+
     private countries: Array<any> = [
         { country: 'Nederland', red: 255, green: 106, blue: 0 },
         { country: 'België', red: 140, green: 255, blue: 172 },
@@ -77,6 +80,12 @@ class Canvas {
 
         this.europeMap = new Image()
         this.europeMap.src = './assets/images/mapEurope.png'
+
+        this.oldButton = new Image()
+        this.oldButton.src = "./assets/images/oldButton.png"
+
+        this.settingsButton = new Image()
+        this.settingsButton.src = './assets/images/settings-button.png'
     }
     public writeTextToCanvas(
         text: string,
@@ -196,6 +205,11 @@ class Canvas {
             }
             if (this.selectedCountry !== '') {
                 this.clearScreen()
+                this.writeImageToCanvasPreload(this.settingsButton, this.getCenter().X + 610, this.getCenter().Y + 300, 75, 75)
+                this.writeImageToCanvasPreload(this.oldButton, this.getCenter().X + 350, this.getCenter().Y + 200, 250, 170)
+                this.writeTextToCanvas("Opslaan", 35, this.getCenter().X + 475, this.getCenter().Y + 290, 'black', "center", "Old English Text MT")
+
+
                 this.writeButtonToCanvas('./assets/images/settings-button.png', this.getCenter().X + 610, this.getCenter().Y + 300, " ", 35, this.getCenter().X, this.getCenter().Y, 'black', 'center', 'ariel');
                 this.writeImageToCanvasPreload(this.europeMap, this.getWidth() / 28, this.getWidth() / 19, this.getHeight() - this.getHeight() / 9.3, this.getHeight() - this.getHeight() / 9.3)
                 this.writeTextToCanvas(this.selectedCountry, 35, this.getWidth() / 1.35, this.getHeight() / 4, PlayerHandler.getFontColor(), "center", "Old English Text MT")

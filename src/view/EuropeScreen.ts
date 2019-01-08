@@ -50,6 +50,7 @@ class EuropeScreen extends Mapview {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X + 610 && event.x < this.canvas.getCenter().X + 685) {
                 if (event.y > this.canvas.getCenter().Y + 300 && event.y < this.canvas.getCenter().Y + 375) {
+                    this.canvas.resetSelectedCountry()
                     ScreenSwitch.draw('optionsScreen');
                     this.removeButtons();
                 }
@@ -64,6 +65,7 @@ class EuropeScreen extends Mapview {
             if (event.x > this.canvas.getCenter().X + 350 && event.x < this.canvas.getCenter().X + 600) {
                 if (event.y > this.canvas.getCenter().Y + 200 && event.y < this.canvas.getCenter().Y + 370) {
                     PlayerHandler.setSaveStatus('overwrite')
+                    this.canvas.resetSelectedCountry()
                     ScreenSwitch.draw('saveScreen')
                     this.removeButtons()
                 }
