@@ -13,6 +13,7 @@ class StartScreen {
         this.drawWorld();
         this.startButton();
         this.optionButton();
+        ScreenSwitch.screenMemory('startScreen');
     }
 
     public drawNameBox() {

@@ -24,7 +24,7 @@ class OptionsScreen {
         this.letterStyle5Button();
         this.difficultyNormalButton();
         this.difficultyHardButton();
-        this.canvas.writeButtonToCanvas('./assets/images/home-button.png', this.canvas.getCenter().X + 610, this.canvas.getCenter().Y + 300, " ", 35, this.canvas.getCenter().X, this.canvas.getCenter().Y, 'black', 'center', 'ariel');
+        this.canvas.writeButtonToCanvas('./assets/images/back-button.png', this.canvas.getCenter().X + 610, this.canvas.getCenter().Y + 300, " ", 35, this.canvas.getCenter().X, this.canvas.getCenter().Y, 'black', 'center', 'ariel');
         this.optionButton();
     }
 
@@ -83,7 +83,6 @@ class OptionsScreen {
                     console.log('Old English Text MT is gedrukt');
                     this.removeButtons();
                     ScreenSwitch.draw('optionsScreen')
-
                 }
             }
         }
@@ -99,8 +98,6 @@ class OptionsScreen {
                     PlayerHandler.setFontStyle('Arial')
                     console.log('Arial is gedrukt');
                     ScreenSwitch.draw('optionsScreen')
-
-
                 }
             }
         }
@@ -117,8 +114,6 @@ class OptionsScreen {
                     console.log('Times New Roman is gedrukt');
                     this.removeButtons();
                     ScreenSwitch.draw('optionsScreen')
-
-
                 }
             }
         }
@@ -135,7 +130,6 @@ class OptionsScreen {
                     console.log('Comic Sans MS is gedrukt');
                     this.removeButtons();
                     ScreenSwitch.draw('optionsScreen')
-
                 }
             }
         }
@@ -153,7 +147,6 @@ class OptionsScreen {
                     console.log('Tekstkleur ZWART is gedrukt');
                     this.removeButtons();
                     ScreenSwitch.draw('optionsScreen')
-
                 }
             }
         }
@@ -170,8 +163,6 @@ class OptionsScreen {
                     console.log('Tekstkleur WIT is gedrukt');
                     this.removeButtons();
                     ScreenSwitch.draw('optionsScreen')
-
-
                 }
             }
         }
@@ -188,7 +179,6 @@ class OptionsScreen {
                     console.log('Tekstkleur BLAUW is gedrukt');
                     this.removeButtons();
                     ScreenSwitch.draw('optionsScreen')
-
                 }
             }
         }
@@ -221,7 +211,6 @@ class OptionsScreen {
                     console.log('Tekstkleur GROEN is gedrukt');
                     this.removeButtons();
                     ScreenSwitch.draw('optionsScreen')
-
                 }
             }
         }
@@ -236,7 +225,6 @@ class OptionsScreen {
 
                     // difficulty normal
                     console.log('Makkelijk is gedrukt');
-
                 }
             }
         }
@@ -250,7 +238,6 @@ class OptionsScreen {
 
                     // difficulty hard
                     console.log('Moelijk is gedrukt');
-
                 }
             }
         }
@@ -263,7 +250,7 @@ class OptionsScreen {
             if (event.x > this.canvas.getCenter().X + 610 && event.x < this.canvas.getCenter().X + 685) {
                 if (event.y > this.canvas.getCenter().Y + 300 && event.y < this.canvas.getCenter().Y + 375) {
 
-                    ScreenSwitch.draw('startScreen');
+                    ScreenSwitch.drawPrevious();
                     this.removeButtons();
                 }
             }

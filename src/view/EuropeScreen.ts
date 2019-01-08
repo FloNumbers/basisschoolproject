@@ -17,6 +17,9 @@ class EuropeScreen extends Mapview {
         console.log(this.canvas.getSelectedCountry())
         this.canvas.writeTextToCanvas('Kies een land om te beginnen!', 35, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 4, "black", "center", "Old English Text MT")
         this.clickCountry()
+        this.canvas.writeButtonToCanvas('./assets/images/settings-button.png', this.canvas.getCenter().X + 610, this.canvas.getCenter().Y + 300, " ", 35, this.canvas.getCenter().X, this.canvas.getCenter().Y, 'black', 'center', 'ariel');
+        this.optionButton();
+        ScreenSwitch.screenMemory('europeScreen')
     }
 
     private removeButtons() {
@@ -39,5 +42,18 @@ class EuropeScreen extends Mapview {
         }
         this.listeners.push(listenerToCountry)
         window.addEventListener('click', listenerToCountry)
+    }
+
+    public optionButton() {
+        let startListener = (event: MouseEvent) => {
+            if (event.x > this.canvas.getCenter().X + 610 && event.x < this.canvas.getCenter().X + 685) {
+                if (event.y > this.canvas.getCenter().Y + 300 && event.y < this.canvas.getCenter().Y + 375) {
+                    ScreenSwitch.draw('optionsScreen');
+                    this.removeButtons();
+                }
+            }
+        }
+        this.listeners.push(startListener)
+        window.addEventListener('click', startListener)
     }
 }
