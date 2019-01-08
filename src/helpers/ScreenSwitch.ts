@@ -31,4 +31,30 @@ namespace ScreenSwitch {
             this.saveScreen.draw();
         }
     }
+
+    export function screenMemory(currentScreen: string) {
+        this.lastScreen = currentScreen
+    }
+
+    export function drawPrevious() {
+        this.canvas.clearScreen()
+        if (this.lastScreen == 'startScreen') {
+            this.startScreen.draw();
+        }
+        if (this.lastScreen == 'europeScreen') {
+            this.europeScreen.draw();
+        }
+        if (this.lastScreen == 'countryScreen') {
+            this.countryScreen.draw();
+        }
+        if (this.lastScreen == 'shopScreen') {
+            this.shopScreen.draw();
+        }
+        if (this.lastScreen == 'optionsScreen') {
+            this.optionsScreen.draw();
+        }
+        if (this.lastScreen == 'saveScreen') {
+            this.saveScreen.draw();
+        }
+    }
 }
