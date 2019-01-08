@@ -1,7 +1,6 @@
 class OptionsScreen {
     private canvas: Canvas;
     private listeners: Array<(event: MouseEvent) => void> = [];
-    private context: h
 
     constructor() {
         const canvasElement: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('canvas');
@@ -31,26 +30,25 @@ class OptionsScreen {
 
     public writeLettertypesToCanvas() {
         this.canvas.writeTextToCanvas('Lettertype:', 50, this.canvas.getWidth() / 2, this.canvas.getHeight() / 3, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle());
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 615, this.canvas.getHeight() / 2.5, 'Pristina', 30, this.canvas.getWidth() / 2 - 510, this.canvas.getHeight() / 2.33, PlayerHandler.getFontColor(), 'center', 'Pristina ');
-        this.canvas.writeStrokeTextToCanvas(30, 'Pristina','black', 'center', 'Pristina', this.canvas.getWidth() / 2 - 510, this.canvas.getHeight() / 2);
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 370, this.canvas.getHeight() / 2.5, 'Old English Text MT', 20, this.canvas.getWidth() / 2 - 260, this.canvas.getHeight() / 2.33, PlayerHandler.getFontColor(), 'center', 'Old English Text MT');
-        this.canvas.writeStrokeTextToCanvas(20, 'Old English Text MT','black', 'center', 'Old English Text MT', this.canvas.getWidth() / 2 - 260, this.canvas.getHeight() / 2.33)
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 111, this.canvas.getHeight() / 2.5, 'Arial', 30, this.canvas.getWidth() / 2, this.canvas.getHeight() / 2.33, PlayerHandler.getFontColor(), 'center', 'Arial');
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 141, this.canvas.getHeight() / 2.5, 'Times New Roman', 25, this.canvas.getWidth() / 2 + 250, this.canvas.getHeight() / 2.36, PlayerHandler.getFontColor(), 'center', 'Times New Roman');
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 393, this.canvas.getHeight() / 2.5, 'Comic Sans MS', 25, this.canvas.getWidth() / 2 + 505, this.canvas.getHeight() / 2.33, PlayerHandler.getFontColor(), 'center', 'Comic Sans MS');
+        // this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 615, this.canvas.getHeight() / 2.5, 'Pristina', 30, this.canvas.getWidth() / 2 - 510, this.canvas.getHeight() / 2.33, PlayerHandler.getFontColor(), 'center', 'Pristina ');
+        this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 615, this.canvas.getHeight() / 2.5, 'Pristina', 30, this.canvas.getWidth() / 2 - 510, this.canvas.getHeight() / 2.33, PlayerHandler.getFontColor(), 'center', 'Pristina', 'black');
+        this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 370, this.canvas.getHeight() / 2.5, 'Old English Text MT', 20, this.canvas.getWidth() / 2 - 260, this.canvas.getHeight() / 2.33, PlayerHandler.getFontColor(), 'center', 'Old English Text MT', 'black');
+        this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 111, this.canvas.getHeight() / 2.5, 'Arial', 30, this.canvas.getWidth() / 2, this.canvas.getHeight() / 2.33, PlayerHandler.getFontColor(), 'center', 'Arial', 'black');
+        this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 141, this.canvas.getHeight() / 2.5, 'Times New Roman', 25, this.canvas.getWidth() / 2 + 250, this.canvas.getHeight() / 2.36, PlayerHandler.getFontColor(), 'center', 'Times New Roman', 'black');
+        this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 393, this.canvas.getHeight() / 2.5, 'Comic Sans MS', 25, this.canvas.getWidth() / 2 + 505, this.canvas.getHeight() / 2.33, PlayerHandler.getFontColor(), 'center', 'Comic Sans MS', 'black');
     }
     public writeTextColourToCanvas() {
         this.canvas.writeTextToCanvas('Tekstkleur:', 50, this.canvas.getWidth() / 2, this.canvas.getHeight() / 1.8, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle());
         this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 615, this.canvas.getHeight() / 1.5 - 39, 'Zwart', 30, this.canvas.getWidth() / 2 - 510, this.canvas.getHeight() / 1.53, 'black', 'center', PlayerHandler.getFontStyle());
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 363, this.canvas.getHeight() / 1.5 - 39, 'Wit', 30, this.canvas.getWidth() / 2 - 260, this.canvas.getHeight() / 1.53, 'black', 'center', PlayerHandler.getFontStyle());
+        this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 363, this.canvas.getHeight() / 1.5 - 39, 'Wit', 30, this.canvas.getWidth() / 2 - 260, this.canvas.getHeight() / 1.53, 'white', 'center', PlayerHandler.getFontStyle(), 'black');
         this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 111, this.canvas.getHeight() / 1.5 - 39, 'Blauw', 30, this.canvas.getWidth() / 2, this.canvas.getHeight() / 1.53, 'DarkTurquoise', 'center', PlayerHandler.getFontStyle());
         this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 141, this.canvas.getHeight() / 1.5 - 39, 'Roze', 30, this.canvas.getWidth() / 2 + 250, this.canvas.getHeight() / 1.53, 'DeepPink', 'center', PlayerHandler.getFontStyle());
         this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 393, this.canvas.getHeight() / 1.5 - 39, 'Groen', 30, this.canvas.getWidth() / 2 + 500, this.canvas.getHeight() / 1.53, 'lime', 'center', PlayerHandler.getFontStyle());
     }
     public writeDifficultyToCanvas() {
         this.canvas.writeTextToCanvas('Moeilijkheidgraad:', 50, this.canvas.getWidth() / 2, this.canvas.getHeight() / 1.25, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle());
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 242, this.canvas.getHeight() / 1.1 - 39, 'Makkelijk', 30, this.canvas.getWidth() / 2 - 135, this.canvas.getHeight() / 1.1 - 10, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle());
-        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 20, this.canvas.getHeight() / 1.1 - 39, 'Moeilijk', 30, this.canvas.getWidth() / 2 + 125, this.canvas.getHeight() / 1.1 - 10, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle());
+        this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 242, this.canvas.getHeight() / 1.1 - 39, 'Makkelijk', 30, this.canvas.getWidth() / 2 - 135, this.canvas.getHeight() / 1.1 - 10, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle(), 'black');
+        this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 20, this.canvas.getHeight() / 1.1 - 39, 'Moeilijk', 30, this.canvas.getWidth() / 2 + 125, this.canvas.getHeight() / 1.1 - 10, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle(), 'black');
     }
 
     private removeButtons() {
