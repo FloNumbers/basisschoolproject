@@ -16,12 +16,12 @@ class CountryScreen extends Mapview {
         this.question = new Question();
         this.player = new Player();
         this.listeners = [];
-        
+        this.canvas.colorClickNederland(this.question.getQuestion(2).question, this.question.getQuestion(2).answer)
     }
 
     public draw() {
 
-        this.canvas.colorClickNederland(this.question.getQuestion(2).question, this.question.getQuestion(2).answer)
+        
         this.canvas.writeImageToCanvas('./assets/images/nederland.png', this.canvas.getCenter().X / 4, this.canvas.getCenter().Y / 2.7, this.canvas.getWidth() / 2.5, this.canvas.getHeight() / 1.25)
         // this.canvas.writeImageToCanvas(this.questionImage.src, this.canvas.getWidth() / 1.43, 90, this.canvas.getWidth() / 4, this.canvas.getHeight() / 1.1)
         // this.canvas.writeTextToCanvas(`${this.player.getName()}`, 30, this.canvas.getWidth() / 6, this.canvas.getHeight() / 4, 'black', 'center', 'Pristina')
