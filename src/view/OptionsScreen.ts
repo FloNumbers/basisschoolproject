@@ -50,19 +50,15 @@ class OptionsScreen {
         this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 242, this.canvas.getHeight() / 1.1 - 39, 'Makkelijk', 30, this.canvas.getWidth() / 2 - 135, this.canvas.getHeight() / 1.1 - 10, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle(), 'black');
         this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 20, this.canvas.getHeight() / 1.1 - 39, 'Moeilijk', 30, this.canvas.getWidth() / 2 + 125, this.canvas.getHeight() / 1.1 - 10, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle(), 'black');
     }
-
     private removeButtons() {
         this.listeners.forEach(e => {
             window.removeEventListener('click', e);
         });
     }
-
     public letterType1Button() {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X - 615 && event.x < this.canvas.getCenter().X - 393) {
                 if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
-
-                    // lettertype 1
                     PlayerHandler.setFontStyle('Pristina')
                     console.log('Pristina is gedrukt');
                     this.removeButtons();
@@ -77,8 +73,6 @@ class OptionsScreen {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X - 363 && event.x < this.canvas.getCenter().X - 141) {
                 if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
-
-                    // lettertype 2
                     PlayerHandler.setFontStyle('Old English Text MT')
                     console.log('Old English Text MT is gedrukt');
                     this.removeButtons();
@@ -93,8 +87,6 @@ class OptionsScreen {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X - 111 && event.x < this.canvas.getCenter().X + 111) {
                 if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
-
-                    // lettertype 3
                     PlayerHandler.setFontStyle('Arial')
                     console.log('Arial is gedrukt');
                     ScreenSwitch.draw('optionsScreen')
@@ -108,8 +100,6 @@ class OptionsScreen {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X + 141 && event.x < this.canvas.getCenter().X + 363) {
                 if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
-
-                    // lettertype 4
                     PlayerHandler.setFontStyle('Times New Roman')
                     console.log('Times New Roman is gedrukt');
                     this.removeButtons();
@@ -124,8 +114,6 @@ class OptionsScreen {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X + 393 && event.x < this.canvas.getCenter().X + 615) {
                 if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
-
-                    // lettertype 5
                     PlayerHandler.setFontStyle('Comic Sans MS')
                     console.log('Comic Sans MS is gedrukt');
                     this.removeButtons();
@@ -136,13 +124,10 @@ class OptionsScreen {
         this.listeners.push(startListener)
         window.addEventListener('click', startListener)
     }
-
     public letterStyle1Button() {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X - 615 && event.x < this.canvas.getCenter().X - 393) {
                 if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
-
-                    // Tekstkleur 1
                     PlayerHandler.setFontColor('Black')
                     console.log('Tekstkleur ZWART is gedrukt');
                     this.removeButtons();
@@ -157,8 +142,6 @@ class OptionsScreen {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X - 363 && event.x < this.canvas.getCenter().X - 141) {
                 if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
-
-                    // Tekstkleur 2
                     PlayerHandler.setFontColor('White')
                     console.log('Tekstkleur WIT is gedrukt');
                     this.removeButtons();
@@ -173,8 +156,6 @@ class OptionsScreen {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X - 111 && event.x < this.canvas.getCenter().X + 111) {
                 if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
-
-                    // Tekstkleur 3
                     PlayerHandler.setFontColor('DarkTurquoise')
                     console.log('Tekstkleur BLAUW is gedrukt');
                     this.removeButtons();
@@ -189,8 +170,6 @@ class OptionsScreen {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X + 141 && event.x < this.canvas.getCenter().X + 363) {
                 if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
-
-                    // Tekstkleur 4
                     PlayerHandler.setFontColor('DeepPink')
                     console.log('Tekstkleur ROZE is gedrukt');
                     this.removeButtons();
@@ -205,8 +184,6 @@ class OptionsScreen {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X + 393 && event.x < this.canvas.getCenter().X + 615) {
                 if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
-
-                    // Tekstkleur 5
                     PlayerHandler.setFontColor('Lime')
                     console.log('Tekstkleur GROEN is gedrukt');
                     this.removeButtons();
@@ -217,13 +194,10 @@ class OptionsScreen {
         this.listeners.push(startListener)
         window.addEventListener('click', startListener)
     }
-
     public difficultyNormalButton() {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getWidth() / 2 - 242 && event.x < this.canvas.getCenter().X - 20) {
                 if (event.y > this.canvas.getHeight() / 1.1 - 39 && event.y < this.canvas.getHeight() / 1.1) {
-
-                    // difficulty normal
                     console.log('Makkelijk is gedrukt');
                 }
             }
@@ -235,8 +209,6 @@ class OptionsScreen {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X + 20 && event.x < this.canvas.getCenter().X + 242) {
                 if (event.y > this.canvas.getHeight() / 1.1 - 39 && event.y < this.canvas.getHeight() / 1.1) {
-
-                    // difficulty hard
                     console.log('Moelijk is gedrukt');
                 }
             }
@@ -249,7 +221,6 @@ class OptionsScreen {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X + 610 && event.x < this.canvas.getCenter().X + 685) {
                 if (event.y > this.canvas.getCenter().Y + 300 && event.y < this.canvas.getCenter().Y + 375) {
-
                     ScreenSwitch.drawPrevious();
                     this.removeButtons();
                 }
