@@ -11,14 +11,14 @@ class ShopScreen {
         this.canvas.writeTextToCanvas('Hints :', 100, this.canvas.getCenter().X - 424, this.canvas.getCenter().Y - 100, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle())
         this.drawShopBoxes(225, 175)
         this.hintShopHandler(225, 175)
-        this.canvas.writeTextToCanvas('Achtergrond :', 100, this.canvas.getCenter().X - 550, this.canvas.getCenter().Y + 100,PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle())
-        this.drawShopBoxes(225, -25)
-        this.canvas.writeTextToCanvas('Muziek :', 100, this.canvas.getCenter().X - 455, this.canvas.getCenter().Y + 300, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle())
-        this.drawShopBoxes(225, -225)
+        // this.canvas.writeTextToCanvas('Achtergrond :', 100, this.canvas.getCenter().X - 550, this.canvas.getCenter().Y + 100,PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle())
+        // this.drawShopBoxes(225, -25)
+        // this.canvas.writeTextToCanvas('Muziek :', 100, this.canvas.getCenter().X - 455, this.canvas.getCenter().Y + 300, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle())
+        // this.drawShopBoxes(225, -225)
         this.canvas.writeButtonToCanvas("./assets/images/oldButton.png", this.canvas.getCenter().X + 325, this.canvas.getCenter().Y + 175, "terug", 35, this.canvas.getCenter().X + 450, this.canvas.getCenter().Y + 260, "black", "center", "Old English Text MT");
         this.canvas.writeTextToCanvas('Hints = 10 punten', 30, this.canvas.getWidth() / 1.4, this.canvas.getHeight() / 5, PlayerHandler.getFontColor(), 'center', 'Pristina')
-        this.canvas.writeTextToCanvas('Achtergrond = nog niet verkrijgbaar', 30, this.canvas.getWidth() / 1.315, this.canvas.getHeight() / 4.25, PlayerHandler.getFontColor(), 'center', 'Pristina')
-        this.canvas.writeTextToCanvas('Muziek = nog niet verkrijgbaar', 30, this.canvas.getWidth() / 1.34, this.canvas.getHeight() / 3.75, PlayerHandler.getFontColor(), 'center', 'Pristina')
+        // this.canvas.writeTextToCanvas('Achtergrond = nog niet verkrijgbaar', 30, this.canvas.getWidth() / 1.315, this.canvas.getHeight() / 4.25, PlayerHandler.getFontColor(), 'center', 'Pristina')
+        // this.canvas.writeTextToCanvas('Muziek = nog niet verkrijgbaar', 30, this.canvas.getWidth() / 1.34, this.canvas.getHeight() / 3.75, PlayerHandler.getFontColor(), 'center', 'Pristina')
         this.shopOutHandler()
     }
     public drawShopBoxes(xBox: number, yBox: number) {

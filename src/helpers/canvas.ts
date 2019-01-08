@@ -10,6 +10,7 @@ class Canvas {
     private europeMap: HTMLImageElement
     private oldButton: HTMLImageElement
     private settingsButton: HTMLImageElement
+    private NetherlandsComplete: boolean = false;
 
     private countries: Array<any> = [
         { country: 'Nederland', red: 255, green: 106, blue: 0 },
@@ -258,6 +259,7 @@ class Canvas {
                     PlayerHandler.scorePlus(100);
 
                     if (this.questionNumber > 6) {
+                        this.NetherlandsComplete = true
                         this.clearArea(this.getWidth() / 1.9, 0, this.getWidth() / 2, this.getHeight() / 1.8);
                         this.writeTextToCanvas(`${PlayerHandler.getName()} je score is: ${PlayerHandler.getScore()}`, 40, this.getWidth() / 1.35, this.getHeight() / 6, PlayerHandler.getFontColor(), 'center', 'Pristina')
                         this.writeTextToCanvas(`Je hebt alle vragen goed beantwoord!!`, 40, this.getWidth() / 1.35, this.getHeight() / 2.8, PlayerHandler.getFontColor(), 'center', 'Pristina')
@@ -296,6 +298,10 @@ class Canvas {
 
             }
         });
+    }
+
+    public checkNetherlandsComplete(): boolean {
+        return this.NetherlandsComplete
     }
 
     public getSelectedProvince(): string {

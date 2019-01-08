@@ -11,6 +11,12 @@ class TrophyScreen {
     public constructor(canvas: HTMLCanvasElement) {
         this.canvas = new Canvas(canvas)
         this.ctx = this.canvas.returnCtx()
+        if (this.canvas.checkNetherlandsComplete() == true) {
+            this.netherlandsComplete = true
+        }
+        else {
+            this.netherlandsComplete = false
+        }
         // this.particle = new Particle(canvas)
 
         // for (let i = 0; i < this.particle.maxConfettis; i++) {
