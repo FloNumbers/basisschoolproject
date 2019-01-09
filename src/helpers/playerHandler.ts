@@ -31,8 +31,8 @@ namespace PlayerHandler {
             }
         } else if (this.saveFile == saveFile) {
             localStorage.setItem(`Player${this.saveFile}`, JSON.stringify(this.player.player))
-                alert(`De save voor ${this.player.player.name} is opgeslagen op plek ${saveFile}`)
-                this.saveStatus = 'save'
+            alert(`De save voor ${this.player.player.name} is opgeslagen op plek ${saveFile}`)
+            this.saveStatus = 'save'
         }
     }
 
