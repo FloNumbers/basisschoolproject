@@ -10,7 +10,7 @@ class Game {
         PlayerHandler.makePlayer();
     }
     draw() {
-        ScreenSwitch.draw('shopScreen');
+        ScreenSwitch.draw('startScreen');
     }
     gameLoop() {
         this.draw();
