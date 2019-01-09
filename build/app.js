@@ -4,14 +4,13 @@ class Game {
         this.canvas = new Canvas(canvasElement);
         this.mathHelper = new MathHelper;
         this.question = new Question;
-        this.player = new Player;
         this.highscore = new Highscore;
         this.introText = new IntroText;
         ScreenSwitch.makeScreens(canvas);
         PlayerHandler.makePlayer();
     }
     draw() {
-        ScreenSwitch.draw('startScreen');
+        ScreenSwitch.draw('shopScreen');
     }
     gameLoop() {
         this.draw();
@@ -339,12 +338,54 @@ class IntroText {
         ];
     }
 }
+class Particle {
+    constructor(canvas) {
+        this.W = window.innerWidth;
+        this.H = window.innerHeight;
+        this.maxConfettis = 150;
+        this.particles = [];
+        this.possibleColors = ["DodgerBlue", "OliveDrab", "Gold", "Pink", "SlateBlue", "LightBlue", "Gold", "Violet", "PaleGreen", "SteelBlue", "SandyBrown", "Chocolate", "Crimson"];
+        this.canvas = new Canvas(canvas);
+        this.ctx = this.canvas.returnCtx();
+    }
+    draw() {
+        this.x = Math.random() * this.W;
+        this.y = Math.random() * this.H - this.H;
+        this.r = this.randomFromTo(11, 33);
+        this.d = Math.random() * this.maxConfettis + 11;
+        this.color = this.possibleColors[Math.floor(Math.random() * this.possibleColors.length)];
+        this.tilt = Math.floor(Math.random() * 33) - 11;
+        this.tiltAngleIncremental = Math.random() * 0.07 + 0.05;
+        this.tiltAngle = 0;
+        console.log("test");
+        this.ctx.beginPath();
+        this.ctx.lineWidth = this.r / 2;
+        this.ctx.strokeStyle = this.color;
+        this.ctx.moveTo(this.x + this.tilt + this.r / 3, this.y);
+        this.ctx.lineTo(this.x + this.tilt, this.y + this.tilt + this.r / 5);
+        return this.ctx.stroke();
+    }
+    randomFromTo(from, to) {
+        return Math.floor(Math.random() * (to - from + 1) + from);
+    }
+    getTiltAngle() {
+        return this.tiltAngle;
+    }
+    setTiltAngle(d) {
+        this.tiltAngle = d;
+    }
+    getTiltAngleIncremental() {
+        return this.tiltAngleIncremental;
+    }
+}
 class Player {
     constructor() {
-        this.player1 = {
+        this.player = {
             name: '',
             score: 0,
-            hints: 0
+            hints: 0,
+            fontStyle: 'Pristina',
+            fontColor: 'white'
         };
     }
 }
@@ -456,7 +497,10 @@ var ScreenSwitch;
         this.startScreen = new StartScreen();
         this.europeScreen = new EuropeScreen(canvas);
         this.countryScreen = new CountryScreen(canvas);
-        this.shopScreen = new ShopScreen();
+        this.saveScreen = new SaveScreen(canvas);
+        this.shopScreen = new ShopScreen(canvas);
+        this.optionsScreen = new OptionsScreen();
+        this.trophyScreen = new TrophyScreen(canvas);
     }
     ScreenSwitch.makeScreens = makeScreens;
     function draw(currentScreen) {
@@ -473,14 +517,58 @@ var ScreenSwitch;
         if (currentScreen == 'shopScreen') {
             this.shopScreen.draw();
         }
+        if (currentScreen == 'optionsScreen') {
+            this.optionsScreen.draw();
+        }
+        if (currentScreen == 'saveScreen') {
+            this.saveScreen.draw();
+        }
+        if (currentScreen == 'trophyScreen') {
+            this.trophyScreen.draw();
+        }
     }
     ScreenSwitch.draw = draw;
+    function screenMemory(currentScreen) {
+        this.lastScreen = currentScreen;
+    }
+    ScreenSwitch.screenMemory = screenMemory;
+    function getScreenMemory() {
+        return this.lastScreen;
+    }
+    ScreenSwitch.getScreenMemory = getScreenMemory;
+    function drawPrevious() {
+        this.canvas.clearScreen();
+        if (this.lastScreen == 'startScreen') {
+            this.startScreen.draw();
+        }
+        if (this.lastScreen == 'europeScreen') {
+            this.europeScreen.draw();
+        }
+        if (this.lastScreen == 'countryScreen') {
+            this.countryScreen.draw();
+        }
+        if (this.lastScreen == 'shopScreen') {
+            this.shopScreen.draw();
+        }
+        if (this.lastScreen == 'optionsScreen') {
+            this.optionsScreen.draw();
+        }
+        if (this.lastScreen == 'saveScreen') {
+            this.saveScreen.draw();
+        }
+        if (this.lastScreen == 'trophyScreen') {
+            this.trophyScreen.draw();
+        }
+    }
+    ScreenSwitch.drawPrevious = drawPrevious;
 })(ScreenSwitch || (ScreenSwitch = {}));
 class Canvas {
     constructor(canvas) {
         this.selectedCountry = '';
+        this.selectedProvince = "";
         this.countryIndex = null;
         this.questionNumber = 0;
+        this.NetherlandsComplete = false;
         this.countries = [
             { country: 'Nederland', red: 255, green: 106, blue: 0 },
             { country: 'België', red: 140, green: 255, blue: 172 },
@@ -547,12 +635,22 @@ class Canvas {
         this.ctx = this.canvas.getContext("2d");
         this.europeMap = new Image();
         this.europeMap.src = './assets/images/mapEurope.png';
+        this.oldButton = new Image();
+        this.oldButton.src = "./assets/images/oldButton.png";
+        this.settingsButton = new Image();
+        this.settingsButton.src = './assets/images/settings-button.png';
     }
     writeTextToCanvas(text, fontSize, xCoordinate, yCoordinate, color = "white", alignment = "center", font) {
         this.ctx.font = `${fontSize}px ${font}`;
         this.ctx.fillStyle = color;
         this.ctx.textAlign = alignment;
         this.ctx.fillText(text, xCoordinate, yCoordinate);
+    }
+    writeStrokeTextToCanvas(fontsize, fontstyle, color, alignment, text, xcoordinate, ycoordinate) {
+        this.ctx.font = `${fontsize}px ${fontstyle}`;
+        this.ctx.strokeStyle = color;
+        this.ctx.textAlign = alignment;
+        this.ctx.strokeText(text, xcoordinate, ycoordinate);
     }
     returnCtx() {
         return this.ctx;
@@ -584,6 +682,15 @@ class Canvas {
             this.writeTextToCanvas(imageText, imageTextSize, imageTextX, imageTextY, imageTextColor, imageTextAlignment, imageTextFont);
         });
     }
+    writeButtonAndStrokeTextToCanvas(imageSource, imageX, imageY, imageText, imageTextSize, imageTextX, imageTextY, imageTextColor, imageTextAlignment, imageTextFont, imageStrokeColor) {
+        let buttonElement = document.createElement("img");
+        buttonElement.src = imageSource;
+        buttonElement.addEventListener("load", () => {
+            this.ctx.drawImage(buttonElement, imageX, imageY);
+            this.writeTextToCanvas(imageText, imageTextSize, imageTextX, imageTextY, imageTextColor, imageTextAlignment, imageTextFont);
+            this.writeStrokeTextToCanvas(imageTextSize, imageTextFont, imageStrokeColor, imageTextAlignment, imageText, imageTextX, imageTextY);
+        });
+    }
     drawShopBox(x, y) {
         this.ctx.fillRect(x, y, 100, 100);
         this.ctx.stroke();
@@ -592,6 +699,11 @@ class Canvas {
     }
     writeImageToCanvasPreload(image, xCoordinate, yCoordinate, width, height) {
         this.ctx.drawImage(image, xCoordinate, yCoordinate, width, height);
+    }
+    writeImageToCanvasPreloadOnload(image, xCoordinate, yCoordinate, width, height) {
+        image.onload = () => {
+            this.ctx.drawImage(image, xCoordinate, yCoordinate, width, height);
+        };
     }
     colorClick() {
         this.canvas.addEventListener("click", (event) => {
@@ -607,14 +719,18 @@ class Canvas {
             }
             if (this.selectedCountry !== '') {
                 this.clearScreen();
+                this.writeImageToCanvasPreload(this.settingsButton, this.getCenter().X + 610, this.getCenter().Y + 300, 75, 75);
+                this.writeImageToCanvasPreload(this.oldButton, this.getCenter().X + 350, this.getCenter().Y + 200, 250, 170);
+                this.writeTextToCanvas("Opslaan", 35, this.getCenter().X + 475, this.getCenter().Y + 290, 'black', "center", "Old English Text MT");
+                this.writeButtonToCanvas('./assets/images/settings-button.png', this.getCenter().X + 610, this.getCenter().Y + 300, " ", 35, this.getCenter().X, this.getCenter().Y, 'black', 'center', 'ariel');
                 this.writeImageToCanvasPreload(this.europeMap, this.getWidth() / 28, this.getWidth() / 19, this.getHeight() - this.getHeight() / 9.3, this.getHeight() - this.getHeight() / 9.3);
-                this.writeTextToCanvas(this.selectedCountry, 35, this.getWidth() / 1.35, this.getHeight() / 4, "black", "center", "Old English Text MT");
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro1, 17, this.getWidth() / 1.35, this.getHeight() / 3.4, "white", "center", "Old English Text MT");
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro2, 17, this.getWidth() / 1.35, this.getHeight() / 3.1, "white", "center", "Old English Text MT");
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro3, 17, this.getWidth() / 1.35, this.getHeight() / 2.85, "white", "center", "Old English Text MT");
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro4, 17, this.getWidth() / 1.35, this.getHeight() / 2.625, "white", "center", "Old English Text MT");
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro5, 17, this.getWidth() / 1.35, this.getHeight() / 2.425, "white", "center", "Old English Text MT");
-                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro6, 17, this.getWidth() / 1.35, this.getHeight() / 2.25, "white", "center", "Old English Text MT");
+                this.writeTextToCanvas(this.selectedCountry, 35, this.getWidth() / 1.35, this.getHeight() / 4, PlayerHandler.getFontColor(), "center", "Old English Text MT");
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro1, 24, this.getWidth() / 1.35, this.getHeight() / 3.4, PlayerHandler.getFontColor(), 'center', 'Pristina');
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro2, 24, this.getWidth() / 1.35, this.getHeight() / 3.1, PlayerHandler.getFontColor(), 'center', 'Pristina');
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro3, 24, this.getWidth() / 1.35, this.getHeight() / 2.85, PlayerHandler.getFontColor(), 'center', 'Pristina');
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro4, 24, this.getWidth() / 1.35, this.getHeight() / 2.625, PlayerHandler.getFontColor(), 'center', 'Pristina');
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro5, 24, this.getWidth() / 1.35, this.getHeight() / 2.425, PlayerHandler.getFontColor(), 'center', 'Pristina');
+                this.writeTextToCanvas(this.introText.intro[this.countryIndex].intro6, 24, this.getWidth() / 1.35, this.getHeight() / 2.25, PlayerHandler.getFontColor(), 'center', 'Pristina');
                 if (this.selectedCountry == 'Nederland') {
                     this.writeCountryButton("./assets/images/oldButton.png", this.getWidth() / 1.35 - 125, this.getHeight() / 2, "Start", 35, this.getWidth() / 1.35, this.getHeight() / 1.62, "black", "center", "Old English Text MT");
                 }
@@ -647,24 +763,43 @@ class Canvas {
                     this.questionNumber++;
                     PlayerHandler.scorePlus(100);
                     if (this.questionNumber > 6) {
+                        this.NetherlandsComplete = true;
                         this.clearArea(this.getWidth() / 1.9, 0, this.getWidth() / 2, this.getHeight() / 1.8);
-                        this.writeTextToCanvas(`${PlayerHandler.getName()} je score is: ${PlayerHandler.getScore()}`, 40, this.getWidth() / 1.35, this.getHeight() / 6, 'white', 'center', 'Pristina');
-                        this.writeTextToCanvas(`Je hebt alle vragen goed beantwoord!!`, 40, this.getWidth() / 1.35, this.getHeight() / 2.8, 'white', 'center', 'Pristina');
+                        this.writeTextToCanvas(`${PlayerHandler.getName()} je score is: ${PlayerHandler.getScore()}`, 40, this.getWidth() / 1.35, this.getHeight() / 6, PlayerHandler.getFontColor(), 'center', 'Pristina');
+                        this.writeTextToCanvas(`Je hebt alle vragen goed beantwoord!!`, 40, this.getWidth() / 1.35, this.getHeight() / 2.8, PlayerHandler.getFontColor(), 'center', 'Pristina');
                     }
                     else {
                         this.resetSelectedProvince();
                         this.clearArea(this.getWidth() / 1.9, 0, this.getWidth() / 2, this.getHeight() / 1.8);
-                        this.writeTextToCanvas(`${PlayerHandler.getName()} je score is: ${PlayerHandler.getScore()}`, 40, this.getWidth() / 1.35, this.getHeight() / 6, 'white', 'center', 'Pristina');
-                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.7, 'white', 'center', 'Pristina');
-                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion2}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.2, 'white', 'center', 'Pristina');
-                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion3}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.8, 'white', 'center', 'Pristina');
-                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion4}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.5, 'white', 'center', 'Pristina');
-                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion5}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.2, 'white', 'center', 'Pristina');
-                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).question}`, 30, this.getWidth() / 1.35, this.getHeight() / 1.9, 'white', 'center', 'Pristina');
+                        this.writeTextToCanvas(`${PlayerHandler.getName()} je score is: ${PlayerHandler.getScore()}`, 40, this.getWidth() / 1.35, this.getHeight() / 6, PlayerHandler.getFontColor(), 'center', 'Pristina');
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.7, PlayerHandler.getFontColor(), 'center', 'Pristina');
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion2}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.2, PlayerHandler.getFontColor(), 'center', 'Pristina');
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion3}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.8, PlayerHandler.getFontColor(), 'center', 'Pristina');
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion4}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.5, PlayerHandler.getFontColor(), 'center', 'Pristina');
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion5}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.2, PlayerHandler.getFontColor(), 'center', 'Pristina');
+                        this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).question}`, 30, this.getWidth() / 1.35, this.getHeight() / 1.9, PlayerHandler.getFontColor(), 'center', 'Pristina');
                     }
+                }
+                else if (this.getSelectedProvince() !== this.question.getQuestion(this.questionNumber).answer && this.selectedProvince !== "") {
+                    this.selectedProvince = "";
+                    alert('helaas probeer het nog eens');
+                    if (PlayerHandler.getScore() > 0) {
+                        PlayerHandler.scoreMinus(10);
+                    }
+                    this.clearArea(this.getWidth() / 1.9, 0, this.getWidth() / 2, this.getHeight() / 1.8);
+                    this.writeTextToCanvas(`${PlayerHandler.getName()} je score is: ${PlayerHandler.getScore()}`, 40, this.getWidth() / 1.35, this.getHeight() / 6, 'white', 'center', 'Pristina');
+                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.7, 'white', 'center', 'Pristina');
+                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion2}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.2, 'white', 'center', 'Pristina');
+                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion3}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.8, 'white', 'center', 'Pristina');
+                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion4}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.5, 'white', 'center', 'Pristina');
+                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion5}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.2, 'white', 'center', 'Pristina');
+                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).question}`, 30, this.getWidth() / 1.35, this.getHeight() / 1.9, 'white', 'center', 'Pristina');
                 }
             }
         });
+    }
+    checkNetherlandsComplete() {
+        return this.NetherlandsComplete;
     }
     getSelectedProvince() {
         return this.selectedProvince;
@@ -684,6 +819,9 @@ class Canvas {
     getquestionNumber() {
         return this.questionNumber;
     }
+    getColor(sx, sy, sw, sh, index) {
+        return this.ctx.getImageData(sx, sy, sw, sh).data[index];
+    }
 }
 class MathHelper {
     randomNumber(min, max) {
@@ -694,51 +832,105 @@ var PlayerHandler;
 (function (PlayerHandler) {
     function makePlayer() {
         this.player = new Player;
-        console.log(this.player.player1);
+        this.saveStatus = 'dontsave';
+        console.log(this.player.player);
     }
     PlayerHandler.makePlayer = makePlayer;
     function SavePlayer() {
-        localStorage.setItem('Player1', JSON.stringify(this.player.player1));
-        alert(`The save file for ${this.player.player1.name} was saved`);
+        if (this.saveStatus == 'save') {
+            localStorage.setItem(`Player${this.saveFile}`, JSON.stringify(this.player.player));
+            alert(`De save voor ${this.player.player.name} is opgeslagen op plek ${this.saveFile}`);
+        }
     }
     PlayerHandler.SavePlayer = SavePlayer;
-    function loadPlayer() {
-        this.player.player1 = JSON.parse(localStorage.getItem('Player1'));
-        alert(`The save file for ${this.player.player1.name} was loaded`);
+    function createSaveFile(saveFile) {
+        if (this.saveFile != saveFile) {
+            if (localStorage.getItem(`Player${saveFile}`)) {
+                let confirmation = confirm(`Weet je zeker dat je de save van ${JSON.parse(localStorage.getItem(`Player${saveFile}`)).name} wilt verwijderen en de save van ${this.player.player.name} hier wilt opslaan?`);
+                if (confirmation == true) {
+                    this.saveFile = saveFile;
+                    localStorage.setItem(`Player${this.saveFile}`, JSON.stringify(this.player.player));
+                    alert(`De save voor ${this.player.player.name} is opgeslagen op plek ${saveFile}`);
+                    this.saveStatus = 'save';
+                }
+            }
+            else {
+                this.saveFile = saveFile;
+                localStorage.setItem(`Player${this.saveFile}`, JSON.stringify(this.player.player));
+                alert(`De save voor ${this.player.player.name} is opgeslagen op plek ${saveFile}`);
+                this.saveStatus = 'save';
+            }
+        }
+        else if (this.saveFile == saveFile) {
+            localStorage.setItem(`Player${this.saveFile}`, JSON.stringify(this.player.player));
+            alert(`De save voor ${this.player.player.name} is opgeslagen op plek ${saveFile}`);
+            this.saveStatus = 'save';
+        }
+    }
+    PlayerHandler.createSaveFile = createSaveFile;
+    function loadPlayer(saveFile) {
+        this.saveFile = saveFile;
+        this.saveStatus = 'save';
+        this.player.player = JSON.parse(localStorage.getItem(`Player${saveFile}`));
+        alert(`De save voor ${this.player.player.name} is geladen`);
     }
     PlayerHandler.loadPlayer = loadPlayer;
+    function getSaveStatus() {
+        return this.saveStatus;
+    }
+    PlayerHandler.getSaveStatus = getSaveStatus;
+    function setSaveStatus(saveStatus) {
+        this.saveStatus = saveStatus;
+    }
+    PlayerHandler.setSaveStatus = setSaveStatus;
     function setName(name) {
-        this.player.player1.name = name;
+        this.player.player.name = name;
     }
     PlayerHandler.setName = setName;
     function getScore() {
-        return this.player.player1.score;
+        return this.player.player.score;
     }
     PlayerHandler.getScore = getScore;
     function getName() {
-        return this.player.player1.name;
+        return this.player.player.name;
     }
     PlayerHandler.getName = getName;
     function scoreMinus(minusAmount) {
-        this.player.player1.score -= minusAmount;
+        this.player.player.score -= minusAmount;
     }
     PlayerHandler.scoreMinus = scoreMinus;
     function scorePlus(plusAmount) {
-        this.player.player1.score += plusAmount;
+        this.player.player.score += plusAmount;
     }
     PlayerHandler.scorePlus = scorePlus;
     function getHints() {
-        return this.player.player1.hints;
+        return this.player.player.hints;
     }
     PlayerHandler.getHints = getHints;
     function addHint() {
-        this.player.player1.hints++;
+        this.player.player.hints++;
     }
     PlayerHandler.addHint = addHint;
     function minusHint() {
-        this.player.player1.hints--;
+        this.player.player.hints--;
     }
     PlayerHandler.minusHint = minusHint;
+    function setFontStyle(fontStyle) {
+        this.player.player.fontStyle = fontStyle;
+    }
+    PlayerHandler.setFontStyle = setFontStyle;
+    function getFontStyle() {
+        return this.player.player.fontStyle;
+    }
+    PlayerHandler.getFontStyle = getFontStyle;
+    function setFontColor(fontColor) {
+        this.player.player.fontColor = fontColor;
+    }
+    PlayerHandler.setFontColor = setFontColor;
+    function getFontColor() {
+        return this.player.player.fontColor;
+    }
+    PlayerHandler.getFontColor = getFontColor;
 })(PlayerHandler || (PlayerHandler = {}));
 class CountryScreen extends Mapview {
     constructor(canvas) {
@@ -750,24 +942,27 @@ class CountryScreen extends Mapview {
         this.question = new Question();
         this.player = new Player();
         this.listeners = [];
+        this.canvas.colorClickNederland(this.question.getQuestion(2).question, this.question.getQuestion(2).answer);
     }
     draw() {
-        this.canvas.colorClickNederland(this.question.getQuestion(2).question, this.question.getQuestion(2).answer);
         this.canvas.writeImageToCanvas('./assets/images/nederland.png', this.canvas.getCenter().X / 4, this.canvas.getCenter().Y / 2.7, this.canvas.getWidth() / 2.5, this.canvas.getHeight() / 1.25);
         this.canvas.writeButtonToCanvas(this.shopButton.src, this.canvas.getWidth() / 1.4, this.canvas.getHeight() / 1.35, "Winkel", 35, this.canvas.getWidth() / 1.28, this.canvas.getHeight() / 1.18, "black", "center", "Old English Text MT");
         this.toShopHandler();
-        this.canvas.writeTextToCanvas(`${PlayerHandler.getName()} je score is: ${PlayerHandler.getScore()}`, 40, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 6, 'white', 'center', 'Pristina');
-        this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).introToQuestion}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 3.7, 'white', 'center', 'Pristina');
-        this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).introToQuestion2}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 3.2, 'white', 'center', 'Pristina');
-        this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).introToQuestion3}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 2.8, 'white', 'center', 'Pristina');
-        this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).introToQuestion4}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 2.5, 'white', 'center', 'Pristina');
-        this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).introToQuestion5}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 2.2, 'white', 'center', 'Pristina');
-        this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).question}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 1.9, 'white', 'center', 'Pristina');
+        this.canvas.writeTextToCanvas(`${PlayerHandler.getName()} je score is: ${PlayerHandler.getScore()}`, 40, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 6, PlayerHandler.getFontColor(), 'center', 'Pristina');
+        this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).introToQuestion}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 3.7, PlayerHandler.getFontColor(), 'center', 'Pristina');
+        this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).introToQuestion2}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 3.2, PlayerHandler.getFontColor(), 'center', 'Pristina');
+        this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).introToQuestion3}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 2.8, PlayerHandler.getFontColor(), 'center', 'Pristina');
+        this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).introToQuestion4}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 2.5, PlayerHandler.getFontColor(), 'center', 'Pristina');
+        this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).introToQuestion5}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 2.2, PlayerHandler.getFontColor(), 'center', 'Pristina');
+        this.canvas.writeTextToCanvas(`${this.question.getQuestion(this.canvas.getquestionNumber()).question}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 1.9, PlayerHandler.getFontColor(), 'center', 'Pristina');
         this.canvas.writeButtonToCanvas(this.shopButton.src, this.canvas.getWidth() / 1.8, this.canvas.getHeight() / 1.35, "Terug", 35, this.canvas.getWidth() / 1.62, this.canvas.getHeight() / 1.18, "black", "center", "Old English Text MT");
         this.backToEuropeHandler();
-        this.canvas.writeTextToCanvas(`je hebt ${PlayerHandler.getHints()} hints`, 50, this.canvas.getWidth() / 6, this.canvas.getHeight() / 6, "white", "center", "Old English Text MT");
+        this.canvas.writeTextToCanvas(`je hebt ${PlayerHandler.getHints()} hints`, 50, this.canvas.getWidth() / 6, this.canvas.getHeight() / 6, PlayerHandler.getFontColor(), "center", "Old English Text MT");
         this.canvas.writeButtonToCanvas(this.shopButton.src, this.canvas.getWidth() / 10, this.canvas.getHeight() / 5, "Gebruik hint", 35, this.canvas.getWidth() / 6, this.canvas.getHeight() / 3.5, "black", "center", "Old English Text MT");
         this.hintHandler();
+        this.canvas.writeButtonToCanvas('./assets/images/settings-button.png', this.canvas.getCenter().X + 610, this.canvas.getCenter().Y + 300, " ", 35, this.canvas.getCenter().X, this.canvas.getCenter().Y, 'black', 'center', 'ariel');
+        ScreenSwitch.screenMemory('countryScreen');
+        this.optionButton();
     }
     backToEuropeHandler() {
         let listenerBackToEurope = (event) => {
@@ -797,15 +992,31 @@ class CountryScreen extends Mapview {
         let hintListener = (event) => {
             if (event.x > this.canvas.getWidth() / 10 && event.x < this.canvas.getWidth() / 10 + this.shopButton.width) {
                 if (event.y > this.canvas.getHeight() / 5 && event.y < this.canvas.getHeight() / 5 + this.shopButton.height) {
-                    if (PlayerHandler.getHints() > 0)
+                    if (PlayerHandler.getHints() > 0) {
                         PlayerHandler.minusHint();
-                    this.canvas.clearArea(this.canvas.getWidth() / 10.5, this.canvas.getHeight() / 10, this.canvas.getWidth() / 6, this.canvas.getHeight() / 12);
-                    this.canvas.writeTextToCanvas(`je hebt ${PlayerHandler.getHints()} hints`, 50, this.canvas.getWidth() / 6, this.canvas.getHeight() / 6, "white", "center", "Old English Text MT");
+                        this.canvas.clearArea(this.canvas.getWidth() / 10.5, this.canvas.getHeight() / 10, this.canvas.getWidth() / 6, this.canvas.getHeight() / 12);
+                        this.canvas.writeTextToCanvas(`je hebt ${PlayerHandler.getHints()} hints`, 50, this.canvas.getWidth() / 6, this.canvas.getHeight() / 6, PlayerHandler.getFontColor(), "center", "Old English Text MT");
+                        this.canvas.clearArea(this.canvas.getWidth() / 1.9, this.canvas.getHeight() / 1.8, 500, 100);
+                        this.canvas.writeTextToCanvas(`${this.question.getHint(this.canvas.getquestionNumber()).hint}`, 30, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 1.7, PlayerHandler.getFontColor(), 'center', 'Pristina');
+                        PlayerHandler.SavePlayer();
+                    }
                 }
             }
         };
         this.listeners.push(hintListener);
         window.addEventListener('click', hintListener);
+    }
+    optionButton() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X + 610 && event.x < this.canvas.getCenter().X + 685) {
+                if (event.y > this.canvas.getCenter().Y + 300 && event.y < this.canvas.getCenter().Y + 375) {
+                    ScreenSwitch.draw('optionsScreen');
+                    this.removeButtons();
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
     }
     removeButtons() {
         this.listeners.forEach(e => {
@@ -824,9 +1035,13 @@ class EuropeScreen extends Mapview {
     draw() {
         this.canvas.writeImageToCanvasPreload(this.europeMap, this.canvas.getWidth() / 28, this.canvas.getWidth() / 19, this.canvas.getHeight() - this.canvas.getHeight() / 9.3, this.canvas.getHeight() - this.canvas.getHeight() / 9.3);
         this.canvas.getSelectedCountry();
-        console.log(this.canvas.getSelectedCountry());
-        this.canvas.writeTextToCanvas('Kies een land om te beginnen!', 35, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 4, "black", "center", "Old English Text MT");
+        this.canvas.writeTextToCanvas('Kies een land om te beginnen!', 35, this.canvas.getWidth() / 1.35, this.canvas.getHeight() / 4, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle());
         this.clickCountry();
+        this.canvas.writeButtonToCanvas('./assets/images/settings-button.png', this.canvas.getCenter().X + 610, this.canvas.getCenter().Y + 300, " ", 35, this.canvas.getCenter().X, this.canvas.getCenter().Y, 'black', 'center', 'ariel');
+        this.optionButton();
+        ScreenSwitch.screenMemory('europeScreen');
+        this.canvas.writeButtonToCanvas("./assets/images/oldButton.png", this.canvas.getCenter().X + 350, this.canvas.getCenter().Y + 200, "Opslaan", 35, this.canvas.getCenter().X + 475, this.canvas.getCenter().Y + 290, 'black', "center", "Old English Text MT");
+        this.saveButton();
     }
     removeButtons() {
         this.listeners.forEach(e => {
@@ -848,31 +1063,345 @@ class EuropeScreen extends Mapview {
         this.listeners.push(listenerToCountry);
         window.addEventListener('click', listenerToCountry);
     }
+    optionButton() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X + 610 && event.x < this.canvas.getCenter().X + 685) {
+                if (event.y > this.canvas.getCenter().Y + 300 && event.y < this.canvas.getCenter().Y + 375) {
+                    this.canvas.resetSelectedCountry();
+                    ScreenSwitch.draw('optionsScreen');
+                    this.removeButtons();
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+    saveButton() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X + 350 && event.x < this.canvas.getCenter().X + 600) {
+                if (event.y > this.canvas.getCenter().Y + 200 && event.y < this.canvas.getCenter().Y + 370) {
+                    PlayerHandler.setSaveStatus('overwrite');
+                    this.canvas.resetSelectedCountry();
+                    ScreenSwitch.draw('saveScreen');
+                    this.removeButtons();
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
 }
-class ShopScreen {
+class OptionsScreen {
     constructor() {
+        this.listeners = [];
         const canvasElement = document.getElementById('canvas');
         this.canvas = new Canvas(canvasElement);
+    }
+    draw() {
+        this.canvas.writeTextToCanvas('Optiescherm', 125, this.canvas.getWidth() / 2, this.canvas.getHeight() / 4.2, PlayerHandler.getFontColor(), 'center', 'Old English Text MT');
+        this.writeLettertypesToCanvas();
+        this.writeTextColourToCanvas();
+        this.writeDifficultyToCanvas();
+        this.letterType1Button();
+        this.letterType2Button();
+        this.letterType3Button();
+        this.letterType4Button();
+        this.letterType5Button();
+        this.letterStyle1Button();
+        this.letterStyle2Button();
+        this.letterStyle3Button();
+        this.letterStyle4Button();
+        this.letterStyle5Button();
+        this.difficultyNormalButton();
+        this.difficultyHardButton();
+        this.canvas.writeButtonToCanvas('./assets/images/back-button.png', this.canvas.getCenter().X + 610, this.canvas.getCenter().Y + 300, " ", 35, this.canvas.getCenter().X, this.canvas.getCenter().Y, 'black', 'center', 'ariel');
+        this.optionButton();
+    }
+    writeLettertypesToCanvas() {
+        this.canvas.writeTextToCanvas('Lettertype:', 50, this.canvas.getWidth() / 2, this.canvas.getHeight() / 3, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle());
+        this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 615, this.canvas.getHeight() / 2.5, 'Pristina', 30, this.canvas.getWidth() / 2 - 510, this.canvas.getHeight() / 2.33, PlayerHandler.getFontColor(), 'center', 'Pristina', 'black');
+        this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 370, this.canvas.getHeight() / 2.5, 'Old English Text MT', 20, this.canvas.getWidth() / 2 - 260, this.canvas.getHeight() / 2.33, PlayerHandler.getFontColor(), 'center', 'Old English Text MT', 'black');
+        this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 111, this.canvas.getHeight() / 2.5, 'Arial', 30, this.canvas.getWidth() / 2, this.canvas.getHeight() / 2.33, PlayerHandler.getFontColor(), 'center', 'Arial', 'black');
+        this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 141, this.canvas.getHeight() / 2.5, 'Times New Roman', 25, this.canvas.getWidth() / 2 + 250, this.canvas.getHeight() / 2.36, PlayerHandler.getFontColor(), 'center', 'Times New Roman', 'black');
+        this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 393, this.canvas.getHeight() / 2.5, 'Comic Sans MS', 25, this.canvas.getWidth() / 2 + 505, this.canvas.getHeight() / 2.33, PlayerHandler.getFontColor(), 'center', 'Comic Sans MS', 'black');
+    }
+    writeTextColourToCanvas() {
+        this.canvas.writeTextToCanvas('Tekstkleur:', 50, this.canvas.getWidth() / 2, this.canvas.getHeight() / 1.8, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle());
+        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 615, this.canvas.getHeight() / 1.5 - 39, 'Zwart', 30, this.canvas.getWidth() / 2 - 510, this.canvas.getHeight() / 1.53, 'black', 'center', PlayerHandler.getFontStyle());
+        this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 363, this.canvas.getHeight() / 1.5 - 39, 'Wit', 30, this.canvas.getWidth() / 2 - 260, this.canvas.getHeight() / 1.53, 'white', 'center', PlayerHandler.getFontStyle(), 'black');
+        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 111, this.canvas.getHeight() / 1.5 - 39, 'Blauw', 30, this.canvas.getWidth() / 2, this.canvas.getHeight() / 1.53, 'DarkTurquoise', 'center', PlayerHandler.getFontStyle());
+        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 141, this.canvas.getHeight() / 1.5 - 39, 'Roze', 30, this.canvas.getWidth() / 2 + 250, this.canvas.getHeight() / 1.53, 'DeepPink', 'center', PlayerHandler.getFontStyle());
+        this.canvas.writeButtonToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 393, this.canvas.getHeight() / 1.5 - 39, 'Groen', 30, this.canvas.getWidth() / 2 + 500, this.canvas.getHeight() / 1.53, 'lime', 'center', PlayerHandler.getFontStyle());
+    }
+    writeDifficultyToCanvas() {
+        this.canvas.writeTextToCanvas('Moeilijkheidgraad:', 50, this.canvas.getWidth() / 2, this.canvas.getHeight() / 1.25, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle());
+        this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 - 242, this.canvas.getHeight() / 1.1 - 39, 'Makkelijk', 30, this.canvas.getWidth() / 2 - 135, this.canvas.getHeight() / 1.1 - 10, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle(), 'black');
+        this.canvas.writeButtonAndStrokeTextToCanvas('./assets/images/buttonYellow.png', this.canvas.getWidth() / 2 + 20, this.canvas.getHeight() / 1.1 - 39, 'Moeilijk', 30, this.canvas.getWidth() / 2 + 125, this.canvas.getHeight() / 1.1 - 10, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle(), 'black');
+    }
+    removeButtons() {
+        this.listeners.forEach(e => {
+            window.removeEventListener('click', e);
+        });
+    }
+    letterType1Button() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X - 615 && event.x < this.canvas.getCenter().X - 393) {
+                if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
+                    PlayerHandler.setFontStyle('Pristina');
+                    console.log('Pristina is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen');
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+    letterType2Button() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X - 363 && event.x < this.canvas.getCenter().X - 141) {
+                if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
+                    PlayerHandler.setFontStyle('Old English Text MT');
+                    console.log('Old English Text MT is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen');
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+    letterType3Button() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X - 111 && event.x < this.canvas.getCenter().X + 111) {
+                if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
+                    PlayerHandler.setFontStyle('Arial');
+                    console.log('Arial is gedrukt');
+                    ScreenSwitch.draw('optionsScreen');
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+    letterType4Button() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X + 141 && event.x < this.canvas.getCenter().X + 363) {
+                if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
+                    PlayerHandler.setFontStyle('Times New Roman');
+                    console.log('Times New Roman is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen');
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+    letterType5Button() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X + 393 && event.x < this.canvas.getCenter().X + 615) {
+                if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
+                    PlayerHandler.setFontStyle('Comic Sans MS');
+                    console.log('Comic Sans MS is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen');
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+    letterStyle1Button() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X - 615 && event.x < this.canvas.getCenter().X - 393) {
+                if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
+                    PlayerHandler.setFontColor('Black');
+                    console.log('Tekstkleur ZWART is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen');
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+    letterStyle2Button() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X - 363 && event.x < this.canvas.getCenter().X - 141) {
+                if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
+                    PlayerHandler.setFontColor('White');
+                    console.log('Tekstkleur WIT is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen');
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+    letterStyle3Button() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X - 111 && event.x < this.canvas.getCenter().X + 111) {
+                if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
+                    PlayerHandler.setFontColor('DarkTurquoise');
+                    console.log('Tekstkleur BLAUW is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen');
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+    letterStyle4Button() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X + 141 && event.x < this.canvas.getCenter().X + 363) {
+                if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
+                    PlayerHandler.setFontColor('DeepPink');
+                    console.log('Tekstkleur ROZE is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen');
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+    letterStyle5Button() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X + 393 && event.x < this.canvas.getCenter().X + 615) {
+                if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
+                    PlayerHandler.setFontColor('Lime');
+                    console.log('Tekstkleur GROEN is gedrukt');
+                    this.removeButtons();
+                    ScreenSwitch.draw('optionsScreen');
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+    difficultyNormalButton() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getWidth() / 2 - 242 && event.x < this.canvas.getCenter().X - 20) {
+                if (event.y > this.canvas.getHeight() / 1.1 - 39 && event.y < this.canvas.getHeight() / 1.1) {
+                    console.log('Makkelijk is gedrukt');
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+    difficultyHardButton() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X + 20 && event.x < this.canvas.getCenter().X + 242) {
+                if (event.y > this.canvas.getHeight() / 1.1 - 39 && event.y < this.canvas.getHeight() / 1.1) {
+                    console.log('Moelijk is gedrukt');
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+    optionButton() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X + 610 && event.x < this.canvas.getCenter().X + 685) {
+                if (event.y > this.canvas.getCenter().Y + 300 && event.y < this.canvas.getCenter().Y + 375) {
+                    ScreenSwitch.drawPrevious();
+                    this.removeButtons();
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+}
+class SaveScreen {
+    constructor(canvas) {
+        this.listeners = [];
+        this.canvas = new Canvas(canvas);
+        this.saveImage = new Image();
+        this.saveImage.src = './assets/images/Wereldbol.png';
+    }
+    draw() {
+        for (let index = 0; index < 3; index++) {
+            if (localStorage.getItem(`Player${index + 1}`)) {
+                this.canvas.writeTextToCanvas(JSON.parse(localStorage.getItem(`Player${index + 1}`)).name, 75, this.canvas.getWidth() * (0.25 * (index + 1)), this.canvas.getHeight() * 0.75, "black", "center", "Pristina");
+            }
+            else {
+                this.canvas.writeTextToCanvas(`Speler ${index + 1}`, 75, this.canvas.getWidth() * (0.25 * (index + 1)), this.canvas.getHeight() * 0.75, "black", "center", "Pristina");
+            }
+        }
+        for (let index = 1; index <= 3; index++) {
+            this.canvas.writeImageToCanvas('./assets/images/Wereldbol.png', this.canvas.getWidth() * (0.25 * index) - this.saveImage.width / 4, this.canvas.getCenter().Y - this.saveImage.height / 3, this.saveImage.width / 2, this.saveImage.height / 2);
+        }
+        this.clickHandler();
+        this.canvas.writeButtonToCanvas('./assets/images/back-button.png', 20, 20, " ", 35, this.canvas.getCenter().X, this.canvas.getCenter().Y, 'black', 'center', 'ariel');
+        this.backButton();
+    }
+    removeButtons() {
+        this.listeners.forEach(e => {
+            window.removeEventListener('click', e);
+        });
+    }
+    clickHandler() {
+        for (let index = 0; index < 3; index++) {
+            let loadSaveFile = (event) => {
+                if (event.x > this.canvas.getWidth() * (0.25 * (index + 1)) - this.saveImage.width / 4 && event.x < this.canvas.getWidth() * (0.25 * (index + 1)) + this.saveImage.width / 4) {
+                    if (event.y > this.canvas.getCenter().Y - this.saveImage.height / 3 && event.y < this.canvas.getCenter().Y - this.saveImage.height / 3 + this.saveImage.height / 2) {
+                        if (this.canvas.getColor(event.x, event.y, 1, 1, 3) !== 0) {
+                            if (localStorage.getItem(`Player${index + 1}`)) {
+                                if (PlayerHandler.getSaveStatus() != 'overwrite') {
+                                    PlayerHandler.loadPlayer(index + 1);
+                                }
+                                else if (PlayerHandler.getSaveStatus() == 'overwrite') {
+                                    PlayerHandler.createSaveFile(index + 1);
+                                }
+                            }
+                            else {
+                                PlayerHandler.createSaveFile(index + 1);
+                            }
+                            this.removeButtons();
+                            ScreenSwitch.draw('saveScreen');
+                        }
+                    }
+                }
+            };
+            this.listeners.push(loadSaveFile);
+            window.addEventListener('click', loadSaveFile);
+        }
+    }
+    backButton() {
+        let startListener = (event) => {
+            if (event.x > 20 && event.x < 95) {
+                if (event.y > 20 && event.y < 95) {
+                    ScreenSwitch.drawPrevious();
+                    this.removeButtons();
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+}
+class ShopScreen {
+    constructor(canvas) {
+        this.canvas = new Canvas(canvas);
         this.listeners = [];
     }
     draw() {
-        this.canvas.writeTextToCanvas('Winkel', 150, this.canvas.getCenter().X, this.canvas.getCenter().Y - 260, "black", "center", "Old English Text MT");
-        this.canvas.writeTextToCanvas('Hints :', 100, this.canvas.getCenter().X - 424, this.canvas.getCenter().Y - 100, "white", 'center', "Old English Text MT");
+        this.canvas.writeTextToCanvas('Winkel', 150, this.canvas.getCenter().X, this.canvas.getCenter().Y - 260, PlayerHandler.getFontColor(), "center", "Old English Text MT");
+        this.canvas.writeTextToCanvas('Hints :', 100, this.canvas.getCenter().X - 424, this.canvas.getCenter().Y - 100, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle());
         this.drawShopBoxes(225, 175);
         this.hintShopHandler(225, 175);
-        this.canvas.writeTextToCanvas('Achtergrond :', 100, this.canvas.getCenter().X - 550, this.canvas.getCenter().Y + 100, "white", 'center', "Old English Text MT");
-        this.drawShopBoxes(225, -25);
-        this.canvas.writeTextToCanvas('Muziek :', 100, this.canvas.getCenter().X - 455, this.canvas.getCenter().Y + 300, "white", "center", "Old English Text MT");
-        this.drawShopBoxes(225, -225);
         this.canvas.writeButtonToCanvas("./assets/images/oldButton.png", this.canvas.getCenter().X + 325, this.canvas.getCenter().Y + 175, "terug", 35, this.canvas.getCenter().X + 450, this.canvas.getCenter().Y + 260, "black", "center", "Old English Text MT");
-        this.canvas.writeTextToCanvas('Hints = 10 punten', 30, this.canvas.getWidth() / 1.4, this.canvas.getHeight() / 5, "black", 'center', "Pristina");
-        this.canvas.writeTextToCanvas('Achtergrond = nog niet verkrijgbaar', 30, this.canvas.getWidth() / 1.315, this.canvas.getHeight() / 4.25, "black", 'center', "Pristina");
-        this.canvas.writeTextToCanvas('Muziek = nog niet verkrijgbaar', 30, this.canvas.getWidth() / 1.34, this.canvas.getHeight() / 3.75, "black", 'center', "Pristina");
+        this.canvas.writeTextToCanvas('Hints = 10 punten', 30, this.canvas.getWidth() / 1.4, this.canvas.getHeight() / 5, PlayerHandler.getFontColor(), 'center', 'Pristina');
         this.shopOutHandler();
     }
     drawShopBoxes(xBox, yBox) {
         for (let index = 0; index < 4; index++) {
-            this.canvas.writeTextToCanvas("Koop", 50, this.canvas.getCenter().X - xBox + 50 + (index * 130), this.canvas.getCenter().Y - yBox - 20, "black", "center", "Old English Text MT");
+            this.canvas.writeTextToCanvas("Koop", 50, this.canvas.getCenter().X - xBox + 50 + (index * 130), this.canvas.getCenter().Y - yBox - 20, PlayerHandler.getFontColor(), "center", "Old English Text MT");
             this.canvas.drawShopBox(this.canvas.getCenter().X - xBox + (index * 130), this.canvas.getCenter().Y - yBox);
             let listenerShopBoxesCheckMark = (event) => {
                 if (event.x > this.canvas.getCenter().X - xBox + (index * 130) && event.x < this.canvas.getCenter().X - xBox + 100 + (index * 130)) {
@@ -888,8 +1417,8 @@ class ShopScreen {
     hintShopHandler(xBox, yBox) {
         for (let index = 0; index < 4; index++) {
             let isClicked = 0;
-            this.canvas.writeTextToCanvas(`Je hebt ${PlayerHandler.getHints()} hints`, 50, this.canvas.getCenter().X + 450, this.canvas.getCenter().Y - 100, "black", "center", "Old English Text MT");
-            this.canvas.writeTextToCanvas(`${PlayerHandler.getScore()} punten`, 50, this.canvas.getCenter().X - 410, this.canvas.getCenter().Y - 250, "black", "center", "Old English Text MT");
+            this.canvas.writeTextToCanvas(`Je hebt ${PlayerHandler.getHints()} hints`, 50, this.canvas.getCenter().X + 450, this.canvas.getCenter().Y - 100, PlayerHandler.getFontColor(), "center", "Old English Text MT");
+            this.canvas.writeTextToCanvas(`${PlayerHandler.getScore()} punten`, 50, this.canvas.getCenter().X - 410, this.canvas.getCenter().Y - 250, PlayerHandler.getFontColor(), "center", "Old English Text MT");
             let listenerHintShop = (event) => {
                 if (event.x > this.canvas.getCenter().X - xBox + (index * 130) && event.x < this.canvas.getCenter().X - xBox + 100 + (index * 130)) {
                     if (event.y > this.canvas.getCenter().Y - yBox && event.y < this.canvas.getCenter().Y - yBox + 100) {
@@ -901,8 +1430,8 @@ class ShopScreen {
                                 PlayerHandler.scoreMinus(10);
                                 PlayerHandler.addHint();
                             }
-                            this.canvas.writeTextToCanvas(`Je hebt ${PlayerHandler.getHints()} hints`, 50, this.canvas.getCenter().X + 450, this.canvas.getCenter().Y - 100, "black", "center", "Old English Text MT");
-                            this.canvas.writeTextToCanvas(`${PlayerHandler.getScore()} punten`, 50, this.canvas.getCenter().X - 410, this.canvas.getCenter().Y - 250, "black", "center", "Old English Text MT");
+                            this.canvas.writeTextToCanvas(`Je hebt ${PlayerHandler.getHints()} hints`, 50, this.canvas.getCenter().X + 450, this.canvas.getCenter().Y - 100, PlayerHandler.getFontColor(), "center", "Old English Text MT");
+                            this.canvas.writeTextToCanvas(`${PlayerHandler.getScore()} punten`, 50, this.canvas.getCenter().X - 410, this.canvas.getCenter().Y - 250, PlayerHandler.getFontColor(), "center", "Old English Text MT");
                             console.log(PlayerHandler.getHints());
                         }
                     }
@@ -932,39 +1461,119 @@ class ShopScreen {
 }
 class StartScreen {
     constructor() {
+        this.listeners = [];
         const canvasElement = document.getElementById('canvas');
         this.canvas = new Canvas(canvasElement);
     }
     draw() {
-        this.canvas.writeTextToCanvas('Waar is deze geschiedenis?', 125, this.canvas.getWidth() / 2, this.canvas.getHeight() / 4.2, 'black', 'center', "Old English Text MT");
-        this.canvas.writeTextToCanvas('Vul hier je naam in:', 70, this.canvas.getWidth() / 2, this.canvas.getHeight() / 1.55, 'black', 'center', "Pristina");
-        this.canvas.writeButtonToCanvas("./assets/images/oldButton.png", this.canvas.getCenter().X - 125, this.canvas.getCenter().Y + 250, "Start", 35, this.canvas.getCenter().X, this.canvas.getCenter().Y + 340, "black", "center", "Old English Text MT");
-        this.canvas.writeImageToCanvas('./assets/images/emblem-with-a-wind-rose-old-compass-and-sailboat-vector-20874003.png', this.canvas.getWidth() / 15, this.canvas.getHeight() / 1.8, 350, 350);
-        this.buttonPressed = false;
-        document.getElementById("wereld").style.top = '23%';
-        document.getElementById('wereld').style.left = '40%';
-        document.getElementById('wereld').style.width = '20%';
-        document.getElementById('wereld').style.height = '40%';
+        this.drawCompassAndButtonAndTextToCanvas();
+        this.drawNameBox();
+        this.drawWorld();
+        this.startButton();
+        this.optionButton();
+        this.loadButton();
+        ScreenSwitch.screenMemory('startScreen');
+    }
+    drawNameBox() {
+        document.getElementById("name").setAttribute('style', 'position: absolute;left: 642px;top: 500px;width: 310px;height: 70px;font-size: 50px');
         document.getElementById('name').style.top = '70%';
         document.getElementById('name').style.left = '38%';
         document.getElementById('name').style.width = '24%';
         document.getElementById('name').style.height = '8%';
-        window.addEventListener("click", (event) => {
-            if (this.buttonPressed == false) {
-                if (event.x > this.canvas.getCenter().X - 125 && event.x < this.canvas.getCenter().X + 125) {
-                    if (event.y > this.canvas.getCenter().Y + 250 && event.y < this.canvas.getCenter().Y + 420) {
-                        let names = document.getElementById('name');
-                        names.type = "hidden";
-                        PlayerHandler.setName(names.value);
-                        console.log(names.value);
-                        document.getElementById("wereld").setAttribute('style', 'hidden');
-                        this.canvas.clearScreen();
-                        ScreenSwitch.draw('europeScreen');
-                        this.buttonPressed = true;
-                    }
+    }
+    drawWorld() {
+        document.getElementById("wereld").setAttribute('style', 'position: absolute;left: 650px;top: 200px;width: 300px;height: 300px');
+        document.getElementById("wereld").style.top = '23%';
+        document.getElementById('wereld').style.left = '40%';
+        document.getElementById('wereld').style.width = '20%';
+        document.getElementById('wereld').style.height = '40%';
+    }
+    drawCompassAndButtonAndTextToCanvas() {
+        this.canvas.writeTextToCanvas('Waar is deze geschiedenis?', 125, this.canvas.getWidth() / 2, this.canvas.getHeight() / 4.2, PlayerHandler.getFontColor(), 'center', "Old English Text MT");
+        this.canvas.writeTextToCanvas('Vul hier je naam in:', 70, this.canvas.getWidth() / 2, this.canvas.getHeight() / 1.55, PlayerHandler.getFontColor(), 'center', PlayerHandler.getFontStyle());
+        this.canvas.writeButtonToCanvas("./assets/images/oldButton.png", this.canvas.getCenter().X - 270, this.canvas.getCenter().Y + 250, "Start", 35, this.canvas.getCenter().X - 145, this.canvas.getCenter().Y + 340, 'black', "center", "Old English Text MT");
+        this.canvas.writeButtonToCanvas("./assets/images/oldButton.png", this.canvas.getCenter().X - 5, this.canvas.getCenter().Y + 250, "Laden", 35, this.canvas.getCenter().X + 120, this.canvas.getCenter().Y + 340, 'black', "center", "Old English Text MT");
+        this.canvas.writeImageToCanvas('./assets/images/emblem-with-a-wind-rose-old-compass-and-sailboat-vector-20874003.png', this.canvas.getWidth() / 15, this.canvas.getHeight() / 1.8, 350, 350);
+        this.canvas.writeButtonToCanvas('./assets/images/settings-button.png', this.canvas.getCenter().X + 610, this.canvas.getCenter().Y + 300, " ", 35, this.canvas.getCenter().X, this.canvas.getCenter().Y, 'black', 'center', 'ariel');
+    }
+    removeButtons() {
+        this.listeners.forEach(e => {
+            window.removeEventListener('click', e);
+        });
+    }
+    startButton() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X - 260 && event.x < this.canvas.getCenter().X - 30) {
+                if (event.y > this.canvas.getCenter().Y + 270 && event.y < this.canvas.getCenter().Y + 385) {
+                    let names = document.getElementById('name');
+                    document.getElementById("name").setAttribute('style', 'hidden');
+                    PlayerHandler.setName(names.value);
+                    console.log(names.value);
+                    document.getElementById("wereld").setAttribute('style', 'hidden');
+                    ScreenSwitch.draw('europeScreen');
+                    this.removeButtons();
                 }
             }
-        });
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+    loadButton() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X + 3 && event.x < this.canvas.getCenter().X + 240) {
+                if (event.y > this.canvas.getCenter().Y + 270 && event.y < this.canvas.getCenter().Y + 385) {
+                    let names = document.getElementById('name');
+                    document.getElementById("name").setAttribute('style', 'hidden');
+                    PlayerHandler.setName(names.value);
+                    console.log(names.value);
+                    document.getElementById("wereld").setAttribute('style', 'hidden');
+                    ScreenSwitch.draw('saveScreen');
+                    this.removeButtons();
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+    optionButton() {
+        let startListener = (event) => {
+            if (event.x > this.canvas.getCenter().X + 610 && event.x < this.canvas.getCenter().X + 685) {
+                if (event.y > this.canvas.getCenter().Y + 300 && event.y < this.canvas.getCenter().Y + 375) {
+                    document.getElementById("name").setAttribute('style', 'hidden');
+                    document.getElementById("wereld").setAttribute('style', 'hidden');
+                    ScreenSwitch.draw('optionsScreen');
+                    this.removeButtons();
+                }
+            }
+        };
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
+    }
+}
+class TrophyScreen {
+    constructor(canvas) {
+        this.netherlandsComplete = false;
+        this.W = window.innerWidth;
+        this.H = window.innerHeight;
+        this.remainingFlakes = 0;
+        this.trophyScreenOn = false;
+        this.canvas = new Canvas(canvas);
+        this.ctx = this.canvas.returnCtx();
+        if (this.canvas.checkNetherlandsComplete() == true) {
+            this.netherlandsComplete = true;
+        }
+        else {
+            this.netherlandsComplete = false;
+        }
+    }
+    draw() {
+        if (this.netherlandsComplete == true) {
+            this.canvas.writeImageToCanvas('./assets/images/trophy.png', this.canvas.getWidth() / 2 - 250, this.canvas.getHeight() / 2 - 250, 500, 500);
+        }
+        if (this.netherlandsComplete == false) {
+            this.canvas.writeImageToCanvas('./assets/images/trophyEmpty.png', this.canvas.getWidth() / 2 - 250, this.canvas.getHeight() / 2 - 250, 500, 500);
+        }
+        this.canvas.writeTextToCanvas('Nederland', 100, this.canvas.getWidth() / 2, this.canvas.getHeight() / 5, 'black', 'center', "Pristina");
     }
 }
 //# sourceMappingURL=app.js.map
