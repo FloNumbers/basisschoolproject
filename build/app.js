@@ -1376,7 +1376,12 @@ class SaveScreen {
         let startListener = (event) => {
             if (event.x > 20 && event.x < 95) {
                 if (event.y > 20 && event.y < 95) {
-                    ScreenSwitch.drawPrevious();
+                    if (ScreenSwitch.getScreenMemory() == 'startScreen' && PlayerHandler.getSaveStatus() != 'dontsave') {
+                        ScreenSwitch.draw('europeScreen');
+                    }
+                    else {
+                        ScreenSwitch.drawPrevious();
+                    }
                     this.removeButtons();
                 }
             }
