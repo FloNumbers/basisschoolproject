@@ -99,6 +99,10 @@ class Question {
                 questionNumber: 4
             },
             {
+                hint: "Zelfde antwoord als de vorige vraag",
+                questionNumber: 5
+            },
+            {
                 hint: "Je zit in deze provincie op school",
                 questionNumber: 6
             },

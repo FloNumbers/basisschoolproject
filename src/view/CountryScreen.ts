@@ -39,7 +39,7 @@ class CountryScreen extends Mapview {
         this.canvas.writeTextToCanvas(`je hebt ${PlayerHandler.getHints()} hints`, 50, this.canvas.getWidth() / 6, this.canvas.getHeight() / 6, PlayerHandler.getFontColor(), "center", "Old English Text MT")
         this.canvas.writeButtonToCanvas(this.shopButton.src, this.canvas.getWidth() / 10, this.canvas.getHeight() / 5, "Gebruik hint", 35, this.canvas.getWidth() / 6, this.canvas.getHeight() / 3.5, "black", "center", "Old English Text MT");
         this.hintHandler()
-        this.canvas.writeButtonToCanvas('./assets/images/settings-button.png', this.canvas.getCenter().X + 610, this.canvas.getCenter().Y + 300, " ", 35, this.canvas.getCenter().X, this.canvas.getCenter().Y, 'black', 'center', 'ariel');
+        this.canvas.writeButtonToCanvas('./assets/images/settings-button.png', this.canvas.getWidth() / 1.15, this.canvas.getCenter().Y + 300, " ", 35, this.canvas.getCenter().X, this.canvas.getCenter().Y, 'black', 'center', 'ariel');
         ScreenSwitch.screenMemory('countryScreen')
         this.optionButton()
     }
@@ -92,7 +92,7 @@ class CountryScreen extends Mapview {
 
     private optionButton() {
         let startListener = (event: MouseEvent) => {
-            if (event.x > this.canvas.getCenter().X + 610 && event.x < this.canvas.getCenter().X + 685) {
+            if (event.x > this.canvas.getWidth() / 1.15 && event.x < this.canvas.getWidth() / 1.1) {
                 if (event.y > this.canvas.getCenter().Y + 300 && event.y < this.canvas.getCenter().Y + 375) {
                     
                     ScreenSwitch.draw('optionsScreen');

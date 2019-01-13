@@ -260,13 +260,13 @@ class Canvas {
 
                     if (this.questionNumber > 6) {
                         this.NetherlandsComplete = true
-                        this.clearArea(this.getWidth() / 1.9, 0, this.getWidth() / 2, this.getHeight() / 1.8);
+                        this.clearArea(this.getWidth() / 1.9, 0, this.getWidth() / 2, this.getHeight() / 1.6);
                         this.writeTextToCanvas(`${PlayerHandler.getName()} je score is: ${PlayerHandler.getScore()}`, 40, this.getWidth() / 1.35, this.getHeight() / 6, PlayerHandler.getFontColor(), 'center', 'Pristina')
                         this.writeTextToCanvas(`Je hebt alle vragen goed beantwoord!!`, 40, this.getWidth() / 1.35, this.getHeight() / 2.8, PlayerHandler.getFontColor(), 'center', 'Pristina')
                     }
                     else {
                         this.resetSelectedProvince();
-                        this.clearArea(this.getWidth() / 1.9, 0, this.getWidth() / 2, this.getHeight() / 1.8);
+                        this.clearArea(this.getWidth() / 1.9, 0, this.getWidth() / 2, this.getHeight() / 1.6);
                         this.writeTextToCanvas(`${PlayerHandler.getName()} je score is: ${PlayerHandler.getScore()}`, 40, this.getWidth() / 1.35, this.getHeight() / 6, PlayerHandler.getFontColor(), 'center', 'Pristina')
                         this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.7, PlayerHandler.getFontColor(), 'center', 'Pristina')
                         this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion2}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.2, PlayerHandler.getFontColor(), 'center', 'Pristina')
@@ -284,14 +284,14 @@ class Canvas {
                     if (PlayerHandler.getScore() > 0) {
                         PlayerHandler.scoreMinus(10);
                     }
-                    this.clearArea(this.getWidth() / 1.9, 0, this.getWidth() / 2, this.getHeight() / 1.8);
-                    this.writeTextToCanvas(`${PlayerHandler.getName()} je score is: ${PlayerHandler.getScore()}`, 40, this.getWidth() / 1.35, this.getHeight() / 6, 'white', 'center', 'Pristina')
-                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.7, 'white', 'center', 'Pristina')
-                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion2}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.2, 'white', 'center', 'Pristina')
-                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion3}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.8, 'white', 'center', 'Pristina')
-                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion4}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.5, 'white', 'center', 'Pristina')
-                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion5}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.2, 'white', 'center', 'Pristina')
-                    this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).question}`, 30, this.getWidth() / 1.35, this.getHeight() / 1.9, 'white', 'center', 'Pristina')
+                    // this.clearArea(this.getWidth() / 1.9, 0, this.getWidth() / 2, this.getHeight());
+                    // this.writeTextToCanvas(`${PlayerHandler.getName()} je score is: ${PlayerHandler.getScore()}`, 40, this.getWidth() / 1.35, this.getHeight() / 6, 'white', 'center', 'Pristina')
+                    // this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.7, 'white', 'center', 'Pristina')
+                    // this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion2}`, 30, this.getWidth() / 1.35, this.getHeight() / 3.2, 'white', 'center', 'Pristina')
+                    // this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion3}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.8, 'white', 'center', 'Pristina')
+                    // this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion4}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.5, 'white', 'center', 'Pristina')
+                    // this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).introToQuestion5}`, 30, this.getWidth() / 1.35, this.getHeight() / 2.2, 'white', 'center', 'Pristina')
+                    // this.writeTextToCanvas(`${this.question.getQuestion(this.getquestionNumber()).question}`, 30, this.getWidth() / 1.35, this.getHeight() / 1.9, 'white', 'center', 'Pristina')
 
 
                 }
