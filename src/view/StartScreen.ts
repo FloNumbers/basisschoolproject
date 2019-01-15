@@ -52,7 +52,7 @@ class StartScreen {
                     let names = (<HTMLInputElement>document.getElementById('name'));
                     document.getElementById("name").setAttribute('style', 'hidden');
                     // this.player.setName(names.value);
-                    PlayerHandler.setName(names.value)
+                    PlayerHandler.setName(names.value);
                     console.log(names.value);
 
                     document.getElementById("wereld").setAttribute('style', 'hidden');
@@ -72,7 +72,7 @@ class StartScreen {
                 if (event.y > this.canvas.getCenter().Y + 270 && event.y < this.canvas.getCenter().Y + 385){
                     let names = (<HTMLInputElement>document.getElementById('name'));
                     document.getElementById("name").setAttribute('style', 'hidden');
-                    PlayerHandler.setName(names.value)
+                    PlayerHandler.setName(names.value);
                     console.log(names.value);
 
                     document.getElementById("wereld").setAttribute('style', 'hidden');
@@ -96,7 +96,6 @@ class StartScreen {
             }
         }
         this.listeners.push(startListener)
-        window.addEventListener('click', startListener)
+        window.addEventListener('click', startListener);
     }
-
 }

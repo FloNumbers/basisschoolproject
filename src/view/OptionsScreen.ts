@@ -59,140 +59,140 @@ class OptionsScreen {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X - 615 && event.x < this.canvas.getCenter().X - 393) {
                 if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
-                    PlayerHandler.setFontStyle('Pristina')
+                    PlayerHandler.setFontStyle('Pristina');
                     console.log('Pristina is gedrukt');
                     this.removeButtons();
-                    ScreenSwitch.draw('optionsScreen')
+                    ScreenSwitch.draw('optionsScreen');
                 }
             }
         }
-        this.listeners.push(startListener)
-        window.addEventListener('click', startListener)
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
     }
     public letterType2Button() {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X - 363 && event.x < this.canvas.getCenter().X - 141) {
                 if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
-                    PlayerHandler.setFontStyle('Old English Text MT')
+                    PlayerHandler.setFontStyle('Old English Text MT');
                     console.log('Old English Text MT is gedrukt');
                     this.removeButtons();
-                    ScreenSwitch.draw('optionsScreen')
+                    ScreenSwitch.draw('optionsScreen');
                 }
             }
         }
-        this.listeners.push(startListener)
-        window.addEventListener('click', startListener)
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
     }
     public letterType3Button() {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X - 111 && event.x < this.canvas.getCenter().X + 111) {
                 if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
-                    PlayerHandler.setFontStyle('Arial')
+                    PlayerHandler.setFontStyle('Arial');
                     console.log('Arial is gedrukt');
-                    ScreenSwitch.draw('optionsScreen')
+                    ScreenSwitch.draw('optionsScreen');
                 }
             }
         }
-        this.listeners.push(startListener)
-        window.addEventListener('click', startListener)
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
     }
     public letterType4Button() {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X + 141 && event.x < this.canvas.getCenter().X + 363) {
                 if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
-                    PlayerHandler.setFontStyle('Times New Roman')
+                    PlayerHandler.setFontStyle('Times New Roman');
                     console.log('Times New Roman is gedrukt');
                     this.removeButtons();
-                    ScreenSwitch.draw('optionsScreen')
+                    ScreenSwitch.draw('optionsScreen');
                 }
             }
         }
-        this.listeners.push(startListener)
-        window.addEventListener('click', startListener)
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
     }
     public letterType5Button() {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X + 393 && event.x < this.canvas.getCenter().X + 615) {
                 if (event.y > this.canvas.getHeight() / 2.5 && event.y < this.canvas.getHeight() / 2.5 + 39) {
-                    PlayerHandler.setFontStyle('Comic Sans MS')
+                    PlayerHandler.setFontStyle('Comic Sans MS');
                     console.log('Comic Sans MS is gedrukt');
                     this.removeButtons();
-                    ScreenSwitch.draw('optionsScreen')
+                    ScreenSwitch.draw('optionsScreen');
                 }
             }
         }
-        this.listeners.push(startListener)
-        window.addEventListener('click', startListener)
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
     }
     public letterStyle1Button() {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X - 615 && event.x < this.canvas.getCenter().X - 393) {
                 if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
-                    PlayerHandler.setFontColor('Black')
+                    PlayerHandler.setFontColor('Black');
                     console.log('Tekstkleur ZWART is gedrukt');
                     this.removeButtons();
-                    ScreenSwitch.draw('optionsScreen')
+                    ScreenSwitch.draw('optionsScreen');
                 }
             }
         }
-        this.listeners.push(startListener)
-        window.addEventListener('click', startListener)
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
     }
     public letterStyle2Button() {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X - 363 && event.x < this.canvas.getCenter().X - 141) {
                 if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
-                    PlayerHandler.setFontColor('White')
+                    PlayerHandler.setFontColor('White');
                     console.log('Tekstkleur WIT is gedrukt');
                     this.removeButtons();
-                    ScreenSwitch.draw('optionsScreen')
+                    ScreenSwitch.draw('optionsScreen');
                 }
             }
         }
-        this.listeners.push(startListener)
-        window.addEventListener('click', startListener)
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
     }
     public letterStyle3Button() {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X - 111 && event.x < this.canvas.getCenter().X + 111) {
                 if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
-                    PlayerHandler.setFontColor('DarkTurquoise')
+                    PlayerHandler.setFontColor('DarkTurquoise');
                     console.log('Tekstkleur BLAUW is gedrukt');
                     this.removeButtons();
-                    ScreenSwitch.draw('optionsScreen')
+                    ScreenSwitch.draw('optionsScreen');
                 }
             }
         }
-        this.listeners.push(startListener)
-        window.addEventListener('click', startListener)
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
     }
     public letterStyle4Button() {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X + 141 && event.x < this.canvas.getCenter().X + 363) {
                 if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
-                    PlayerHandler.setFontColor('DeepPink')
+                    PlayerHandler.setFontColor('DeepPink');
                     console.log('Tekstkleur ROZE is gedrukt');
                     this.removeButtons();
-                    ScreenSwitch.draw('optionsScreen')
+                    ScreenSwitch.draw('optionsScreen');
                 }
             }
         }
-        this.listeners.push(startListener)
-        window.addEventListener('click', startListener)
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
     }
     public letterStyle5Button() {
         let startListener = (event: MouseEvent) => {
             if (event.x > this.canvas.getCenter().X + 393 && event.x < this.canvas.getCenter().X + 615) {
                 if (event.y > this.canvas.getHeight() / 1.5 - 39 && event.y < this.canvas.getHeight() / 1.5) {
-                    PlayerHandler.setFontColor('Lime')
+                    PlayerHandler.setFontColor('Lime');
                     console.log('Tekstkleur GROEN is gedrukt');
                     this.removeButtons();
-                    ScreenSwitch.draw('optionsScreen')
+                    ScreenSwitch.draw('optionsScreen');
                 }
             }
         }
-        this.listeners.push(startListener)
-        window.addEventListener('click', startListener)
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
     }
     public difficultyNormalButton() {
         let startListener = (event: MouseEvent) => {
@@ -202,8 +202,8 @@ class OptionsScreen {
                 }
             }
         }
-        this.listeners.push(startListener)
-        window.addEventListener('click', startListener)
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
     }
     public difficultyHardButton() {
         let startListener = (event: MouseEvent) => {
@@ -213,8 +213,8 @@ class OptionsScreen {
                 }
             }
         }
-        this.listeners.push(startListener)
-        window.addEventListener('click', startListener)
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
     }
 
     public optionButton() {
@@ -226,7 +226,7 @@ class OptionsScreen {
                 }
             }
         }
-        this.listeners.push(startListener)
-        window.addEventListener('click', startListener)
+        this.listeners.push(startListener);
+        window.addEventListener('click', startListener);
     }
 }
